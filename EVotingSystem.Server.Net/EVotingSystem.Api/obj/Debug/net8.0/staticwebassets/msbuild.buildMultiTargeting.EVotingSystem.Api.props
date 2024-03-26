@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\EVotingSystem.Api.props" />
+</Project>
