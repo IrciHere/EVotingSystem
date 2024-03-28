@@ -24,6 +24,8 @@ public partial class EVotingDbContext : DbContext
 
     public virtual DbSet<Electionvote> Electionvotes { get; set; }
 
+    public virtual DbSet<Passwordresetcode> Passwordresetcodes { get; set; }
+
     public virtual DbSet<User> Users { get; set; }
 
     public virtual DbSet<Userspassword> Userspasswords { get; set; }
@@ -113,6 +115,25 @@ public partial class EVotingDbContext : DbContext
             entity.HasOne(d => d.Votedcandidate).WithMany(p => p.Electionvotes)
                 .HasForeignKey(d => d.Votedcandidateid)
                 .HasConstraintName("fk_vote_candidate");
+        });
+
+        modelBuilder.Entity<Passwordresetcode>(entity =>
+        {
+            entity.HasKey(e => e.Userid).HasName("passwordresetcodes_pkey");
+
+            entity.ToTable("passwordresetcodes");
+
+            entity.Property(e => e.Userid)
+                .ValueGeneratedNever()
+                .HasColumnName("userid");
+            entity.Property(e => e.Resetcode)
+                .HasMaxLength(10)
+                .HasColumnName("resetcode");
+
+            entity.HasOne(d => d.User).WithOne(p => p.Passwordresetcode)
+                .HasForeignKey<Passwordresetcode>(d => d.Userid)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_resetcode_user");
         });
 
         modelBuilder.Entity<User>(entity =>

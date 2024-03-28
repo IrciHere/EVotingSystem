@@ -17,6 +17,8 @@ public partial class User
 
     public virtual ICollection<Electionvote> Electionvotes { get; set; } = new List<Electionvote>();
 
+    public virtual Passwordresetcode? Passwordresetcode { get; set; }
+
     public virtual Userspassword? Userspassword { get; set; }
 
     public virtual ICollection<Election> Elections { get; set; } = new List<Election>();
