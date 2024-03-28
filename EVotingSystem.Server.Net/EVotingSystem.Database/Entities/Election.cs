@@ -1,25 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
+﻿namespace EVotingSystem.Database.Entities;
 
-namespace EVotingSystem.Database.Entities;
-
-public partial class Election
+public class Election
 {
     public int Id { get; set; }
 
-    public string Name { get; set; } = null!;
+    public string Name { get; set; }
 
-    public DateTime Starttime { get; set; }
+    public DateTime StartTime { get; set; }
 
-    public DateTime Endtime { get; set; }
+    public DateTime EndTime { get; set; }
 
-    public virtual ICollection<Electionresult> Electionresults { get; set; } = new List<Electionresult>();
+    public virtual ICollection<ElectionResult> ElectionResults { get; set; }
 
-    public virtual Electionsecret? Electionsecret { get; set; }
+    public virtual ElectionSecret ElectionSecret { get; set; }
 
-    public virtual ICollection<Electionvote> Electionvotes { get; set; } = new List<Electionvote>();
+    public virtual ICollection<ElectionVote> ElectionVotes { get; set; }
 
-    public virtual ICollection<User> Users { get; set; } = new List<User>();
+    public virtual ICollection<User> Users { get; set; }
 
-    public virtual ICollection<User> UsersNavigation { get; set; } = new List<User>();
+    public virtual ICollection<User> UsersNavigation { get; set; }
 }

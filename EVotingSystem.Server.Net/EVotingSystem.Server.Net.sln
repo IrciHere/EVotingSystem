@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EVotingSystem.Api", "EVotin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EVotingSystem.Database", "EVotingSystem.Database\EVotingSystem.Database.csproj", "{42109218-052C-47ED-B81F-F7D21BE0AD51}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EVotingSystem.Services", "EVotingSystem.Services\EVotingSystem.Services.csproj", "{4E5F3050-2D55-44A8-88C5-BA479E26CDEC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EVotingSystem.Contracts", "EVotingSystem.Contracts\EVotingSystem.Contracts.csproj", "{A5BD034A-AA6B-4F68-AC6E-EC0E5EA73C1B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +28,13 @@ Global
 		{42109218-052C-47ED-B81F-F7D21BE0AD51}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42109218-052C-47ED-B81F-F7D21BE0AD51}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42109218-052C-47ED-B81F-F7D21BE0AD51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E5F3050-2D55-44A8-88C5-BA479E26CDEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E5F3050-2D55-44A8-88C5-BA479E26CDEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E5F3050-2D55-44A8-88C5-BA479E26CDEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E5F3050-2D55-44A8-88C5-BA479E26CDEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5BD034A-AA6B-4F68-AC6E-EC0E5EA73C1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5BD034A-AA6B-4F68-AC6E-EC0E5EA73C1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5BD034A-AA6B-4F68-AC6E-EC0E5EA73C1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5BD034A-AA6B-4F68-AC6E-EC0E5EA73C1B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
