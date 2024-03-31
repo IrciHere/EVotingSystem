@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using EVotingSystem.Database.Entities;
+﻿using EVotingSystem.Database.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace EVotingSystem.Database.Context;

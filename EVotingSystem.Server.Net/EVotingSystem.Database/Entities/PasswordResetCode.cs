@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿namespace EVotingSystem.Database.Entities;
 
-namespace EVotingSystem.Database.Entities;
-
-public partial class PasswordResetCode
+public class PasswordResetCode
 {
     public int UserId { get; set; }
 
