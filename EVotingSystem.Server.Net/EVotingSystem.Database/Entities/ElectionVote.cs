@@ -1,6 +1,9 @@
-﻿namespace EVotingSystem.Database.Entities;
+﻿using System;
+using System.Collections.Generic;
 
-public class ElectionVote
+namespace EVotingSystem.Database.Entities;
+
+public partial class ElectionVote
 {
     public int Id { get; set; }
 

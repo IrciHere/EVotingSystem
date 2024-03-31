@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EVotingSystem.Services", "E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EVotingSystem.Contracts", "EVotingSystem.Contracts\EVotingSystem.Contracts.csproj", "{A5BD034A-AA6B-4F68-AC6E-EC0E5EA73C1B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EVotingSystem.Repositories", "EVotingSystem.Repositories\EVotingSystem.Repositories.csproj", "{AED204E8-649F-49DB-ACB9-E9F51A94E806}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{A5BD034A-AA6B-4F68-AC6E-EC0E5EA73C1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5BD034A-AA6B-4F68-AC6E-EC0E5EA73C1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5BD034A-AA6B-4F68-AC6E-EC0E5EA73C1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AED204E8-649F-49DB-ACB9-E9F51A94E806}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AED204E8-649F-49DB-ACB9-E9F51A94E806}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AED204E8-649F-49DB-ACB9-E9F51A94E806}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AED204E8-649F-49DB-ACB9-E9F51A94E806}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

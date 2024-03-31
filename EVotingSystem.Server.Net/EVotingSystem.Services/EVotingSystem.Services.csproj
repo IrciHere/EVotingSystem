@@ -7,6 +7,11 @@
 
     <ItemGroup>
       <ProjectReference Include="..\EVotingSystem.Contracts\EVotingSystem.Contracts.csproj" />
+      <ProjectReference Include="..\EVotingSystem.Repositories\EVotingSystem.Repositories.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="13.0.1" />
     </ItemGroup>
 
 </Project>

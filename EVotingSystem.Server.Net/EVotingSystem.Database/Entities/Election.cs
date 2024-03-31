@@ -1,6 +1,9 @@
-﻿namespace EVotingSystem.Database.Entities;
+﻿using System;
+using System.Collections.Generic;
 
-public class Election
+namespace EVotingSystem.Database.Entities;
+
+public partial class Election
 {
     public int Id { get; set; }
 
@@ -10,13 +13,13 @@ public class Election
 
     public DateTime EndTime { get; set; }
 
-    public virtual ICollection<ElectionResult> ElectionResults { get; set; }
+    public virtual ICollection<ElectionResult> ElectionResults { get; set; } = new List<ElectionResult>();
 
     public virtual ElectionSecret ElectionSecret { get; set; }
 
-    public virtual ICollection<ElectionVote> ElectionVotes { get; set; }
+    public virtual ICollection<ElectionVote> ElectionVotes { get; set; } = new List<ElectionVote>();
 
-    public virtual ICollection<User> Users { get; set; }
+    public virtual ICollection<User> Users { get; set; } = new List<User>();
 
-    public virtual ICollection<User> UsersNavigation { get; set; }
+    public virtual ICollection<User> UsersNavigation { get; set; } = new List<User>();
 }

@@ -28,7 +28,9 @@ public partial class EVotingDbContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
-    public virtual DbSet<UsersPassword> UsersPasswords { get; set; }
+    public virtual DbSet<UserPassword> UserPasswords { get; set; }
+
+    public virtual DbSet<UserSecret> UserSecrets { get; set; }
 
     public virtual DbSet<VotesOtp> VotesOtps { get; set; }
 
@@ -47,23 +49,24 @@ public partial class EVotingDbContext : DbContext
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.EndTime)
                 .HasColumnType("timestamp without time zone")
-                .HasColumnName("endtime");
+                .HasColumnName("end_time");
             entity.Property(e => e.Name)
+                .IsRequired()
                 .HasMaxLength(512)
                 .HasColumnName("name");
             entity.Property(e => e.StartTime)
                 .HasColumnType("timestamp without time zone")
-                .HasColumnName("starttime");
+                .HasColumnName("start_time");
         });
 
         modelBuilder.Entity<ElectionResult>(entity =>
         {
-            entity.HasKey(e => new { Userid = e.UserId, Electionid = e.ElectionId }).HasName("candidate_election_result");
+            entity.HasKey(e => new { e.UserId, e.ElectionId }).HasName("candidate_election_result");
 
-            entity.ToTable("electionresults");
+            entity.ToTable("election_results");
 
-            entity.Property(e => e.UserId).HasColumnName("userid");
-            entity.Property(e => e.ElectionId).HasColumnName("electionid");
+            entity.Property(e => e.UserId).HasColumnName("user_id");
+            entity.Property(e => e.ElectionId).HasColumnName("election_id");
             entity.Property(e => e.Votes).HasColumnName("votes");
 
             entity.HasOne(d => d.Election).WithMany(p => p.ElectionResults)
@@ -79,14 +82,16 @@ public partial class EVotingDbContext : DbContext
 
         modelBuilder.Entity<ElectionSecret>(entity =>
         {
-            entity.HasKey(e => e.ElectionId).HasName("electionsecrets_pkey");
+            entity.HasKey(e => e.ElectionId).HasName("election_secrets_pkey");
 
-            entity.ToTable("electionsecrets");
+            entity.ToTable("election_secrets");
 
             entity.Property(e => e.ElectionId)
                 .ValueGeneratedNever()
-                .HasColumnName("electionid");
-            entity.Property(e => e.Secret).HasColumnName("secret");
+                .HasColumnName("election_id");
+            entity.Property(e => e.Secret)
+                .IsRequired()
+                .HasColumnName("secret");
 
             entity.HasOne(d => d.Election).WithOne(p => p.ElectionSecret)
                 .HasForeignKey<ElectionSecret>(d => d.ElectionId)
@@ -96,16 +101,20 @@ public partial class EVotingDbContext : DbContext
 
         modelBuilder.Entity<ElectionVote>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("electionvotes_pkey");
+            entity.HasKey(e => e.Id).HasName("election_votes_pkey");
 
-            entity.ToTable("electionvotes");
+            entity.ToTable("election_votes");
 
             entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.ElectionId).HasColumnName("electionid");
-            entity.Property(e => e.IsVerified).HasColumnName("isverified");
-            entity.Property(e => e.VotedCandidateEncrypted).HasColumnName("votedcandidateencrypted");
-            entity.Property(e => e.VotedCandidateId).HasColumnName("votedcandidateid");
-            entity.Property(e => e.VoteHash).HasColumnName("votehash");
+            entity.Property(e => e.ElectionId).HasColumnName("election_id");
+            entity.Property(e => e.IsVerified).HasColumnName("is_verified");
+            entity.Property(e => e.VoteHash)
+                .IsRequired()
+                .HasColumnName("vote_hash");
+            entity.Property(e => e.VotedCandidateEncrypted)
+                .IsRequired()
+                .HasColumnName("voted_candidate_encrypted");
+            entity.Property(e => e.VotedCandidateId).HasColumnName("voted_candidate_id");
 
             entity.HasOne(d => d.Election).WithMany(p => p.ElectionVotes)
                 .HasForeignKey(d => d.ElectionId)
@@ -119,16 +128,17 @@ public partial class EVotingDbContext : DbContext
 
         modelBuilder.Entity<PasswordResetCode>(entity =>
         {
-            entity.HasKey(e => e.UserId).HasName("passwordresetcodes_pkey");
+            entity.HasKey(e => e.UserId).HasName("password_reset_codes_pkey");
 
-            entity.ToTable("passwordresetcodes");
+            entity.ToTable("password_reset_codes");
 
             entity.Property(e => e.UserId)
                 .ValueGeneratedNever()
-                .HasColumnName("userid");
+                .HasColumnName("user_id");
             entity.Property(e => e.ResetCode)
+                .IsRequired()
                 .HasMaxLength(10)
-                .HasColumnName("resetcode");
+                .HasColumnName("reset_code");
 
             entity.HasOne(d => d.User).WithOne(p => p.PasswordResetCode)
                 .HasForeignKey<PasswordResetCode>(d => d.UserId)
@@ -144,85 +154,112 @@ public partial class EVotingDbContext : DbContext
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Email)
+                .IsRequired()
                 .HasMaxLength(320)
                 .HasColumnName("email");
-            entity.Property(e => e.PhoneNumber)
-                .HasMaxLength(15)
-                .HasColumnName("phonenumber");
-            entity.Property(e => e.IsAdmin).HasColumnName("isadmin");
+            entity.Property(e => e.IsAdmin).HasColumnName("is_admin");
             entity.Property(e => e.Name)
+                .IsRequired()
                 .HasMaxLength(100)
                 .HasColumnName("name");
+            entity.Property(e => e.PhoneNumber)
+                .IsRequired()
+                .HasMaxLength(15)
+                .HasColumnName("phone_number");
 
             entity.HasMany(d => d.Elections).WithMany(p => p.Users)
                 .UsingEntity<Dictionary<string, object>>(
-                    "Electioncandidate",
+                    "ElectionCandidate",
                     r => r.HasOne<Election>().WithMany()
-                        .HasForeignKey("Electionid")
+                        .HasForeignKey("ElectionId")
                         .OnDelete(DeleteBehavior.ClientSetNull)
                         .HasConstraintName("fk_candidate_election"),
                     l => l.HasOne<User>().WithMany()
-                        .HasForeignKey("Userid")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.ClientSetNull)
                         .HasConstraintName("fk_candidate_user"),
                     j =>
                     {
-                        j.HasKey("Userid", "Electionid").HasName("candidate_election");
-                        j.ToTable("electioncandidates");
-                        j.IndexerProperty<int>("Userid").HasColumnName("userid");
-                        j.IndexerProperty<int>("Electionid").HasColumnName("electionid");
+                        j.HasKey("UserId", "ElectionId").HasName("candidate_election");
+                        j.ToTable("election_candidates");
+                        j.IndexerProperty<int>("UserId").HasColumnName("user_id");
+                        j.IndexerProperty<int>("ElectionId").HasColumnName("election_id");
                     });
 
             entity.HasMany(d => d.ElectionsNavigation).WithMany(p => p.UsersNavigation)
                 .UsingEntity<Dictionary<string, object>>(
-                    "Eligiblevoter",
+                    "EligibleVoter",
                     r => r.HasOne<Election>().WithMany()
-                        .HasForeignKey("Electionid")
+                        .HasForeignKey("ElectionId")
                         .OnDelete(DeleteBehavior.ClientSetNull)
                         .HasConstraintName("fk_voter_election"),
                     l => l.HasOne<User>().WithMany()
-                        .HasForeignKey("Userid")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.ClientSetNull)
                         .HasConstraintName("fk_voter_user"),
                     j =>
                     {
-                        j.HasKey("Userid", "Electionid").HasName("voter_election");
-                        j.ToTable("eligiblevoters");
-                        j.IndexerProperty<int>("Userid").HasColumnName("userid");
-                        j.IndexerProperty<int>("Electionid").HasColumnName("electionid");
+                        j.HasKey("UserId", "ElectionId").HasName("voter_election");
+                        j.ToTable("eligible_voters");
+                        j.IndexerProperty<int>("UserId").HasColumnName("user_id");
+                        j.IndexerProperty<int>("ElectionId").HasColumnName("election_id");
                     });
         });
 
-        modelBuilder.Entity<UsersPassword>(entity =>
+        modelBuilder.Entity<UserPassword>(entity =>
         {
-            entity.HasKey(e => e.Userid).HasName("userspasswords_pkey");
+            entity.HasKey(e => e.UserId).HasName("user_passwords_pkey");
 
-            entity.ToTable("userspasswords");
+            entity.ToTable("user_passwords");
 
-            entity.Property(e => e.Userid)
+            entity.Property(e => e.UserId)
                 .ValueGeneratedNever()
-                .HasColumnName("userid");
-            entity.Property(e => e.PasswordHash).HasColumnName("passwordhash");
-            entity.Property(e => e.PasswordSalt).HasColumnName("passwordsalt");
+                .HasColumnName("user_id");
+            entity.Property(e => e.PasswordHash)
+                .IsRequired()
+                .HasColumnName("password_hash");
 
-            entity.HasOne(d => d.User).WithOne(p => p.UsersPassword)
-                .HasForeignKey<UsersPassword>(d => d.Userid)
+            entity.HasOne(d => d.User).WithOne(p => p.UserPassword)
+                .HasForeignKey<UserPassword>(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_password_user");
         });
 
+        modelBuilder.Entity<UserSecret>(entity =>
+        {
+            entity.HasKey(e => e.UserId).HasName("user_secrets_pkey");
+
+            entity.ToTable("user_secrets");
+
+            entity.Property(e => e.UserId)
+                .ValueGeneratedNever()
+                .HasColumnName("user_id");
+            entity.Property(e => e.PasswordSalt)
+                .IsRequired()
+                .HasColumnName("password_salt");
+            entity.Property(e => e.VotingSecret)
+                .IsRequired()
+                .HasColumnName("voting_secret");
+
+            entity.HasOne(d => d.User).WithOne(p => p.UserSecret)
+                .HasForeignKey<UserSecret>(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_secret_user");
+        });
+
         modelBuilder.Entity<VotesOtp>(entity =>
         {
-            entity.HasKey(e => e.VoteId).HasName("votesotp_pkey");
+            entity.HasKey(e => e.VoteId).HasName("votes_otp_pkey");
 
-            entity.ToTable("votesotp");
+            entity.ToTable("votes_otp");
 
             entity.Property(e => e.VoteId)
                 .ValueGeneratedOnAdd()
-                .HasColumnName("voteid");
+                .HasColumnName("vote_id");
             entity.Property(e => e.OtpCode)
+                .IsRequired()
                 .HasMaxLength(10)
-                .HasColumnName("otpcode");
+                .HasColumnName("otp_code");
 
             entity.HasOne(d => d.Vote).WithOne(p => p.VotesOtp)
                 .HasForeignKey<VotesOtp>(d => d.VoteId)

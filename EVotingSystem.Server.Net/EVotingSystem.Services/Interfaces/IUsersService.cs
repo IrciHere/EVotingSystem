@@ -4,5 +4,5 @@ namespace EVotingSystem.Services.Interfaces;
 
 public interface IUsersService
 {
-    Task<NewUserDto> CreateUserAsync(NewUserDto user);
+    Task<UserDto> CreateUserAsync(NewUserDto user);
 }
