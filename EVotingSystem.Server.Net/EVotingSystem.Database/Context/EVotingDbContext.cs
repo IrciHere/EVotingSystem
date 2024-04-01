@@ -22,6 +22,8 @@ public partial class EVotingDbContext : DbContext
 
     public virtual DbSet<ElectionVote> ElectionVotes { get; set; }
 
+    public virtual DbSet<EligibleVoter> EligibleVoters { get; set; }
+
     public virtual DbSet<PasswordResetCode> PasswordResetCodes { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
@@ -124,6 +126,27 @@ public partial class EVotingDbContext : DbContext
                 .HasConstraintName("fk_vote_candidate");
         });
 
+        modelBuilder.Entity<EligibleVoter>(entity =>
+        {
+            entity.HasKey(e => new { e.UserId, e.ElectionId }).HasName("voter_election");
+
+            entity.ToTable("eligible_voters");
+
+            entity.Property(e => e.UserId).HasColumnName("user_id");
+            entity.Property(e => e.ElectionId).HasColumnName("election_id");
+            entity.Property(e => e.HasVoted).HasColumnName("has_voted");
+
+            entity.HasOne(d => d.Election).WithMany(p => p.EligibleVoters)
+                .HasForeignKey(d => d.ElectionId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_voter_election");
+
+            entity.HasOne(d => d.User).WithMany(p => p.EligibleVoters)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_voter_user");
+        });
+
         modelBuilder.Entity<PasswordResetCode>(entity =>
         {
             entity.HasKey(e => e.UserId).HasName("password_reset_codes_pkey");
@@ -180,25 +203,6 @@ public partial class EVotingDbContext : DbContext
                     {
                         j.HasKey("UserId", "ElectionId").HasName("candidate_election");
                         j.ToTable("election_candidates");
-                        j.IndexerProperty<int>("UserId").HasColumnName("user_id");
-                        j.IndexerProperty<int>("ElectionId").HasColumnName("election_id");
-                    });
-
-            entity.HasMany(d => d.ElectionsNavigation).WithMany(p => p.UsersNavigation)
-                .UsingEntity<Dictionary<string, object>>(
-                    "EligibleVoter",
-                    r => r.HasOne<Election>().WithMany()
-                        .HasForeignKey("ElectionId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("fk_voter_election"),
-                    l => l.HasOne<User>().WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("fk_voter_user"),
-                    j =>
-                    {
-                        j.HasKey("UserId", "ElectionId").HasName("voter_election");
-                        j.ToTable("eligible_voters");
                         j.IndexerProperty<int>("UserId").HasColumnName("user_id");
                         j.IndexerProperty<int>("ElectionId").HasColumnName("election_id");
                     });

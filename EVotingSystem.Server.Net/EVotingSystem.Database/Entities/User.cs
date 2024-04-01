@@ -16,6 +16,8 @@ public class User
 
     public virtual ICollection<ElectionVote> ElectionVotes { get; set; } = new List<ElectionVote>();
 
+    public virtual ICollection<EligibleVoter> EligibleVoters { get; set; } = new List<EligibleVoter>();
+
     public virtual PasswordResetCode PasswordResetCode { get; set; }
 
     public virtual UserPassword UserPassword { get; set; }
@@ -23,6 +25,4 @@ public class User
     public virtual UserSecret UserSecret { get; set; }
 
     public virtual ICollection<Election> Elections { get; set; } = new List<Election>();
-
-    public virtual ICollection<Election> ElectionsNavigation { get; set; } = new List<Election>();
 }

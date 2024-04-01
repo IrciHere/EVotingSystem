@@ -16,7 +16,7 @@ public class Election
 
     public virtual ICollection<ElectionVote> ElectionVotes { get; set; } = new List<ElectionVote>();
 
-    public virtual ICollection<User> Users { get; set; } = new List<User>();
+    public virtual ICollection<EligibleVoter> EligibleVoters { get; set; } = new List<EligibleVoter>();
 
-    public virtual ICollection<User> UsersNavigation { get; set; } = new List<User>();
+    public virtual ICollection<User> Users { get; set; } = new List<User>();
 }

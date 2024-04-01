@@ -41,6 +41,7 @@ CREATE TABLE election_secrets (
 CREATE TABLE eligible_voters (
     user_id      integer NOT NULL,
     election_id  integer NOT NULL,
+    has_voted    boolean NOT NULL,
     CONSTRAINT voter_election PRIMARY KEY (user_id, election_id),
     CONSTRAINT fk_voter_user FOREIGN KEY(user_id) REFERENCES users(id),
     CONSTRAINT fk_voter_election FOREIGN KEY(election_id) REFERENCES elections(id)
