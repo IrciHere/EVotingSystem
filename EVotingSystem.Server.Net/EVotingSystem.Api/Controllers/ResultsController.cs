@@ -1,6 +1,14 @@
-﻿namespace EVotingSystem.Api.Controllers;
+﻿using Microsoft.AspNetCore.Mvc;
 
-public class ResultsController
+namespace EVotingSystem.Api.Controllers;
+
+[ApiController]
+[Route("[controller]")]
+public class ResultsController : ControllerBase
 {
-    
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetSummarizedResults([FromRoute] int id)
+    {
+        return Ok();
+    }
 }

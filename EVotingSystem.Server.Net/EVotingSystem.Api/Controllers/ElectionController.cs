@@ -1,6 +1,32 @@
-﻿namespace EVotingSystem.Api.Controllers;
+﻿using Microsoft.AspNetCore.Mvc;
 
-public class ElectionController
+namespace EVotingSystem.Api.Controllers;
+
+[ApiController]
+[Route("[controller]")]
+public class ElectionController : ControllerBase
 {
-    
+    [HttpGet]
+    public async Task<IActionResult> GetElections()
+    {
+        return Ok();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateElection()
+    {
+        return Ok();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> AssignEligibleVoters()
+    {
+        return Ok();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> AssignCandidates()
+    {
+        return Ok();
+    }
 }

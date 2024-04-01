@@ -1,6 +1,26 @@
-﻿namespace EVotingSystem.Api.Controllers;
+﻿using Microsoft.AspNetCore.Mvc;
 
-public class VotesController
+namespace EVotingSystem.Api.Controllers;
+
+[ApiController]
+[Route("[controller]")]
+public class VotesController : ControllerBase
 {
+    [HttpGet]
+    public async Task<IActionResult> GetAllElectionVotes()
+    {
+        return Ok();
+    }
     
+    [HttpPut]
+    public async Task<IActionResult> Vote()
+    {
+        return Ok();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> VerifyVote()
+    {
+        return Ok();
+    }
 }
