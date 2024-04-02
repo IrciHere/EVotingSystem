@@ -3,7 +3,9 @@ using EVotingSystem.Database.Context;
 using EVotingSystem.Repositories.Implementations;
 using EVotingSystem.Repositories.Interfaces;
 using EVotingSystem.Services.Implementations;
+using EVotingSystem.Services.Implementations.Helpers;
 using EVotingSystem.Services.Interfaces;
+using EVotingSystem.Services.Interfaces.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,8 +19,12 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(EVotingSystemProfile));
 
 builder.Services.AddTransient<IUsersService, UsersService>();
+builder.Services.AddTransient<IEmailsService, EmailsService>();
+builder.Services.AddTransient<ILoginService, LoginService>();
+builder.Services.AddTransient<IPasswordEncryptionService, PasswordEncryptionService>();
 
 builder.Services.AddTransient<IUsersRepository, UsersRepository>();
+builder.Services.AddTransient<IHelperRepository, HelperRepository>();
 
 builder.Services.AddDbContext<EVotingDbContext>();
 

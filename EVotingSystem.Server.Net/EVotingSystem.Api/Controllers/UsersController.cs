@@ -23,7 +23,7 @@ public class UsersController : ControllerBase
         return Ok(createdUser);
     }
 
-    [HttpPatch]
+    [HttpPatch("change-password")]
     public async Task<IActionResult> ChangePassword([FromBody] object passwordChange)
     {
         return Ok();

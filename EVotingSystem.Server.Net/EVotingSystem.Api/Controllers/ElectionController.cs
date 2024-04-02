@@ -18,13 +18,13 @@ public class ElectionController : ControllerBase
         return Ok();
     }
 
-    [HttpPost]
+    [HttpPost("assign-voters")]
     public async Task<IActionResult> AssignEligibleVoters()
     {
         return Ok();
     }
 
-    [HttpPost]
+    [HttpPost("assign-candidates")]
     public async Task<IActionResult> AssignCandidates()
     {
         return Ok();
