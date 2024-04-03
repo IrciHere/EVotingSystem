@@ -34,8 +34,10 @@ public class LoginController : ControllerBase
     }
 
     [HttpPatch("reset-password")]
-    public async Task<IActionResult> ResetPassword()
+    public async Task<IActionResult> ResetPassword(ResetPasswordDto resetPasswordDto)
     {
-        return Ok();
+        bool wasChanged = await _usersService.ResetPassword(resetPasswordDto);
+        
+        return wasChanged ? Ok() : Unauthorized();
     }
 }

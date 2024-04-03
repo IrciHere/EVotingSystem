@@ -43,4 +43,21 @@ public class UsersRepository : IUsersRepository
         
         return user;
     }
+
+    public async Task<User> GetUserByPasswordResetCode(string resetCode)
+    {
+        PasswordResetCode userPasswordResetCode = await _dbContext.PasswordResetCodes
+            .Include(prc => prc.User)
+            .ThenInclude(u => u.UserPassword)
+            .Include(prc => prc.User)
+            .ThenInclude(u => u.UserSecret)
+            .FirstOrDefaultAsync(prc => prc.ResetCode == resetCode);
+
+        return userPasswordResetCode?.User;
+    }
+
+    public void RemovePasswordResetCode(PasswordResetCode passwordResetCode)
+    {
+        _dbContext.PasswordResetCodes.Remove(passwordResetCode);
+    }
 }

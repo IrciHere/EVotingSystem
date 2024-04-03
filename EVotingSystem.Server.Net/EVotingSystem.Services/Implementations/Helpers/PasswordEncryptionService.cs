@@ -18,6 +18,17 @@ public class PasswordEncryptionService : IPasswordEncryptionService
         return hashedPassword;
     }
 
+    public byte[] HashSecret(string secret)
+    {
+        byte[] secretAsByteArray = Encoding.UTF8
+            .GetBytes(secret)
+            .ToArray();
+
+        byte[] hashedSecret = SHA256.HashData(secretAsByteArray);
+
+        return hashedSecret;
+    }
+
     public byte[] GeneratePasswordSalt()
     {
         var rng = RandomNumberGenerator.Create();

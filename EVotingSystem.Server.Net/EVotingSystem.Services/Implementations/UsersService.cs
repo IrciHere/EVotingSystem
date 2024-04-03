@@ -1,9 +1,11 @@
 ﻿using System.Security.Cryptography;
 using AutoMapper;
+using EVotingSystem.Contracts.Login;
 using EVotingSystem.Contracts.User;
 using EVotingSystem.Database.Entities;
 using EVotingSystem.Repositories.Interfaces;
 using EVotingSystem.Services.Interfaces;
+using EVotingSystem.Services.Interfaces.Helpers;
 
 namespace EVotingSystem.Services.Implementations;
 
@@ -12,13 +14,16 @@ public class UsersService : IUsersService
     private readonly IUsersRepository _usersRepository;
     private readonly IHelperRepository _helperRepository;
     private readonly IEmailsService _emailsService;
+    private readonly IPasswordEncryptionService _passwordEncryptionService;
     private readonly IMapper _mapper;
 
-    public UsersService(IUsersRepository usersRepository, IHelperRepository helperRepository, IEmailsService emailsService, IMapper mapper)
+    public UsersService(IUsersRepository usersRepository, IHelperRepository helperRepository, IEmailsService emailsService, 
+        IPasswordEncryptionService passwordEncryptionService, IMapper mapper)
     {
         _usersRepository = usersRepository;
         _helperRepository = helperRepository;
         _emailsService = emailsService;
+        _passwordEncryptionService = passwordEncryptionService;
         _mapper = mapper;
     }
 
@@ -53,9 +58,43 @@ public class UsersService : IUsersService
         await _emailsService.SendResetPasswordMail(user.Email, user.PasswordResetCode.ResetCode);
     }
 
-    private void AddPasswordResetCodeToUser(User user)
+    public async Task<bool> ResetPassword(ResetPasswordDto resetPasswordDto)
     {
-        string resetCode = GeneratePasswordResetCode();
+        User user = await _usersRepository.GetUserByPasswordResetCode(resetPasswordDto.ResetCode);
+
+        if (user is null)
+        {
+            return false;
+        }
+        
+        _usersRepository.RemovePasswordResetCode(user.PasswordResetCode);
+
+        user.UserSecret ??= new UserSecret();
+
+        user.UserSecret.PasswordSalt = _passwordEncryptionService.GeneratePasswordSalt();
+
+        const int votingSecretLength = 30;
+        string userVotingSecret = GenerateRandomText(votingSecretLength);
+        byte[] votingSecretHash = _passwordEncryptionService.HashSecret(userVotingSecret);
+
+        user.UserSecret.VotingSecret = votingSecretHash;
+
+        byte[] hashedPassword =
+            _passwordEncryptionService.HashPasswordWithSalt(resetPasswordDto.NewPassword, user.UserSecret.PasswordSalt);
+
+        user.UserPassword ??= new UserPassword();
+
+        user.UserPassword.PasswordHash = hashedPassword;
+
+        await _helperRepository.SaveChangesAsync();
+
+        return true;
+    }
+
+    private static void AddPasswordResetCodeToUser(User user)
+    {
+        const int codeLength = 10;
+        string resetCode = GenerateRandomText(codeLength);
 
         if (user.PasswordResetCode is null)
         {
@@ -70,12 +109,11 @@ public class UsersService : IUsersService
         }
     }
 
-    private static string GeneratePasswordResetCode()
+    private static string GenerateRandomText(int length)
     {
-        const int codeLength = 10;
         const string possibleChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         
-        string resetCode = RandomNumberGenerator.GetString(possibleChars, codeLength);
+        string resetCode = RandomNumberGenerator.GetString(possibleChars, length);
 
         return resetCode;
     }
