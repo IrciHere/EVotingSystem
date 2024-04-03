@@ -1,7 +1,6 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using EVotingSystem.Contracts;
 using EVotingSystem.Contracts.Login;
 using EVotingSystem.Database.Entities;
 using EVotingSystem.Repositories.Interfaces;

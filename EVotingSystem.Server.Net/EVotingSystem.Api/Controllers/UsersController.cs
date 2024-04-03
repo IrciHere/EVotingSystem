@@ -1,9 +1,11 @@
 ﻿using EVotingSystem.Contracts.User;
 using EVotingSystem.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EVotingSystem.Api.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("[controller]")]
 public class UsersController : ControllerBase
