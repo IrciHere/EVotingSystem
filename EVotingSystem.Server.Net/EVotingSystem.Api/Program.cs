@@ -64,7 +64,6 @@ builder.Services.AddSwaggerGen(c => {
             new string[]{}
         }
     });
-
 });
 
 builder.Services.AddAutoMapper(typeof(EVotingSystemProfile));
@@ -72,10 +71,12 @@ builder.Services.AddAutoMapper(typeof(EVotingSystemProfile));
 builder.Services.AddTransient<IUsersService, UsersService>();
 builder.Services.AddTransient<IEmailsService, EmailsService>();
 builder.Services.AddTransient<ILoginService, LoginService>();
+builder.Services.AddTransient<IElectionService, ElectionService>();
 builder.Services.AddTransient<IPasswordEncryptionService, PasswordEncryptionService>();
 
 builder.Services.AddTransient<IUsersRepository, UsersRepository>();
 builder.Services.AddTransient<IHelperRepository, HelperRepository>();
+builder.Services.AddTransient<IElectionRepository, ElectionRepository>();
 
 builder.Services.AddDbContext<EVotingDbContext>();
 

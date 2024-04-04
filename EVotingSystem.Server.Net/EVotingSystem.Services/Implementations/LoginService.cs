@@ -68,7 +68,7 @@ public class LoginService : ILoginService
     private bool IsPasswordCorrectForUser(string passwordProvided, User user)
     {
         byte[] hashedProvidedPassword =
-            _passwordEncryptionService.HashPasswordWithSalt(passwordProvided, user.UserSecret.PasswordSalt);
+            _passwordEncryptionService.HashSHA256WithSalt(passwordProvided, user.UserSecret.PasswordSalt);
 
         return hashedProvidedPassword.SequenceEqual(user.UserPassword.PasswordHash);
     }

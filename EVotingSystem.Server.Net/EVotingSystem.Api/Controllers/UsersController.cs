@@ -26,8 +26,12 @@ public class UsersController : ControllerBase
     }
 
     [HttpPatch("change-password")]
-    public async Task<IActionResult> ChangePassword([FromBody] object passwordChange)
+    public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto changePasswordDto)
     {
-        return Ok();
+        string userId = User.FindFirst("UserId")?.Value;
+
+        bool wasChanged = await _usersService.ChangePassword(changePasswordDto, userId);
+        
+        return wasChanged ? Ok() : BadRequest();
     }
 }

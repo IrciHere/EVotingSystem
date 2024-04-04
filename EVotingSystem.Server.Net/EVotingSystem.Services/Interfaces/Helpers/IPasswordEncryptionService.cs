@@ -2,7 +2,10 @@
 
 public interface IPasswordEncryptionService
 {
-    byte[] HashPasswordWithSalt(string password, byte[] salt);
-    byte[] HashSecret(string secret);
-    byte[] GeneratePasswordSalt();
+    byte[] HashSHA256(string password);
+    byte[] HashSHA256WithSalt(string password, byte[] salt);
+    byte[] EncryptSecret(string secret, byte[] key, byte[] iv);
+    string DecryptSecret(byte[] encryptedSecret, byte[] key, byte[] iv);
+    byte[] GenerateRandomByteArray();
+    byte[] GenerateIVArrayFromUserId(int userId);
 }

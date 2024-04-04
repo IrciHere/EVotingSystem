@@ -71,20 +71,64 @@ public class UsersService : IUsersService
 
         user.UserSecret ??= new UserSecret();
 
-        user.UserSecret.PasswordSalt = _passwordEncryptionService.GeneratePasswordSalt();
+        user.UserSecret.PasswordSalt = _passwordEncryptionService.GenerateRandomByteArray();
 
-        const int votingSecretLength = 30;
+        const int votingSecretLength = 100;
         string userVotingSecret = GenerateRandomText(votingSecretLength);
-        byte[] votingSecretHash = _passwordEncryptionService.HashSecret(userVotingSecret);
+        
+        // SHA256 hash of password without salt is used as AES encryption key
+        byte[] votingSecretEncryptionKey = _passwordEncryptionService.HashSHA256(resetPasswordDto.NewPassword);
+        byte[] votingSecretEncryptionIV = _passwordEncryptionService.GenerateIVArrayFromUserId(user.Id);
+        byte[] votingSecretEncrypted = _passwordEncryptionService.EncryptSecret(userVotingSecret, votingSecretEncryptionKey, votingSecretEncryptionIV);
 
-        user.UserSecret.VotingSecret = votingSecretHash;
+        user.UserSecret.VotingSecret = votingSecretEncrypted;
 
         byte[] hashedPassword =
-            _passwordEncryptionService.HashPasswordWithSalt(resetPasswordDto.NewPassword, user.UserSecret.PasswordSalt);
+            _passwordEncryptionService.HashSHA256WithSalt(resetPasswordDto.NewPassword, user.UserSecret.PasswordSalt);
 
         user.UserPassword ??= new UserPassword();
 
         user.UserPassword.PasswordHash = hashedPassword;
+
+        await _helperRepository.SaveChangesAsync();
+
+        return true;
+    }
+
+    public async Task<bool> ChangePassword(ChangePasswordDto changePasswordDto, string userId)
+    {
+        User user = await _usersRepository.GetUserById(int.Parse(userId), withPassword: true);
+        
+        if (user is null)
+        {
+            return false; 
+        }
+
+        byte[] hashedOldPassword =
+            _passwordEncryptionService.HashSHA256WithSalt(changePasswordDto.OldPassword, user.UserSecret.PasswordSalt);
+        
+        if (!hashedOldPassword.SequenceEqual(user.UserPassword.PasswordHash))
+        {
+            return false;
+        }
+        
+        // re-encrypt secret
+        byte[] votingSecretEncryptionIV = _passwordEncryptionService.GenerateIVArrayFromUserId(user.Id);
+        // SHA256 hash of password without salt is used as AES encryption key
+        byte[] oldVotingSecretEncryptionKey = _passwordEncryptionService.HashSHA256(changePasswordDto.OldPassword);
+        string votingSecretDecrypted = _passwordEncryptionService.DecryptSecret(user.UserSecret.VotingSecret, oldVotingSecretEncryptionKey, votingSecretEncryptionIV);
+        
+        byte[] newVotingSecretEncryptionKey = _passwordEncryptionService.HashSHA256(changePasswordDto.NewPassword);
+        byte[] newVotingSecretEncrypted = _passwordEncryptionService.EncryptSecret(votingSecretDecrypted, newVotingSecretEncryptionKey, votingSecretEncryptionIV);
+
+        user.UserSecret.VotingSecret = newVotingSecretEncrypted;
+
+        byte[] newHashedPassword =
+            _passwordEncryptionService.HashSHA256WithSalt(changePasswordDto.NewPassword, user.UserSecret.PasswordSalt);
+
+        user.UserPassword ??= new UserPassword();
+
+        user.UserPassword.PasswordHash = newHashedPassword;
 
         await _helperRepository.SaveChangesAsync();
 

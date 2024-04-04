@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using EVotingSystem.Contracts.Election;
 using EVotingSystem.Contracts.User;
 using EVotingSystem.Database.Entities;
 
@@ -10,5 +11,9 @@ public class EVotingSystemProfile : Profile
     {
         CreateMap<NewUserDto, User>();
         CreateMap<User, UserDto>();
+
+        CreateMap<NewElectionDto, Election>();
+        CreateMap<Election, ElectionDto>()
+            .ForMember(dest => dest.HasFinished, opt => opt.MapFrom(src => src.EndTime < DateTime.Now));
     }
 }

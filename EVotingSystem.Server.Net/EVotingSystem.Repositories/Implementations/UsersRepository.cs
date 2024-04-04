@@ -36,6 +36,22 @@ public class UsersRepository : IUsersRepository
         return user;
     }
 
+    public async Task<User> GetUserById(int userId, bool withPassword = false)
+    {
+        IQueryable<User> users = _dbContext.Users;
+
+        if (withPassword)
+        {
+            users = users
+                .Include(u => u.UserPassword)
+                .Include(u => u.UserSecret);
+        }
+
+        User user = await users.FirstOrDefaultAsync(u => u.Id == userId);
+
+        return user;
+    }
+
     public async Task<User> CreateUser(User user)
     {
         _dbContext.Users.Add(user);
