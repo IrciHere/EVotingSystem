@@ -20,7 +20,7 @@ public class UsersController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateUser([FromBody] NewUserDto user)
     {
-        UserDto createdUser = await _usersService.CreateUserAsync(user);
+        UserDto createdUser = await _usersService.CreateUser(user);
         
         return Ok(createdUser);
     }

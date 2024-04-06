@@ -27,7 +27,7 @@ public class UsersService : IUsersService
         _mapper = mapper;
     }
 
-    public async Task<UserDto> CreateUserAsync(NewUserDto user)
+    public async Task<UserDto> CreateUser(NewUserDto user)
     {
         var newUserEntity = _mapper.Map<User>(user);
         
@@ -40,6 +40,31 @@ public class UsersService : IUsersService
         var newUser = _mapper.Map<UserDto>(newUserEntity);
 
         return newUser;
+    }
+
+    public async Task CreateUsersOrAssignExistingEntities(List<User> users)
+    {
+        List<User> existingUsers = await _usersRepository.GetAllUsers();
+
+        List<User> newUsers = [];
+
+        for (var i = 0; i < users.Count; i++)
+        {
+            User user = users[i];
+            User existingUser = existingUsers.FirstOrDefault(u => u.Email == user.Email);
+            if (existingUser is not null)
+            {
+                users[i] = existingUser;
+            }
+            else
+            {
+                AddPasswordResetCodeToUser(user);
+                newUsers.Add(user);
+            }
+        }
+
+        await _usersRepository.CreateManyUsers(newUsers);
+        await _emailsService.SendManyPasswordResetMails(newUsers);
     }
 
     public async Task RequestForgotPassword(string email)

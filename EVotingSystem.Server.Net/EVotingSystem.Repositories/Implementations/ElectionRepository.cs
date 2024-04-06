@@ -13,7 +13,14 @@ public class ElectionRepository : IElectionRepository
     {
         _dbContext = dbContext;
     }
-    
+
+    public async Task<Election> GetElectionById(int electionId)
+    {
+        Election election = await  _dbContext.Elections.FirstOrDefaultAsync(e => e.Id == electionId);
+
+        return election;
+    }
+
     public async Task<List<Election>> GetAllElections()
     {
         List<Election> elections = await _dbContext.Elections.ToListAsync();

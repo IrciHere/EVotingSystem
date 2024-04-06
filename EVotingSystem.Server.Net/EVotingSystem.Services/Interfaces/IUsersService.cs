@@ -1,11 +1,13 @@
 ﻿using EVotingSystem.Contracts.Login;
 using EVotingSystem.Contracts.User;
+using EVotingSystem.Database.Entities;
 
 namespace EVotingSystem.Services.Interfaces;
 
 public interface IUsersService
 {
-    Task<UserDto> CreateUserAsync(NewUserDto user);
+    Task<UserDto> CreateUser(NewUserDto user);
+    Task CreateUsersOrAssignExistingEntities(List<User> users);
     Task RequestForgotPassword(string email);
     
     /// <summary>

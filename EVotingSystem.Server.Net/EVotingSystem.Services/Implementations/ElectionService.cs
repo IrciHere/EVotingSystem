@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using EVotingSystem.Contracts.Election;
+using EVotingSystem.Contracts.User;
 using EVotingSystem.Database.Entities;
 using EVotingSystem.Repositories.Interfaces;
 using EVotingSystem.Services.Interfaces;
@@ -10,12 +11,20 @@ namespace EVotingSystem.Services.Implementations;
 public class ElectionService : IElectionService
 {
     private readonly IElectionRepository _electionRepository;
+    private readonly IHelperRepository _helperRepository;
+    private readonly IUsersService _usersService;
     private readonly IPasswordEncryptionService _passwordEncryptionService;
     private readonly IMapper _mapper;
 
-    public ElectionService(IElectionRepository electionRepository, IPasswordEncryptionService passwordEncryptionService, IMapper mapper)
+    public ElectionService(IElectionRepository electionRepository, 
+        IHelperRepository helperRepository,
+        IUsersService usersService,
+        IPasswordEncryptionService passwordEncryptionService, 
+        IMapper mapper)
     {
         _electionRepository = electionRepository;
+        _helperRepository = helperRepository;
+        _usersService = usersService;
         _passwordEncryptionService = passwordEncryptionService;
         _mapper = mapper;
     }
@@ -37,6 +46,28 @@ public class ElectionService : IElectionService
         election.ElectionSecret = new ElectionSecret { Secret = electionSecret };
 
         await _electionRepository.CreateElection(election);
+
+        var mappedElection = _mapper.Map<ElectionDto>(election);
+
+        return mappedElection;
+    }
+
+    public async Task<ElectionDto> AssignCandidates(int electionId, List<NewUserDto> users)
+    {
+        Election election = await _electionRepository.GetElectionById(electionId);
+
+        if (election is null)
+        {
+            return null;
+        }
+
+        var candidatesToAdd = _mapper.Map<List<User>>(users);
+
+        await _usersService.CreateUsersOrAssignExistingEntities(candidatesToAdd);
+
+        election.Users = candidatesToAdd;
+
+        await _helperRepository.SaveChangesAsync();
 
         var mappedElection = _mapper.Map<ElectionDto>(election);
 

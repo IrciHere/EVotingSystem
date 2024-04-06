@@ -1,4 +1,5 @@
 ﻿using EVotingSystem.Contracts.Election;
+using EVotingSystem.Contracts.User;
 using EVotingSystem.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -39,13 +40,15 @@ public class ElectionController : ControllerBase
         return Ok();
     }
 
-    [HttpPost("assign-candidates")]
-    public async Task<IActionResult> AssignCandidates()
+    [HttpPost("{electionId}/assign-candidates")]
+    public async Task<IActionResult> AssignCandidates(int electionId, [FromBody] List<NewUserDto> users)
     {
-        return Ok();
+        ElectionDto election = await _electionService.AssignCandidates(electionId, users);
+        
+        return Ok(election);
     }
 
-    [HttpPatch("finalize-election/{electionId}")]
+    [HttpPatch("{electionId}/finalize-election")]
     public async Task<IActionResult> FinalizeElection(int electionId)
     {
         return Ok();

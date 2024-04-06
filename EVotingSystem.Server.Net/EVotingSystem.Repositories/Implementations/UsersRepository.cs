@@ -14,6 +14,13 @@ public class UsersRepository : IUsersRepository
         _dbContext = dbContext;
     }
 
+    public async Task<List<User>> GetAllUsers()
+    {
+        List<User> users = await _dbContext.Users.ToListAsync();
+
+        return users;
+    }
+
     public async Task<User> GetUserByEmail(string email, bool withPassword = false, bool withPasswordResetCode = false)
     {
         IQueryable<User> users = _dbContext.Users;
@@ -58,6 +65,12 @@ public class UsersRepository : IUsersRepository
         await _dbContext.SaveChangesAsync();
         
         return user;
+    }
+
+    public async Task CreateManyUsers(List<User> users)
+    {
+        _dbContext.Users.AddRange(users);
+        await _dbContext.SaveChangesAsync();
     }
 
     public async Task<User> GetUserByPasswordResetCode(string resetCode)
