@@ -73,4 +73,33 @@ public class ElectionService : IElectionService
 
         return mappedElection;
     }
+
+    public async Task<ElectionDto> AssignEligibleVoters(int electionId, List<NewUserDto> users)
+    {
+        Election election = await _electionRepository.GetElectionById(electionId);
+
+        if (election is null)
+        {
+            return null;
+        }
+
+        var votersToAdd = _mapper.Map<List<User>>(users);
+
+        await _usersService.CreateUsersOrAssignExistingEntities(votersToAdd);
+
+        List<EligibleVoter> eligibleVoters = votersToAdd.Select(v => new EligibleVoter
+        {
+            ElectionId = electionId,
+            UserId = v.Id,
+            HasVoted = false
+        }).ToList();
+
+        election.EligibleVoters = eligibleVoters;
+
+        await _helperRepository.SaveChangesAsync();
+
+        var mappedElection = _mapper.Map<ElectionDto>(election);
+
+        return mappedElection;
+    }
 }

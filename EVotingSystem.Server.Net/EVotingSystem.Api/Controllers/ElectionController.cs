@@ -34,10 +34,12 @@ public class ElectionController : ControllerBase
         return Ok(newElection);
     }
 
-    [HttpPost("assign-voters")]
-    public async Task<IActionResult> AssignEligibleVoters()
+    [HttpPost("{electionId}/assign-voters")]
+    public async Task<IActionResult> AssignEligibleVoters(int electionId, [FromBody] List<NewUserDto> users)
     {
-        return Ok();
+        ElectionDto election = await _electionService.AssignEligibleVoters(electionId, users);
+        
+        return Ok(election);
     }
 
     [HttpPost("{electionId}/assign-candidates")]
