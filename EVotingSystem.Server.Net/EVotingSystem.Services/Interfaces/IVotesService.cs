@@ -4,5 +4,5 @@ namespace EVotingSystem.Services.Interfaces;
 
 public interface IVotesService
 {
-    Task Vote(string voterId, InputVoteDto vote);
+    Task<byte[]> Vote(string voterId, InputVoteDto vote);
 }

@@ -14,9 +14,17 @@ public class ElectionRepository : IElectionRepository
         _dbContext = dbContext;
     }
 
-    public async Task<Election> GetElectionById(int electionId)
+    public async Task<Election> GetElectionById(int electionId, bool withSecret = false)
     {
-        Election election = await  _dbContext.Elections.FirstOrDefaultAsync(e => e.Id == electionId);
+        IQueryable<Election> elections = _dbContext.Elections;
+
+        if (withSecret)
+        {
+            elections = elections.Include(e => e.ElectionSecret);
+        }
+        
+        Election election = await  elections
+            .FirstOrDefaultAsync(e => e.Id == electionId);
 
         return election;
     }

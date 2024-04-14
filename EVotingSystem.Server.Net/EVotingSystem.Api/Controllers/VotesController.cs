@@ -28,9 +28,9 @@ public class VotesController : ControllerBase
     {
         string userId = User.FindFirst("UserId")?.Value;
 
-        await _votesService.Vote(userId, vote);
+        var voteHash = await _votesService.Vote(userId, vote);
         
-        return Ok();
+        return voteHash.Length == 0 ? BadRequest() : Ok(voteHash);
     }
 
     [HttpPost]
