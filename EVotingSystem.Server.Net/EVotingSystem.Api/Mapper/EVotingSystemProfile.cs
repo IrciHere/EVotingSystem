@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using EVotingSystem.Contracts.Election;
 using EVotingSystem.Contracts.User;
+using EVotingSystem.Contracts.Vote;
 using EVotingSystem.Database.Entities;
 
 namespace EVotingSystem.Api.Mapper;
@@ -15,5 +16,8 @@ public class EVotingSystemProfile : Profile
         CreateMap<NewElectionDto, Election>();
         CreateMap<Election, ElectionDto>()
             .ForMember(dest => dest.HasFinished, opt => opt.MapFrom(src => src.EndTime < DateTime.Now));
+
+        CreateMap<ElectionVote, VoteDto>()
+            .ForMember(dest => dest.VotedCandidateId, opt => opt.MapFrom(src => src.VotedCandidateId ?? 0));
     }
 }

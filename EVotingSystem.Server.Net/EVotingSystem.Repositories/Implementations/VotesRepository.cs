@@ -14,6 +14,16 @@ public class VotesRepository : IVotesRepository
         _dbContext = dbContext;
     }
 
+    public async Task<List<ElectionVote>> GetAllVotesForElection(int electionId)
+    {
+        List<ElectionVote> votes = await _dbContext.ElectionVotes
+            .Where(e => e.ElectionId == electionId)
+            .Where(e => e.IsVerified)
+            .ToListAsync();
+
+        return votes;
+    }
+
     public async Task<ElectionVote> GetVoteByHash(int electionId, byte[] voteHash, bool withOtp = false)
     {
         IQueryable<ElectionVote> votes = _dbContext.ElectionVotes

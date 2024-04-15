@@ -1,5 +1,6 @@
 ﻿using System.Security.Cryptography;
 using System.Text.Json;
+using AutoMapper;
 using EVotingSystem.Contracts.Vote;
 using EVotingSystem.Database.Entities;
 using EVotingSystem.Models;
@@ -16,14 +17,37 @@ public class VotesService : IVotesService
     private readonly IVotesRepository _votesRepository;
     private readonly IPasswordEncryptionService _passwordEncryptionService;
     private readonly ISmsService _smsService;
+    private readonly IMapper _mapper;
 
-    public VotesService(IElectionRepository electionRepository, IUsersRepository usersRepository, IVotesRepository votesRepository, IPasswordEncryptionService passwordEncryptionService, ISmsService smsService)
+    public VotesService(IElectionRepository electionRepository, IUsersRepository usersRepository, IVotesRepository votesRepository, IPasswordEncryptionService passwordEncryptionService, ISmsService smsService, IMapper mapper)
     {
         _electionRepository = electionRepository;
         _usersRepository = usersRepository;
         _votesRepository = votesRepository;
         _passwordEncryptionService = passwordEncryptionService;
         _smsService = smsService;
+        _mapper = mapper;
+    }
+
+    public async Task<List<VoteDto>> GetAllVotesForElection(int electionId)
+    {
+        Election election = await _electionRepository.GetElectionById(electionId);
+
+        if (election is null)
+        {
+            return [];
+        }
+
+        if (election.EndTime.AddMinutes(15) > DateTime.Now)
+        {
+            return [];
+        }
+
+        List<ElectionVote> votes = await _votesRepository.GetAllVotesForElection(electionId);
+
+        var mappedVotes = _mapper.Map<List<VoteDto>>(votes);
+
+        return mappedVotes;
     }
 
     public async Task<byte[]> Vote(string voterId, InputVoteDto vote)

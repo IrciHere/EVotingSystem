@@ -17,10 +17,12 @@ public class VotesController : ControllerBase
         _votesService = votesService;
     }
 
-    [HttpGet]
-    public async Task<IActionResult> GetAllElectionVotes()
+    [HttpGet("election/{electionId}")]
+    public async Task<IActionResult> GetAllElectionVotes(int electionId)
     {
-        return Ok();
+        List<VoteDto> votes = await _votesService.GetAllVotesForElection(electionId);
+        
+        return votes.Count > 0 ? Ok(votes) : BadRequest();
     }
     
     [HttpPut]
