@@ -69,14 +69,17 @@ builder.Services.AddSwaggerGen(c => {
 builder.Services.AddAutoMapper(typeof(EVotingSystemProfile));
 
 builder.Services.AddTransient<IUsersService, UsersService>();
-builder.Services.AddTransient<IEmailsService, EmailsService>();
 builder.Services.AddTransient<ILoginService, LoginService>();
 builder.Services.AddTransient<IElectionService, ElectionService>();
+builder.Services.AddTransient<IVotesService, VotesService>();
+builder.Services.AddTransient<IEmailsService, EmailsService>();
+builder.Services.AddTransient<ISmsService, SmsService>();
 builder.Services.AddTransient<IPasswordEncryptionService, PasswordEncryptionService>();
 
 builder.Services.AddTransient<IUsersRepository, UsersRepository>();
 builder.Services.AddTransient<IHelperRepository, HelperRepository>();
 builder.Services.AddTransient<IElectionRepository, ElectionRepository>();
+builder.Services.AddTransient<IVotesRepository, VotesRepository>();
 
 builder.Services.AddDbContext<EVotingDbContext>();
 

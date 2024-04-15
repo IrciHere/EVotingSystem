@@ -188,7 +188,7 @@ public partial class EVotingDbContext : DbContext
                 .HasMaxLength(15)
                 .HasColumnName("phone_number");
 
-            entity.HasMany(d => d.Elections).WithMany(p => p.Users)
+            entity.HasMany(d => d.Elections).WithMany(p => p.Candidates)
                 .UsingEntity<Dictionary<string, object>>(
                     "ElectionCandidate",
                     r => r.HasOne<Election>().WithMany()

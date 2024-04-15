@@ -65,7 +65,7 @@ public class ElectionService : IElectionService
 
         await _usersService.CreateUsersOrAssignExistingEntities(candidatesToAdd);
 
-        election.Users = candidatesToAdd;
+        election.Candidates = candidatesToAdd;
 
         await _helperRepository.SaveChangesAsync();
 

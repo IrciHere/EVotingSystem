@@ -18,5 +18,5 @@ public class Election
 
     public virtual ICollection<EligibleVoter> EligibleVoters { get; set; } = new List<EligibleVoter>();
 
-    public virtual ICollection<User> Users { get; set; } = new List<User>();
+    public virtual ICollection<User> Candidates { get; set; } = new List<User>();
 }

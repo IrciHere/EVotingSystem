@@ -28,14 +28,16 @@ public class VotesController : ControllerBase
     {
         string userId = User.FindFirst("UserId")?.Value;
 
-        var voteHash = await _votesService.Vote(userId, vote);
+        byte[] voteHash = await _votesService.Vote(userId, vote);
         
         return voteHash.Length == 0 ? BadRequest() : Ok(voteHash);
     }
 
-    [HttpPost]
-    public async Task<IActionResult> VerifyVote()
+    [HttpPost("validate-vote")]
+    public async Task<IActionResult> ValidateVote([FromBody] ValidateVoteDto validateVote)
     {
-        return Ok();
+        byte[] voteHash = await _votesService.ValidateVote(validateVote);
+        
+        return voteHash.Length == 0 ? BadRequest() : Ok();
     }
 }
