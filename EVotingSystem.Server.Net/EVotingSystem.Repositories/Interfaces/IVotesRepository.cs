@@ -9,4 +9,5 @@ public interface IVotesRepository
     Task<ElectionVote> AddVote(ElectionVote vote);
     Task<ElectionVote> ReplaceVote(ElectionVote voteToBeReplaced, ElectionVote newVote);
     Task<ElectionVote> ValidateVote(ElectionVote vote);
+    Task RemoveUnvalidatedVotesForElection(int electionId);
 }

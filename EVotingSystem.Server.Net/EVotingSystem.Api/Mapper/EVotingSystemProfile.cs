@@ -14,8 +14,7 @@ public class EVotingSystemProfile : Profile
         CreateMap<User, UserDto>();
 
         CreateMap<NewElectionDto, Election>();
-        CreateMap<Election, ElectionDto>()
-            .ForMember(dest => dest.HasFinished, opt => opt.MapFrom(src => src.EndTime < DateTime.Now));
+        CreateMap<Election, ElectionDto>();
 
         CreateMap<ElectionVote, VoteDto>()
             .ForMember(dest => dest.VotedCandidateId, opt => opt.MapFrom(src => src.VotedCandidateId ?? 0));

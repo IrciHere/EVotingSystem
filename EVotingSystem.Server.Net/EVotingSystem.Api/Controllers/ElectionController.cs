@@ -53,6 +53,8 @@ public class ElectionController : ControllerBase
     [HttpPatch("{electionId}/finalize-election")]
     public async Task<IActionResult> FinalizeElection(int electionId)
     {
-        return Ok();
+        ElectionDto election = await _electionService.FinalizeElection(electionId);
+        
+        return election is not null ? Ok(election) : BadRequest();
     }
 }

@@ -75,4 +75,20 @@ public class VotesRepository : IVotesRepository
 
         return vote;
     }
+
+    public async Task RemoveUnvalidatedVotesForElection(int electionId)
+    {
+        IQueryable<ElectionVote> votesToRemove = _dbContext.ElectionVotes
+            .Where(ev => ev.ElectionId == electionId)
+            .Include(ev => ev.VotesOtp);
+
+        IQueryable<VotesOtp> otpCodesToRemove = votesToRemove
+            .Where(v => v.VotesOtp != null)
+            .Select(v => v.VotesOtp);
+
+        _dbContext.VotesOtps.RemoveRange(otpCodesToRemove);
+        _dbContext.ElectionVotes.RemoveRange(votesToRemove);
+
+        await _dbContext.SaveChangesAsync();
+    }
 }

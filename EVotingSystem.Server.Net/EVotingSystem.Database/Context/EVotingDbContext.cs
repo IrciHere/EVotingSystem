@@ -45,6 +45,8 @@ public partial class EVotingDbContext : DbContext
             entity.HasKey(e => e.Id).HasName("elections_pkey");
 
             entity.ToTable("elections");
+            
+            entity.Property(e => e.HasEnded).HasColumnName("has_ended");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.EndTime)

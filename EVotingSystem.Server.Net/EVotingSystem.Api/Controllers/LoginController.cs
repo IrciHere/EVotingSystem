@@ -26,7 +26,7 @@ public class LoginController : ControllerBase
     }
 
     [HttpPost("forgot-password")]
-    public async Task<IActionResult> RequestResetPassword(ForgotPasswordDto forgotPasswordDto)
+    public async Task<IActionResult> RequestResetPassword([FromBody] ForgotPasswordDto forgotPasswordDto)
     {
         await _usersService.RequestForgotPassword(forgotPasswordDto.Email);
         
@@ -34,7 +34,7 @@ public class LoginController : ControllerBase
     }
 
     [HttpPatch("reset-password")]
-    public async Task<IActionResult> ResetPassword(ResetPasswordDto resetPasswordDto)
+    public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto resetPasswordDto)
     {
         bool wasChanged = await _usersService.ResetPassword(resetPasswordDto);
         

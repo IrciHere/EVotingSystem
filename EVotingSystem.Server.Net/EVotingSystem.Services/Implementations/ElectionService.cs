@@ -1,7 +1,9 @@
-﻿using AutoMapper;
+﻿using System.Text.Json;
+using AutoMapper;
 using EVotingSystem.Contracts.Election;
 using EVotingSystem.Contracts.User;
 using EVotingSystem.Database.Entities;
+using EVotingSystem.Models;
 using EVotingSystem.Repositories.Interfaces;
 using EVotingSystem.Services.Interfaces;
 using EVotingSystem.Services.Interfaces.Helpers;
@@ -14,19 +16,21 @@ public class ElectionService : IElectionService
     private readonly IHelperRepository _helperRepository;
     private readonly IUsersService _usersService;
     private readonly IPasswordEncryptionService _passwordEncryptionService;
+    private readonly IVotesRepository _votesRepository;
     private readonly IMapper _mapper;
 
     public ElectionService(IElectionRepository electionRepository, 
         IHelperRepository helperRepository,
         IUsersService usersService,
         IPasswordEncryptionService passwordEncryptionService, 
-        IMapper mapper)
+        IMapper mapper, IVotesRepository votesRepository)
     {
         _electionRepository = electionRepository;
         _helperRepository = helperRepository;
         _usersService = usersService;
         _passwordEncryptionService = passwordEncryptionService;
         _mapper = mapper;
+        _votesRepository = votesRepository;
     }
 
     public async Task<List<ElectionDto>> GetAllElections()
@@ -100,6 +104,59 @@ public class ElectionService : IElectionService
 
         var mappedElection = _mapper.Map<ElectionDto>(election);
 
+        return mappedElection;
+    }
+
+    public async Task<ElectionDto> FinalizeElection(int electionId)
+    {
+        Election election = await _electionRepository.GetElectionById(electionId, withSecret: true, withCandidates: true);
+
+        if (election is null)
+        {
+            return null;
+        }
+
+        if (election.EndTime.AddMinutes(10) > DateTime.Now || election.HasEnded)
+        {
+            return null;
+        }
+        
+        // get votes
+        List<ElectionVote> votes = await _votesRepository.GetAllVotesForElection(electionId);
+        
+        // decrypt votes
+        byte[] ivArray = _passwordEncryptionService.GenerateIVArrayFromUserId(electionId);
+        
+        foreach (ElectionVote vote in votes)
+        {
+            string decryptedVoteStr = _passwordEncryptionService
+                .DecryptSecret(vote.VotedCandidateEncrypted, election.ElectionSecret.Secret, ivArray);
+            var decryptedVote = JsonSerializer.Deserialize<VoteEncryptModel>(decryptedVoteStr);
+            vote.VotedCandidateId = decryptedVote.CandidateId;
+        }
+        
+        // create summarised results
+        Dictionary<int?, List<ElectionVote>> resultsGrouped = votes
+            .GroupBy(v => v.VotedCandidateId)
+            .ToDictionary(g => g.Key, g => g.ToList());
+        
+        List<ElectionResult> results = election.Candidates.Select(c => new ElectionResult
+            {
+                ElectionId = electionId,
+                UserId = c.Id,
+                Votes = resultsGrouped.TryGetValue(c.Id, out List<ElectionVote> value) ? value.Count : 0
+            })
+            .ToList();
+        
+        election.ElectionResults = results;
+        
+        election.HasEnded = true;
+        
+        await _helperRepository.SaveChangesAsync();
+
+        await _votesRepository.RemoveUnvalidatedVotesForElection(electionId);
+
+        var mappedElection = _mapper.Map<ElectionDto>(election);
         return mappedElection;
     }
 }

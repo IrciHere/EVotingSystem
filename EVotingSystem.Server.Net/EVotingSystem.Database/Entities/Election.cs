@@ -9,6 +9,8 @@ public class Election
     public DateTime StartTime { get; set; }
 
     public DateTime EndTime { get; set; }
+    
+    public bool HasEnded { get; set; }
 
     public virtual ICollection<ElectionResult> ElectionResults { get; set; } = new List<ElectionResult>();
 
