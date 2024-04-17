@@ -80,6 +80,7 @@ public class VotesRepository : IVotesRepository
     {
         IQueryable<ElectionVote> votesToRemove = _dbContext.ElectionVotes
             .Where(ev => ev.ElectionId == electionId)
+            .Where(ev => !ev.IsVerified)
             .Include(ev => ev.VotesOtp);
 
         IQueryable<VotesOtp> otpCodesToRemove = votesToRemove

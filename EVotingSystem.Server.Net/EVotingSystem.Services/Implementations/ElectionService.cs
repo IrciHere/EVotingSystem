@@ -42,6 +42,33 @@ public class ElectionService : IElectionService
         return mappedElections;
     }
 
+    public async Task<List<ElectionDto>> GetElectionsForUser(string userId)
+    {
+        int userIdNumeric = int.Parse(userId);
+        
+        List<Election> elections = await _electionRepository.GetElectionsForUser(userIdNumeric);
+        
+        var mappedElections = _mapper.Map<List<ElectionDto>>(elections);
+
+        return mappedElections;
+    }
+
+    public async Task<List<CandidateDto>> GetElectionCandidates(int electionId)
+    {
+        Election election = await _electionRepository.GetElectionById(electionId, withCandidates: true);
+
+        if (election is null)
+        {
+            return [];
+        }
+
+        List<User> candidates = election.Candidates.ToList();
+
+        var mappedCandidates = _mapper.Map<List<CandidateDto>>(candidates);
+
+        return mappedCandidates;
+    }
+
     public async Task<List<ElectionResultDto>> GetElectionResults(int electionId)
     {
         Election election = await _electionRepository.GetElectionById(electionId);

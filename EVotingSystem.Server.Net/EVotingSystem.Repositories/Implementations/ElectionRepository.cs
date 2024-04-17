@@ -57,6 +57,17 @@ public class ElectionRepository : IElectionRepository
         return elections;
     }
 
+    public async Task<List<Election>> GetElectionsForUser(int userId)
+    {
+        List<Election> elections = await _dbContext.EligibleVoters
+            .Where(ev => ev.UserId == userId)
+            .Include(ev => ev.Election)
+            .Select(ev => ev.Election)
+            .ToListAsync();
+
+        return elections;
+    }
+
     public async Task<Election> CreateElection(Election election)
     {
         _dbContext.Elections.Add(election);

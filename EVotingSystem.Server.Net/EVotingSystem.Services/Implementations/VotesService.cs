@@ -50,6 +50,60 @@ public class VotesService : IVotesService
         return mappedVotes;
     }
 
+    public async Task<byte[]> GetMyVoteHashForElection(string userId, HashCheckDto hashCheckDto)
+    {
+        int voterIdNumeric = int.Parse(userId);
+        User user = await _usersRepository.GetUserById(voterIdNumeric, withPassword: true);
+        
+        if (user?.UserPassword is null)
+        {
+            return []; 
+        }
+        
+        // verify user password
+        byte[] hashedPassword =
+            _passwordEncryptionService.HashSHA256WithSalt(hashCheckDto.Password, user.UserSecret.PasswordSalt);
+        
+        if (!hashedPassword.SequenceEqual(user.UserPassword.PasswordHash))
+        {
+            return [];
+        }
+        
+        Election election = await _electionRepository
+            .GetElectionById(hashCheckDto.ElectionId, withVoters: true);
+
+        if (election is null)
+        {
+            return [];
+        }
+
+        if (!election.EligibleVoters.Any(ev => ev.UserId == voterIdNumeric))
+        {
+            return [];
+        }
+        
+        // get user secret
+        byte[] votingSecretEncryptionIV = _passwordEncryptionService.GenerateIVArrayFromUserId(user.Id);
+        // SHA256 hash of password without salt is used as AES encryption key
+        byte[] votingSecretEncryptionKey = _passwordEncryptionService
+            .HashSHA256(hashCheckDto.Password);
+        string votingSecretDecrypted = _passwordEncryptionService
+            .DecryptSecret(user.UserSecret.VotingSecret, votingSecretEncryptionKey, votingSecretEncryptionIV);
+        
+        // create hash
+        var voteHashObject = new VoteHashModel
+        {
+            UserId = user.Id,
+            ElectionId = election.Id,
+            Secret = votingSecretDecrypted
+        };
+
+        string voteHashString = JsonSerializer.Serialize(voteHashObject);
+        byte[] voteHash = _passwordEncryptionService.HashSHA256(voteHashString);
+
+        return voteHash;
+    }
+
     public async Task<byte[]> Vote(string voterId, InputVoteDto vote)
     {
         int voterIdNumeric = int.Parse(voterId);
@@ -71,6 +125,11 @@ public class VotesService : IVotesService
 
         Election election = await _electionRepository
             .GetElectionById(vote.ElectionId, withSecret: true, withCandidates: true, withVoters: true);
+
+        if (election is null)
+        {
+            return [];
+        }
 
         if (election.StartTime > DateTime.Now || election.EndTime < DateTime.Now)
         {

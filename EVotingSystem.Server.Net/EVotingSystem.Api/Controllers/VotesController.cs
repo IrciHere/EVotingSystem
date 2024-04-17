@@ -25,6 +25,16 @@ public class VotesController : ControllerBase
         return votes.Count > 0 ? Ok(votes) : BadRequest();
     }
     
+    [HttpPost("my-vote-hash")]
+    public async Task<IActionResult> GetMyVoteHashForElection([FromBody] HashCheckDto hashCheckDto)
+    {
+        string userId = User.FindFirst("UserId")?.Value;
+        
+        byte[] myHash = await _votesService.GetMyVoteHashForElection(userId, hashCheckDto);
+        
+        return Ok(myHash);
+    }
+    
     [HttpPut]
     public async Task<IActionResult> Vote([FromBody] InputVoteDto vote)
     {

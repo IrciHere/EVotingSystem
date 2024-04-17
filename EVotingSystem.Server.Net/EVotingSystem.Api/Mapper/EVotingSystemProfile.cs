@@ -12,6 +12,7 @@ public class EVotingSystemProfile : Profile
     {
         CreateMap<NewUserDto, User>();
         CreateMap<User, UserDto>();
+        CreateMap<User, CandidateDto>();
 
         CreateMap<NewElectionDto, Election>();
         CreateMap<Election, ElectionDto>();

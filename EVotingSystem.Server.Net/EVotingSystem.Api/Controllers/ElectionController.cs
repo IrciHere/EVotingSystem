@@ -30,9 +30,19 @@ public class ElectionController : ControllerBase
     [HttpGet("my-available")]
     public async Task<IActionResult> GetMyElections()
     {
-        List<ElectionDto> elections = [];
+        string userId = User.FindFirst("UserId")?.Value;
+        
+        List<ElectionDto> elections = await _electionService.GetElectionsForUser(userId);
 
         return Ok(elections);
+    }
+
+    [HttpGet("{electionId}/candidates")]
+    public async Task<IActionResult> GetElectionCandidates(int electionId)
+    {
+        List<CandidateDto> candidates = await _electionService.GetElectionCandidates(electionId);
+
+        return candidates.Count > 0 ? Ok(candidates) : NotFound();
     }
 
     [HttpPost]
