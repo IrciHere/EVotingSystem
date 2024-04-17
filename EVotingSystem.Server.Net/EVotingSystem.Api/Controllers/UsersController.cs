@@ -1,4 +1,5 @@
 ﻿using EVotingSystem.Contracts.User;
+using EVotingSystem.Models;
 using EVotingSystem.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,6 +19,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = Roles.Admin)]
     public async Task<IActionResult> CreateUser([FromBody] NewUserDto user)
     {
         UserDto createdUser = await _usersService.CreateUser(user);

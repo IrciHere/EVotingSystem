@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using EVotingSystem.Contracts.Login;
 using EVotingSystem.Database.Entities;
+using EVotingSystem.Models;
 using EVotingSystem.Repositories.Interfaces;
 using EVotingSystem.Services.Interfaces;
 using EVotingSystem.Services.Interfaces.Helpers;
@@ -30,7 +31,7 @@ public class LoginService : ILoginService
     {
         User user = await _usersRepository.GetUserByEmail(login.Email, withPassword: true);
 
-        if (user is null)
+        if (user?.UserPassword is null)
         {
             return string.Empty;
         }
@@ -40,27 +41,28 @@ public class LoginService : ILoginService
             return string.Empty;
         }
 
-        string token = GenerateToken(user.Id);
+        string token = GenerateToken(user);
 
         return token;
     }
 
-    private string GenerateToken(int userId)
+    private string GenerateToken(User user)
     {
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(TokenSecret));
 
         var claims = new List<Claim>()
         {
-            new("UserId", userId.ToString())
+            new("UserId", user.Id.ToString()),
+            new(ClaimTypes.Role, user.IsAdmin ? Roles.Admin.ToString() : Roles.User.ToString())
         };
 
-        var signingCredetials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+        var signingCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
         var token = new JwtSecurityToken(
             Issuer,
             Audience,
             claims, 
             expires: DateTime.UtcNow.AddHours(12),
-            signingCredentials: signingCredetials);
+            signingCredentials: signingCredentials);
 
         return new JwtSecurityTokenHandler().WriteToken(token);
     }

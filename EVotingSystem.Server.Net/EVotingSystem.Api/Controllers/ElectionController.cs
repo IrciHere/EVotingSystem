@@ -1,5 +1,6 @@
 ﻿using EVotingSystem.Contracts.Election;
 using EVotingSystem.Contracts.User;
+using EVotingSystem.Models;
 using EVotingSystem.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -26,7 +27,16 @@ public class ElectionController : ControllerBase
         return Ok(elections);
     }
 
+    [HttpGet("my-available")]
+    public async Task<IActionResult> GetMyElections()
+    {
+        List<ElectionDto> elections = [];
+
+        return Ok(elections);
+    }
+
     [HttpPost]
+    [Authorize(Roles = Roles.Admin)]
     public async Task<IActionResult> CreateElection([FromBody] NewElectionDto election)
     {
         ElectionDto newElection = await _electionService.CreateElection(election);
@@ -34,22 +44,25 @@ public class ElectionController : ControllerBase
         return Ok(newElection);
     }
 
+    [Authorize(Roles = Roles.Admin)]
     [HttpPost("{electionId}/assign-voters")]
     public async Task<IActionResult> AssignEligibleVoters(int electionId, [FromBody] List<NewUserDto> users)
     {
         ElectionDto election = await _electionService.AssignEligibleVoters(electionId, users);
         
-        return Ok(election);
+        return election is not null ? Ok(election) : NotFound();
     }
 
+    [Authorize(Roles = Roles.Admin)]
     [HttpPost("{electionId}/assign-candidates")]
     public async Task<IActionResult> AssignCandidates(int electionId, [FromBody] List<NewUserDto> users)
     {
         ElectionDto election = await _electionService.AssignCandidates(electionId, users);
         
-        return Ok(election);
+        return election is not null ? Ok(election) : NotFound();
     }
 
+    [Authorize(Roles = Roles.Admin)]
     [HttpPatch("{electionId}/finalize-election")]
     public async Task<IActionResult> FinalizeElection(int electionId)
     {

@@ -39,6 +39,17 @@ public class ElectionRepository : IElectionRepository
         return election;
     }
 
+    public async Task<List<ElectionResult>> GetElectionResults(int electionId)
+    {
+        List<ElectionResult> results = await _dbContext.ElectionResults
+            .Where(er => er.ElectionId == electionId)
+            .Include(er => er.User)
+            .OrderByDescending(er => er.Votes)
+            .ToListAsync();
+
+        return results;
+    }
+
     public async Task<List<Election>> GetAllElections()
     {
         List<Election> elections = await _dbContext.Elections.ToListAsync();

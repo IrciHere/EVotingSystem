@@ -42,6 +42,27 @@ public class ElectionService : IElectionService
         return mappedElections;
     }
 
+    public async Task<List<ElectionResultDto>> GetElectionResults(int electionId)
+    {
+        Election election = await _electionRepository.GetElectionById(electionId);
+
+        if (election is null)
+        {
+            return [];
+        }
+
+        if (!election.HasEnded)
+        {
+            return [];
+        }
+
+        List<ElectionResult> results = await _electionRepository.GetElectionResults(electionId);
+
+        var resultsMapped = _mapper.Map<List<ElectionResultDto>>(results);
+
+        return resultsMapped;
+    }
+
     public async Task<ElectionDto> CreateElection(NewElectionDto newElection)
     {
         var election = _mapper.Map<Election>(newElection);
