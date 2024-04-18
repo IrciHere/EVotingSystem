@@ -7,24 +7,29 @@ using EVotingSystem.Models;
 using EVotingSystem.Repositories.Interfaces;
 using EVotingSystem.Services.Interfaces;
 using EVotingSystem.Services.Interfaces.Helpers;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
 namespace EVotingSystem.Services.Implementations;
 
 public class LoginService : ILoginService
 {
-    #warning GET THIS OUT OF HERE
-    private const string TokenSecret = "KeyToBeMovedLaterInDevelopmentProcess";
-    private const string Issuer = "localhost";
-    private const string Audience = "localhost";
+    private readonly string _tokenSecret;
+    private readonly string _issuer;
+    private readonly string _audience;
     
     private readonly IUsersRepository _usersRepository;
     private readonly IPasswordEncryptionService _passwordEncryptionService;
 
-    public LoginService(IUsersRepository usersRepository, IPasswordEncryptionService passwordEncryptionService)
+    public LoginService(IUsersRepository usersRepository, 
+        IPasswordEncryptionService passwordEncryptionService, 
+        IConfiguration configuration)
     {
         _usersRepository = usersRepository;
         _passwordEncryptionService = passwordEncryptionService;
+        _tokenSecret = configuration["JwtSettings:Key"];
+        _issuer = configuration["JwtSettings:Issuer"];
+        _audience = configuration["JwtSettings:Audience"];
     }
 
     public async Task<string> LoginUser(LoginDto login)
@@ -48,18 +53,18 @@ public class LoginService : ILoginService
 
     private string GenerateToken(User user)
     {
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(TokenSecret));
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_tokenSecret));
 
-        var claims = new List<Claim>()
+        var claims = new List<Claim>
         {
             new("UserId", user.Id.ToString()),
-            new(ClaimTypes.Role, user.IsAdmin ? Roles.Admin.ToString() : Roles.User.ToString())
+            new(ClaimTypes.Role, user.IsAdmin ? Roles.Admin : Roles.User)
         };
 
         var signingCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
         var token = new JwtSecurityToken(
-            Issuer,
-            Audience,
+            _issuer,
+            _audience,
             claims, 
             expires: DateTime.UtcNow.AddHours(12),
             signingCredentials: signingCredentials);

@@ -9,9 +9,16 @@ using EVotingSystem.Services.Interfaces;
 using EVotingSystem.Services.Interfaces.Helpers;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+
+IConfigurationBuilder configurationBuilder = new ConfigurationBuilder()
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("appsettings.json");
+
+IConfigurationRoot configuration = configurationBuilder.Build();
 
 // Add services to the container.
 
@@ -20,12 +27,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     {
         x.TokenValidationParameters = new TokenValidationParameters
         {
-            // ValidIssuer = configuration["JwtSettings:Issuer"],
-            // ValidAudience = configuration["JwtSettings:Audience"],
-            // IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:Key"]!)),
-            ValidIssuer = "localhost",
-            ValidAudience = "localhost",
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("KeyToBeMovedLaterInDevelopmentProcess")),
+            ValidIssuer = configuration["JwtSettings:Issuer"],
+            ValidAudience = configuration["JwtSettings:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:Key"]!)),
             ValidateIssuer = true,
             ValidateAudience = true,
             ValidateLifetime = true,
@@ -34,7 +38,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 builder.Services.AddAuthorization();
-
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -81,7 +84,10 @@ builder.Services.AddTransient<IHelperRepository, HelperRepository>();
 builder.Services.AddTransient<IElectionRepository, ElectionRepository>();
 builder.Services.AddTransient<IVotesRepository, VotesRepository>();
 
-builder.Services.AddDbContext<EVotingDbContext>();
+builder.Services.AddSingleton<IConfiguration>(_ => configuration);
+
+builder.Services.AddDbContext<EVotingDbContext>(options =>
+    options.UseNpgsql(configuration.GetConnectionString("EVotingSystemDatabase")));
 
 var app = builder.Build();
 
