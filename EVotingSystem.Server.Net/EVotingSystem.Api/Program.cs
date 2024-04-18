@@ -77,7 +77,7 @@ builder.Services.AddTransient<IUsersService, UsersService>();
 builder.Services.AddTransient<ILoginService, LoginService>();
 builder.Services.AddTransient<IElectionService, ElectionService>();
 builder.Services.AddTransient<IVotesService, VotesService>();
-builder.Services.AddTransient<IEmailsService, GmailEmailsService>();
+builder.Services.AddTransient<IEmailsService, MockEmailsService>();
 builder.Services.AddTransient<ISmsService, SmsService>();
 builder.Services.AddTransient<IPasswordEncryptionService, PasswordEncryptionService>();
 
