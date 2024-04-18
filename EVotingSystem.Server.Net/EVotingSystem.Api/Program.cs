@@ -1,17 +1,7 @@
 using System.Text;
-using EVotingSystem.Api.Mapper;
-using EVotingSystem.Database.Context;
-using EVotingSystem.Repositories.Implementations;
-using EVotingSystem.Repositories.Interfaces;
-using EVotingSystem.Services.Implementations;
-using EVotingSystem.Services.Implementations.Emails;
-using EVotingSystem.Services.Implementations.Helpers;
-using EVotingSystem.Services.Implementations.Sms;
-using EVotingSystem.Services.Interfaces;
-using EVotingSystem.Services.Interfaces.Helpers;
+using EVotingSystem.Api.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -66,32 +56,16 @@ builder.Services.AddSwaggerGen(c => {
                     Id = "Bearer"
                 }
             },
-            new string[]{}
+            Array.Empty<string>()
         }
     });
 });
 
-builder.Services.AddAutoMapper(typeof(EVotingSystemProfile));
+builder.Services.AddApplicationServices(withMockEmails: true, withMockSms: true);
 
-builder.Services.AddTransient<IUsersService, UsersService>();
-builder.Services.AddTransient<ILoginService, LoginService>();
-builder.Services.AddTransient<IElectionService, ElectionService>();
-builder.Services.AddTransient<IVotesService, VotesService>();
-builder.Services.AddTransient<IEmailsService, MockEmailsService>();
-builder.Services.AddTransient<ISmsService, SmsService>();
-builder.Services.AddTransient<IPasswordEncryptionService, PasswordEncryptionService>();
+builder.Services.AddApplicationInfrastructure(configuration);
 
-builder.Services.AddTransient<IUsersRepository, UsersRepository>();
-builder.Services.AddTransient<IHelperRepository, HelperRepository>();
-builder.Services.AddTransient<IElectionRepository, ElectionRepository>();
-builder.Services.AddTransient<IVotesRepository, VotesRepository>();
-
-builder.Services.AddSingleton<IConfiguration>(_ => configuration);
-
-builder.Services.AddDbContext<EVotingDbContext>(options =>
-    options.UseNpgsql(configuration.GetConnectionString("EVotingSystemDatabase")));
-
-var app = builder.Build();
+WebApplication app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

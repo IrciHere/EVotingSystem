@@ -2,7 +2,7 @@ using EVotingSystem.Services.Interfaces;
 
 namespace EVotingSystem.Services.Implementations.Sms;
 
-public class SmsService : ISmsService
+public class MockSmsService : ISmsService
 {
     public Task SendOtpCote(string phoneNumber, string otpCode)
     {

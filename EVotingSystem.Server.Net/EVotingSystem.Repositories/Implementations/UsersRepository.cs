@@ -67,7 +67,7 @@ public class UsersRepository : IUsersRepository
         return user;
     }
 
-    public async Task CreateManyUsers(List<User> users)
+    public async Task CreateManyUsers(IEnumerable<User> users)
     {
         _dbContext.Users.AddRange(users);
         await _dbContext.SaveChangesAsync();

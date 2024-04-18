@@ -2,7 +2,7 @@
 
 public class ElectionResultDto
 {
-    public int CandidateId { get; set; }
-    public string CandidateName { get; set; }
-    public int Votes { get; set; }
+    public int CandidateId { get; init; }
+    public string CandidateName { get; init; }
+    public int Votes { get; init; }
 }
