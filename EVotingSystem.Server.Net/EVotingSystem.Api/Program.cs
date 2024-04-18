@@ -4,7 +4,9 @@ using EVotingSystem.Database.Context;
 using EVotingSystem.Repositories.Implementations;
 using EVotingSystem.Repositories.Interfaces;
 using EVotingSystem.Services.Implementations;
+using EVotingSystem.Services.Implementations.Emails;
 using EVotingSystem.Services.Implementations.Helpers;
+using EVotingSystem.Services.Implementations.Sms;
 using EVotingSystem.Services.Interfaces;
 using EVotingSystem.Services.Interfaces.Helpers;
 using Microsoft.IdentityModel.Tokens;
@@ -75,7 +77,7 @@ builder.Services.AddTransient<IUsersService, UsersService>();
 builder.Services.AddTransient<ILoginService, LoginService>();
 builder.Services.AddTransient<IElectionService, ElectionService>();
 builder.Services.AddTransient<IVotesService, VotesService>();
-builder.Services.AddTransient<IEmailsService, EmailsService>();
+builder.Services.AddTransient<IEmailsService, GmailEmailsService>();
 builder.Services.AddTransient<ISmsService, SmsService>();
 builder.Services.AddTransient<IPasswordEncryptionService, PasswordEncryptionService>();
 

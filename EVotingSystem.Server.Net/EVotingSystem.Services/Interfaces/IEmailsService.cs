@@ -4,6 +4,6 @@ namespace EVotingSystem.Services.Interfaces;
 
 public interface IEmailsService
 {
-    Task SendResetPasswordMail(string email, string code);
-    Task SendManyPasswordResetMails(List<User> users);
+    void SendResetPasswordMail(string email, string code);
+    void SendManyPasswordResetMails(List<User> users);
 }

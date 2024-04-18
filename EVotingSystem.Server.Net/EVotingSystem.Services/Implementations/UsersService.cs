@@ -35,7 +35,7 @@ public class UsersService : IUsersService
 
         newUserEntity = await _usersRepository.CreateUser(newUserEntity);
 
-        await _emailsService.SendResetPasswordMail(newUserEntity.Email, newUserEntity.PasswordResetCode.ResetCode);
+        _emailsService.SendResetPasswordMail(newUserEntity.Email, newUserEntity.PasswordResetCode.ResetCode);
 
         var newUser = _mapper.Map<UserDto>(newUserEntity);
 
@@ -64,7 +64,7 @@ public class UsersService : IUsersService
         }
 
         await _usersRepository.CreateManyUsers(newUsers);
-        await _emailsService.SendManyPasswordResetMails(newUsers);
+        _emailsService.SendManyPasswordResetMails(newUsers);
     }
 
     public async Task RequestForgotPassword(string email)
@@ -80,7 +80,7 @@ public class UsersService : IUsersService
 
         await _helperRepository.SaveChangesAsync();
 
-        await _emailsService.SendResetPasswordMail(user.Email, user.PasswordResetCode.ResetCode);
+        _emailsService.SendResetPasswordMail(user.Email, user.PasswordResetCode.ResetCode);
     }
 
     public async Task<bool> ResetPassword(ResetPasswordDto resetPasswordDto)

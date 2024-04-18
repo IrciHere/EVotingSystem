@@ -1,8 +1,13 @@
 {
+  "GmailSettings": {
+    "ServerLogin": "examplelogin@gmail.com",
+    "ServerPassword": "examplePassword",
+    "UserName": "exampleUserName"
+  },
   "JwtSettings": {
     "Issuer": "localhost",
     "Audience": "localhost",
-    "Key": "KeyToBeMovedLaterInDevelopmentProcess"
+    "Key": "JwtSettingsSecretKey"
   },
   "Logging": {
     "LogLevel": {

@@ -108,7 +108,7 @@ public class ElectionService : IElectionService
     {
         Election election = await _electionRepository.GetElectionById(electionId);
 
-        if (election is null)
+        if (election is null || election.HasEnded)
         {
             return null;
         }
@@ -130,7 +130,7 @@ public class ElectionService : IElectionService
     {
         Election election = await _electionRepository.GetElectionById(electionId);
 
-        if (election is null)
+        if (election is null || election.HasEnded)
         {
             return null;
         }

@@ -1,6 +1,6 @@
 using EVotingSystem.Services.Interfaces;
 
-namespace EVotingSystem.Services.Implementations;
+namespace EVotingSystem.Services.Implementations.Sms;
 
 public class SmsService : ISmsService
 {
