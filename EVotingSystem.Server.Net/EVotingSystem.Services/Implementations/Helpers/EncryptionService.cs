@@ -1,5 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
+using EVotingSystem.Models;
 using EVotingSystem.Services.Interfaces.Helpers;
 
 namespace EVotingSystem.Services.Implementations.Helpers;
@@ -28,6 +30,21 @@ public class EncryptionService : IEncryptionService
 
         return hashedPassword;
     }
+
+    public byte[] EncryptVote(int candidateId, int electionId, byte[] electionSecret, byte[] voteHash)
+    {
+        var voteEncryptObject = new VoteEncryptModel
+        {
+            CandidateId = candidateId,
+            VoteHash = voteHash
+        };
+        string voteEncryptText = JsonSerializer.Serialize(voteEncryptObject);
+
+        byte[] ivArray = GenerateIVArrayFromId(electionId);
+        byte[] voteEncrypted = EncryptSecret(voteEncryptText, electionSecret, ivArray);
+
+        return voteEncrypted;
+    } 
 
     public byte[] EncryptVotingSecretForUser(string secret, string password, int userId)
     {

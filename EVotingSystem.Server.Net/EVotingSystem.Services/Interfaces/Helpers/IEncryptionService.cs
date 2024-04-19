@@ -4,6 +4,7 @@ public interface IEncryptionService
 {
     byte[] HashSHA256(string password);
     byte[] HashSHA256WithSalt(string password, byte[] salt);
+    byte[] EncryptVote(int candidateId, int electionId, byte[] electionSecret, byte[] voteHash);
     byte[] EncryptVotingSecretForUser(string secret, string password, int userId);
     string DecryptVotingSecretForUser(byte[] secret, string password, int userId);
     byte[] EncryptSecret(string secret, byte[] key, byte[] iv);

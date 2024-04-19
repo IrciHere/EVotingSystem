@@ -35,12 +35,7 @@ public class VotesService : IVotesService
     {
         Election election = await _electionRepository.GetElectionById(electionId);
 
-        if (election is null)
-        {
-            return [];
-        }
-
-        if (election.EndTime.AddMinutes(15) > DateTime.Now)
+        if (election is null || election.EndTime.AddMinutes(15) > DateTime.Now)
         {
             return [];
         }
@@ -48,7 +43,6 @@ public class VotesService : IVotesService
         List<ElectionVote> votes = await _votesRepository.GetAllVotesForElection(electionId);
 
         var mappedVotes = _mapper.Map<List<VoteDto>>(votes);
-
         return mappedVotes;
     }
 
@@ -65,34 +59,15 @@ public class VotesService : IVotesService
         Election election = await _electionRepository
             .GetElectionById(hashCheckDto.ElectionId, withVoters: true);
 
-        if (election is null)
+        if (election?.EligibleVoters is null || !IsUserEligibleVoter(election, voterIdNumeric))
         {
             return [];
         }
 
-        if (election.EligibleVoters.All(ev => ev.UserId != voterIdNumeric))
-        {
-            return [];
-        }
+        string votingSecretDecrypted =
+            _encryptionService.DecryptVotingSecretForUser(user.UserSecret.VotingSecret, hashCheckDto.Password, user.Id);
         
-        // get user secret
-        byte[] votingSecretEncryptionIV = _encryptionService.GenerateIVArrayFromId(user.Id);
-        // SHA256 hash of password without salt is used as AES encryption key
-        byte[] votingSecretEncryptionKey = _encryptionService
-            .HashSHA256(hashCheckDto.Password);
-        string votingSecretDecrypted = _encryptionService
-            .DecryptSecret(user.UserSecret.VotingSecret, votingSecretEncryptionKey, votingSecretEncryptionIV);
-        
-        // create hash
-        var voteHashObject = new VoteHashModel
-        {
-            UserId = user.Id,
-            ElectionId = election.Id,
-            Secret = votingSecretDecrypted
-        };
-
-        string voteHashString = JsonSerializer.Serialize(voteHashObject);
-        byte[] voteHash = _encryptionService.HashSHA256(voteHashString);
+        byte[] voteHash = CreateVoteHash(user.Id, election.Id, votingSecretDecrypted);
 
         return voteHash;
     }
@@ -110,47 +85,78 @@ public class VotesService : IVotesService
         Election election = await _electionRepository
             .GetElectionById(vote.ElectionId, withSecret: true, withCandidates: true, withVoters: true);
 
-        if (election is null)
+        if (election is null 
+            || !IsElectionOngoing(election)
+            || !IsUserEligibleVoter(election, voterIdNumeric)
+            || !IsUserElectionCandidate(election.Candidates, vote.CandidateId))
+        {
+            return [];
+        }
+        
+        string votingSecretDecrypted =
+            _encryptionService.DecryptVotingSecretForUser(user.UserSecret.VotingSecret, vote.VoterPassword, user.Id);
+        
+        byte[] voteHash = CreateVoteHash(user.Id, election.Id, votingSecretDecrypted);
+        
+        ElectionVote previousVote =
+            await SetEligibleVoterToVotedAndReturnPreviousVoteIfExists(election, voterIdNumeric, voteHash);
+        
+        // that case means user has voted, forgot and reset their password and tried to vote again
+        if (previousVote is not null && previousVote.Id == 0) 
+        {
+            return [];
+        }
+        
+        byte[] voteEncrypted = _encryptionService.EncryptVote(vote.CandidateId, vote.ElectionId,
+            election.ElectionSecret.Secret, voteHash);
+
+        ElectionVote newVote = await CreateOrReplaceVote(election.Id, voteHash, voteEncrypted, previousVote);
+  
+        // send SMS
+        await _smsService.SendOtpCote(user.PhoneNumber, newVote.VotesOtp.OtpCode);
+
+        return newVote.VoteHash;
+    }
+
+    public async Task<byte[]> ValidateVote(ValidateVoteDto validateVoteDto)
+    {
+        Election election = await _electionRepository.GetElectionById(validateVoteDto.ElectionId);
+
+        if (election is null || !IsElectionOngoing(election, endTimeMargin: 10))
         {
             return [];
         }
 
-        if (election.StartTime > DateTime.Now || election.EndTime < DateTime.Now)
+        ElectionVote vote = await _votesRepository.GetVoteByHash(election.Id, validateVoteDto.VoteHash, withOtp: true);
+
+        if (vote?.VotesOtp?.OtpCode is null || vote.VotesOtp.OtpCode != validateVoteDto.OtpCode)
         {
             return [];
         }
-        
-        if (election.EligibleVoters.All(ev => ev.UserId != voterIdNumeric))
-        {
-            return [];
-        }
-        
-        if (election.Candidates.All(c => c.Id != vote.CandidateId))
-        {
-            return [];
-        }
-        
-        // get user secret
-        byte[] votingSecretEncryptionIV = _encryptionService.GenerateIVArrayFromId(user.Id);
-        // SHA256 hash of password without salt is used as AES encryption key
-        byte[] votingSecretEncryptionKey = _encryptionService
-            .HashSHA256(vote.VoterPassword);
-        string votingSecretDecrypted = _encryptionService
-            .DecryptSecret(user.UserSecret.VotingSecret, votingSecretEncryptionKey, votingSecretEncryptionIV);
-        
-        // create hash
+
+        await _votesRepository.ValidateVote(vote);
+
+        return vote.VoteHash;
+    }
+    
+    private byte[] CreateVoteHash(int userId, int electionId, string secret)
+    {
         var voteHashObject = new VoteHashModel
         {
-            UserId = user.Id,
-            ElectionId = election.Id,
-            Secret = votingSecretDecrypted
+            UserId = userId,
+            ElectionId = electionId,
+            Secret = secret
         };
 
         string voteHashString = JsonSerializer.Serialize(voteHashObject);
         byte[] voteHash = _encryptionService.HashSHA256(voteHashString);
-        
-        // set eligible voters to voted
-        EligibleVoter voter = election.EligibleVoters.Single(ev => ev.UserId == voterIdNumeric);
+
+        return voteHash;
+    }
+    
+    private async Task<ElectionVote> SetEligibleVoterToVotedAndReturnPreviousVoteIfExists(Election election, int voterId, byte[] voteHash)
+    {
+        EligibleVoter voter = election.EligibleVoters.Single(ev => ev.UserId == voterId);
         ElectionVote previousVote = null;
 
         if (!voter.HasVoted)
@@ -159,29 +165,17 @@ public class VotesService : IVotesService
         }
         else
         {
-            previousVote = await _votesRepository.GetVoteByHash(election.Id, voteHash);
-
-            if (previousVote is null)
-            {
-                return [];
-            }
+            previousVote = await _votesRepository.GetVoteByHash(election.Id, voteHash) ?? new ElectionVote();
         }
-        
-        // encrypt vote
-        var voteEncryptObject = new VoteEncryptModel
-        {
-            CandidateId = vote.CandidateId,
-            VoteHash = voteHash
-        };
-        string voteEncryptText = JsonSerializer.Serialize(voteEncryptObject);
 
-        byte[] ivArray = _encryptionService.GenerateIVArrayFromId(vote.ElectionId);
-        byte[] voteEncrypted = _encryptionService
-            .EncryptSecret(voteEncryptText, election.ElectionSecret.Secret, ivArray);
-
+        return previousVote;
+    }
+    
+    private async Task<ElectionVote> CreateOrReplaceVote(int electionId, byte[] voteHash, byte[] voteEncrypted, ElectionVote previousVote)
+    {
         var newVote = new ElectionVote
         {
-            ElectionId = election.Id,
+            ElectionId = electionId,
             IsVerified = false,
             VoteHash = voteHash,
             VotedCandidateEncrypted = voteEncrypted,
@@ -199,42 +193,23 @@ public class VotesService : IVotesService
         {
             newVote = await _votesRepository.ReplaceVote(previousVote, newVote);
         }
-        
-        // send SMS
-        await _smsService.SendOtpCote(user.PhoneNumber, newVote.VotesOtp.OtpCode);
 
-        return newVote.VoteHash;
+        return newVote;
     }
-
-    public async Task<byte[]> ValidateVote(ValidateVoteDto validateVoteDto)
+    
+    private static bool IsUserEligibleVoter(Election election, int userId)
     {
-        Election election = await _electionRepository.GetElectionById(validateVoteDto.ElectionId);
-
-        if (election is null)
-        {
-            return [];
-        }
-        
-        if (election.StartTime > DateTime.Now || election.EndTime.AddMinutes(10) < DateTime.Now)
-        {
-            return [];
-        }
-
-        ElectionVote vote = await _votesRepository.GetVoteByHash(election.Id, validateVoteDto.VoteHash, withOtp: true);
-
-        if (vote?.VotesOtp is null)
-        {
-            return [];
-        }
-
-        if (vote.VotesOtp.OtpCode != validateVoteDto.OtpCode)
-        {
-            return [];
-        }
-
-        await _votesRepository.ValidateVote(vote);
-
-        return vote.VoteHash;
+        return election.EligibleVoters.Any(ev => ev.UserId == userId);
+    }
+    
+    private static bool IsElectionOngoing(Election election, int endTimeMargin = 0)
+    {
+        return election.StartTime < DateTime.Now && election.EndTime.AddMinutes(endTimeMargin) < DateTime.Now;
+    }
+    
+    private static bool IsUserElectionCandidate(IEnumerable<User> candidates, int userId)
+    {
+        return candidates.Any(c => c.Id == userId);
     }
 
     private static string GenerateRandomOtpCode(int length)
