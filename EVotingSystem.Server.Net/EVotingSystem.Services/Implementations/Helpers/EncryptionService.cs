@@ -4,7 +4,7 @@ using EVotingSystem.Services.Interfaces.Helpers;
 
 namespace EVotingSystem.Services.Implementations.Helpers;
 
-public class PasswordEncryptionService : IPasswordEncryptionService
+public class EncryptionService : IEncryptionService
 {
     public byte[] HashSHA256(string password)
     {
@@ -27,6 +27,26 @@ public class PasswordEncryptionService : IPasswordEncryptionService
         byte[] hashedPassword = SHA256.HashData(saltedPassword);
 
         return hashedPassword;
+    }
+
+    public byte[] EncryptVotingSecretForUser(string secret, string password, int userId)
+    {
+        // SHA256 hash of password without salt is used as AES encryption key
+        byte[] votingSecretEncryptionKey = HashSHA256(password);
+        byte[] votingSecretEncryptionIV = GenerateIVArrayFromUserId(userId);
+        byte[] votingSecretEncrypted = EncryptSecret(secret, votingSecretEncryptionKey, votingSecretEncryptionIV);
+
+        return votingSecretEncrypted;
+    }
+
+    public string DecryptVotingSecretForUser(byte[] secret, string password, int userId)
+    {
+        // SHA256 hash of password without salt is used as AES encryption key
+        byte[] oldVotingSecretEncryptionKey = HashSHA256(password);
+        byte[] votingSecretEncryptionIV = GenerateIVArrayFromUserId(userId);
+        string votingSecretDecrypted = DecryptSecret(secret, oldVotingSecretEncryptionKey, votingSecretEncryptionIV);
+
+        return votingSecretDecrypted;
     }
 
     public byte[] EncryptSecret(string secret, byte[] key, byte[] iv)

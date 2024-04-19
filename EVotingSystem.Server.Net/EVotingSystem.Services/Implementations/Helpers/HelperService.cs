@@ -5,11 +5,11 @@ namespace EVotingSystem.Services.Implementations.Helpers;
 
 public class HelperService : IHelperService
 {
-    private readonly IPasswordEncryptionService _passwordEncryptionService;
+    private readonly IEncryptionService _encryptionService;
 
-    public HelperService(IPasswordEncryptionService passwordEncryptionService)
+    public HelperService(IEncryptionService encryptionService)
     {
-        _passwordEncryptionService = passwordEncryptionService;
+        _encryptionService = encryptionService;
     }
 
     public bool IsPasswordCorrectForUser(string passwordProvided, User user)
@@ -20,7 +20,7 @@ public class HelperService : IHelperService
         }
         
         byte[] hashedProvidedPassword =
-            _passwordEncryptionService.HashSHA256WithSalt(passwordProvided, user.UserSecret.PasswordSalt);
+            _encryptionService.HashSHA256WithSalt(passwordProvided, user.UserSecret.PasswordSalt);
 
         return hashedProvidedPassword.SequenceEqual(user.UserPassword.PasswordHash);
     }

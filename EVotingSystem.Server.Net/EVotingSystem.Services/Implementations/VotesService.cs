@@ -16,16 +16,16 @@ public class VotesService : IVotesService
     private readonly IElectionRepository _electionRepository;
     private readonly IUsersRepository _usersRepository;
     private readonly IVotesRepository _votesRepository;
-    private readonly IPasswordEncryptionService _passwordEncryptionService;
+    private readonly IEncryptionService _encryptionService;
     private readonly ISmsService _smsService;
     private readonly IMapper _mapper;
 
-    public VotesService(IElectionRepository electionRepository, IUsersRepository usersRepository, IVotesRepository votesRepository, IPasswordEncryptionService passwordEncryptionService, ISmsService smsService, IMapper mapper, IHelperService helperService)
+    public VotesService(IElectionRepository electionRepository, IUsersRepository usersRepository, IVotesRepository votesRepository, IEncryptionService encryptionService, ISmsService smsService, IMapper mapper, IHelperService helperService)
     {
         _electionRepository = electionRepository;
         _usersRepository = usersRepository;
         _votesRepository = votesRepository;
-        _passwordEncryptionService = passwordEncryptionService;
+        _encryptionService = encryptionService;
         _smsService = smsService;
         _mapper = mapper;
         _helperService = helperService;
@@ -76,11 +76,11 @@ public class VotesService : IVotesService
         }
         
         // get user secret
-        byte[] votingSecretEncryptionIV = _passwordEncryptionService.GenerateIVArrayFromUserId(user.Id);
+        byte[] votingSecretEncryptionIV = _encryptionService.GenerateIVArrayFromUserId(user.Id);
         // SHA256 hash of password without salt is used as AES encryption key
-        byte[] votingSecretEncryptionKey = _passwordEncryptionService
+        byte[] votingSecretEncryptionKey = _encryptionService
             .HashSHA256(hashCheckDto.Password);
-        string votingSecretDecrypted = _passwordEncryptionService
+        string votingSecretDecrypted = _encryptionService
             .DecryptSecret(user.UserSecret.VotingSecret, votingSecretEncryptionKey, votingSecretEncryptionIV);
         
         // create hash
@@ -92,7 +92,7 @@ public class VotesService : IVotesService
         };
 
         string voteHashString = JsonSerializer.Serialize(voteHashObject);
-        byte[] voteHash = _passwordEncryptionService.HashSHA256(voteHashString);
+        byte[] voteHash = _encryptionService.HashSHA256(voteHashString);
 
         return voteHash;
     }
@@ -131,11 +131,11 @@ public class VotesService : IVotesService
         }
         
         // get user secret
-        byte[] votingSecretEncryptionIV = _passwordEncryptionService.GenerateIVArrayFromUserId(user.Id);
+        byte[] votingSecretEncryptionIV = _encryptionService.GenerateIVArrayFromUserId(user.Id);
         // SHA256 hash of password without salt is used as AES encryption key
-        byte[] votingSecretEncryptionKey = _passwordEncryptionService
+        byte[] votingSecretEncryptionKey = _encryptionService
             .HashSHA256(vote.VoterPassword);
-        string votingSecretDecrypted = _passwordEncryptionService
+        string votingSecretDecrypted = _encryptionService
             .DecryptSecret(user.UserSecret.VotingSecret, votingSecretEncryptionKey, votingSecretEncryptionIV);
         
         // create hash
@@ -147,7 +147,7 @@ public class VotesService : IVotesService
         };
 
         string voteHashString = JsonSerializer.Serialize(voteHashObject);
-        byte[] voteHash = _passwordEncryptionService.HashSHA256(voteHashString);
+        byte[] voteHash = _encryptionService.HashSHA256(voteHashString);
         
         // set eligible voters to voted
         EligibleVoter voter = election.EligibleVoters.Single(ev => ev.UserId == voterIdNumeric);
@@ -175,8 +175,8 @@ public class VotesService : IVotesService
         };
         string voteEncryptText = JsonSerializer.Serialize(voteEncryptObject);
 
-        byte[] ivArray = _passwordEncryptionService.GenerateIVArrayFromUserId(vote.ElectionId);
-        byte[] voteEncrypted = _passwordEncryptionService
+        byte[] ivArray = _encryptionService.GenerateIVArrayFromUserId(vote.ElectionId);
+        byte[] voteEncrypted = _encryptionService
             .EncryptSecret(voteEncryptText, election.ElectionSecret.Secret, ivArray);
 
         var newVote = new ElectionVote

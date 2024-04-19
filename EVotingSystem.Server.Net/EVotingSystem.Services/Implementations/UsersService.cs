@@ -15,16 +15,16 @@ public class UsersService : IUsersService
     private readonly IUsersRepository _usersRepository;
     private readonly IHelperRepository _helperRepository;
     private readonly IEmailsService _emailsService;
-    private readonly IPasswordEncryptionService _passwordEncryptionService;
+    private readonly IEncryptionService _encryptionService;
     private readonly IMapper _mapper;
 
     public UsersService(IUsersRepository usersRepository, IHelperRepository helperRepository, IEmailsService emailsService, 
-        IPasswordEncryptionService passwordEncryptionService, IMapper mapper, IHelperService helperService)
+        IEncryptionService encryptionService, IMapper mapper, IHelperService helperService)
     {
         _usersRepository = usersRepository;
         _helperRepository = helperRepository;
         _emailsService = emailsService;
-        _passwordEncryptionService = passwordEncryptionService;
+        _encryptionService = encryptionService;
         _mapper = mapper;
         _helperService = helperService;
     }
@@ -40,14 +40,12 @@ public class UsersService : IUsersService
         _emailsService.SendResetPasswordMail(newUserEntity.Email, newUserEntity.PasswordResetCode.ResetCode);
 
         var newUser = _mapper.Map<UserDto>(newUserEntity);
-
         return newUser;
     }
 
     public async Task CreateUsersOrAssignExistingEntities(List<User> users)
     {
         List<User> existingUsers = await _usersRepository.GetAllUsers();
-
         List<User> newUsers = [];
 
         for (var i = 0; i < users.Count; i++)
@@ -57,12 +55,11 @@ public class UsersService : IUsersService
             if (existingUser is not null)
             {
                 users[i] = existingUser;
+                continue;
             }
-            else
-            {
-                AddPasswordResetCodeToUser(user);
-                newUsers.Add(user);
-            }
+
+            AddPasswordResetCodeToUser(user);
+            newUsers.Add(user);
         }
 
         await _usersRepository.CreateManyUsers(newUsers);
@@ -97,8 +94,7 @@ public class UsersService : IUsersService
         _usersRepository.RemovePasswordResetCode(user.PasswordResetCode);
 
         user.UserSecret ??= new UserSecret();
-
-        user.UserSecret.PasswordSalt = _passwordEncryptionService.GenerateRandomByteArray();
+        user.UserSecret.PasswordSalt = _encryptionService.GenerateRandomByteArray();
 
         const int votingSecretLength = 100;
         string userVotingSecret = GenerateRandomText(votingSecretLength);
@@ -126,33 +122,35 @@ public class UsersService : IUsersService
         return true;
     }
 
-    private void SetUserVotingSecretAndPassword(string votingSecret, string newPassword, User user)
-    {
-        // SHA256 hash of password without salt is used as AES encryption key
-        byte[] votingSecretEncryptionKey = _passwordEncryptionService.HashSHA256(newPassword);
-        byte[] votingSecretEncryptionIV = _passwordEncryptionService.GenerateIVArrayFromUserId(user.Id);
-        byte[] votingSecretEncrypted = _passwordEncryptionService.EncryptSecret(votingSecret, votingSecretEncryptionKey, votingSecretEncryptionIV);
-
-        user.UserSecret.VotingSecret = votingSecretEncrypted;
-
-        byte[] hashedPassword =
-            _passwordEncryptionService.HashSHA256WithSalt(newPassword, user.UserSecret.PasswordSalt);
-
-        user.UserPassword ??= new UserPassword();
-
-        user.UserPassword.PasswordHash = hashedPassword;
-    }
-
     private void SetNewUserVotingSecretAndPassword(string oldPassword, string newPassword, User user)
     {
-        // re-encrypt secret
-        byte[] votingSecretEncryptionIV = _passwordEncryptionService.GenerateIVArrayFromUserId(user.Id);
-        
-        // SHA256 hash of password without salt is used as AES encryption key
-        byte[] oldVotingSecretEncryptionKey = _passwordEncryptionService.HashSHA256(oldPassword);
-        string votingSecretDecrypted = _passwordEncryptionService.DecryptSecret(user.UserSecret.VotingSecret, oldVotingSecretEncryptionKey, votingSecretEncryptionIV);
+        string votingSecretDecrypted =
+            _encryptionService.DecryptVotingSecretForUser(user.UserSecret.VotingSecret, oldPassword, user.Id);
         
         SetUserVotingSecretAndPassword(votingSecretDecrypted, newPassword, user);
+    }
+    
+    private void SetUserVotingSecretAndPassword(string votingSecret, string newPassword, User user)
+    {
+        SetUserVotingSecret(votingSecret, newPassword, user);
+        SetUserPassword(newPassword, user);
+    }
+
+    private void SetUserVotingSecret(string votingSecret, string newPassword, User user)
+    {  
+        byte[] votingSecretEncrypted =
+            _encryptionService.EncryptVotingSecretForUser(votingSecret, newPassword, user.Id);
+
+        user.UserSecret.VotingSecret = votingSecretEncrypted;
+    }
+
+    private void SetUserPassword(string password, User user)
+    {
+        byte[] hashedPassword =
+            _encryptionService.HashSHA256WithSalt(password, user.UserSecret.PasswordSalt);
+
+        user.UserPassword ??= new UserPassword();
+        user.UserPassword.PasswordHash = hashedPassword;
     }
     
     private static void AddPasswordResetCodeToUser(User user)

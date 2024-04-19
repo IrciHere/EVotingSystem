@@ -15,20 +15,20 @@ public class ElectionService : IElectionService
     private readonly IElectionRepository _electionRepository;
     private readonly IHelperRepository _helperRepository;
     private readonly IUsersService _usersService;
-    private readonly IPasswordEncryptionService _passwordEncryptionService;
+    private readonly IEncryptionService _encryptionService;
     private readonly IVotesRepository _votesRepository;
     private readonly IMapper _mapper;
 
     public ElectionService(IElectionRepository electionRepository, 
         IHelperRepository helperRepository,
         IUsersService usersService,
-        IPasswordEncryptionService passwordEncryptionService, 
+        IEncryptionService encryptionService, 
         IMapper mapper, IVotesRepository votesRepository)
     {
         _electionRepository = electionRepository;
         _helperRepository = helperRepository;
         _usersService = usersService;
-        _passwordEncryptionService = passwordEncryptionService;
+        _encryptionService = encryptionService;
         _mapper = mapper;
         _votesRepository = votesRepository;
     }
@@ -94,7 +94,7 @@ public class ElectionService : IElectionService
     {
         var election = _mapper.Map<Election>(newElection);
 
-        byte[] electionSecret = _passwordEncryptionService.GenerateRandomByteArray();
+        byte[] electionSecret = _encryptionService.GenerateRandomByteArray();
         election.ElectionSecret = new ElectionSecret { Secret = electionSecret };
 
         await _electionRepository.CreateElection(election);
@@ -173,11 +173,11 @@ public class ElectionService : IElectionService
         List<ElectionVote> votes = await _votesRepository.GetAllVotesForElection(electionId);
         
         // decrypt votes
-        byte[] ivArray = _passwordEncryptionService.GenerateIVArrayFromUserId(electionId);
+        byte[] ivArray = _encryptionService.GenerateIVArrayFromUserId(electionId);
         
         foreach (ElectionVote vote in votes)
         {
-            string decryptedVoteStr = _passwordEncryptionService
+            string decryptedVoteStr = _encryptionService
                 .DecryptSecret(vote.VotedCandidateEncrypted, election.ElectionSecret.Secret, ivArray);
             var decryptedVote = JsonSerializer.Deserialize<VoteEncryptModel>(decryptedVoteStr);
             vote.VotedCandidateId = decryptedVote.CandidateId;
