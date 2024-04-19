@@ -66,28 +66,6 @@ public class EncryptionService : IEncryptionService
         return votingSecretDecrypted;
     }
 
-    public byte[] EncryptSecret(string secret, byte[] key, byte[] iv)
-    {
-        using Aes aes = Aes.Create();
-        aes.Key = key;
-        aes.IV = iv;
-
-        ICryptoTransform encryptor = aes.CreateEncryptor();
-
-        // Create the streams used for encryption.
-        using var msEncrypt = new MemoryStream();
-        using var csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write);
-        using (var swEncrypt = new StreamWriter(csEncrypt))
-        {
-            //Write all data to the stream.
-            swEncrypt.Write(secret);
-        }
-        
-        byte[] encryptedSecret = msEncrypt.ToArray();
-
-        return encryptedSecret;
-    }
-
     public string DecryptSecret(byte[] encryptedSecret, byte[] key, byte[] iv)
     {
         using Aes aes = Aes.Create();
@@ -122,5 +100,27 @@ public class EncryptionService : IEncryptionService
         random.NextBytes(ivArray);
 
         return ivArray;
+    }
+    
+    private byte[] EncryptSecret(string secret, byte[] key, byte[] iv)
+    {
+        using Aes aes = Aes.Create();
+        aes.Key = key;
+        aes.IV = iv;
+
+        ICryptoTransform encryptor = aes.CreateEncryptor();
+
+        // Create the streams used for encryption.
+        using var msEncrypt = new MemoryStream();
+        using var csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write);
+        using (var swEncrypt = new StreamWriter(csEncrypt))
+        {
+            //Write all data to the stream.
+            swEncrypt.Write(secret);
+        }
+        
+        byte[] encryptedSecret = msEncrypt.ToArray();
+
+        return encryptedSecret;
     }
 }
