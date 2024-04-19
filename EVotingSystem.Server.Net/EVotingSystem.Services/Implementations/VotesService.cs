@@ -12,6 +12,7 @@ namespace EVotingSystem.Services.Implementations;
 
 public class VotesService : IVotesService
 {
+    private readonly IHelperService _helperService;
     private readonly IElectionRepository _electionRepository;
     private readonly IUsersRepository _usersRepository;
     private readonly IVotesRepository _votesRepository;
@@ -19,7 +20,7 @@ public class VotesService : IVotesService
     private readonly ISmsService _smsService;
     private readonly IMapper _mapper;
 
-    public VotesService(IElectionRepository electionRepository, IUsersRepository usersRepository, IVotesRepository votesRepository, IPasswordEncryptionService passwordEncryptionService, ISmsService smsService, IMapper mapper)
+    public VotesService(IElectionRepository electionRepository, IUsersRepository usersRepository, IVotesRepository votesRepository, IPasswordEncryptionService passwordEncryptionService, ISmsService smsService, IMapper mapper, IHelperService helperService)
     {
         _electionRepository = electionRepository;
         _usersRepository = usersRepository;
@@ -27,6 +28,7 @@ public class VotesService : IVotesService
         _passwordEncryptionService = passwordEncryptionService;
         _smsService = smsService;
         _mapper = mapper;
+        _helperService = helperService;
     }
 
     public async Task<List<VoteDto>> GetAllVotesForElection(int electionId)
@@ -54,17 +56,8 @@ public class VotesService : IVotesService
     {
         int voterIdNumeric = int.Parse(userId);
         User user = await _usersRepository.GetUserById(voterIdNumeric, withPassword: true);
-        
-        if (user?.UserPassword is null)
-        {
-            return []; 
-        }
-        
-        // verify user password
-        byte[] hashedPassword =
-            _passwordEncryptionService.HashSHA256WithSalt(hashCheckDto.Password, user.UserSecret.PasswordSalt);
-        
-        if (!hashedPassword.SequenceEqual(user.UserPassword.PasswordHash))
+
+        if (!_helperService.IsPasswordCorrectForUser(hashCheckDto.Password, user))
         {
             return [];
         }
@@ -77,7 +70,7 @@ public class VotesService : IVotesService
             return [];
         }
 
-        if (!election.EligibleVoters.Any(ev => ev.UserId == voterIdNumeric))
+        if (election.EligibleVoters.All(ev => ev.UserId != voterIdNumeric))
         {
             return [];
         }
@@ -109,16 +102,7 @@ public class VotesService : IVotesService
         int voterIdNumeric = int.Parse(voterId);
         User user = await _usersRepository.GetUserById(voterIdNumeric, withPassword: true);
         
-        if (user is null)
-        {
-            return []; 
-        }
-        
-        // verify user password
-        byte[] hashedPassword =
-            _passwordEncryptionService.HashSHA256WithSalt(vote.VoterPassword, user.UserSecret.PasswordSalt);
-        
-        if (!hashedPassword.SequenceEqual(user.UserPassword.PasswordHash))
+        if (!_helperService.IsPasswordCorrectForUser(vote.VoterPassword, user))
         {
             return [];
         }

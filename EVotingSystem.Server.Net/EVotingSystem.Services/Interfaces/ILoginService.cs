@@ -1,5 +1,4 @@
-﻿using EVotingSystem.Contracts;
-using EVotingSystem.Contracts.Login;
+﻿using EVotingSystem.Contracts.Login;
 
 namespace EVotingSystem.Services.Interfaces;
 

@@ -17,31 +17,24 @@ public class LoginService : ILoginService
     private readonly string _tokenSecret;
     private readonly string _issuer;
     private readonly string _audience;
-    
-    private readonly IUsersRepository _usersRepository;
-    private readonly IPasswordEncryptionService _passwordEncryptionService;
 
-    public LoginService(IUsersRepository usersRepository, 
-        IPasswordEncryptionService passwordEncryptionService, 
-        IConfiguration configuration)
+    private readonly IHelperService _helperService;
+    private readonly IUsersRepository _usersRepository;
+
+    public LoginService(IConfiguration configuration, IUsersRepository usersRepository, IHelperService helperService)
     {
-        _usersRepository = usersRepository;
-        _passwordEncryptionService = passwordEncryptionService;
         _tokenSecret = configuration["JwtSettings:Key"];
         _issuer = configuration["JwtSettings:Issuer"];
         _audience = configuration["JwtSettings:Audience"];
+        _usersRepository = usersRepository;
+        _helperService = helperService;
     }
 
     public async Task<string> LoginUser(LoginDto login)
     {
         User user = await _usersRepository.GetUserByEmail(login.Email, withPassword: true);
 
-        if (user?.UserPassword is null)
-        {
-            return string.Empty;
-        }
-
-        if (!IsPasswordCorrectForUser(login.Password, user))
+        if (!_helperService.IsPasswordCorrectForUser(login.Password, user))
         {
             return string.Empty;
         }
@@ -70,13 +63,5 @@ public class LoginService : ILoginService
             signingCredentials: signingCredentials);
 
         return new JwtSecurityTokenHandler().WriteToken(token);
-    }
-
-    private bool IsPasswordCorrectForUser(string passwordProvided, User user)
-    {
-        byte[] hashedProvidedPassword =
-            _passwordEncryptionService.HashSHA256WithSalt(passwordProvided, user.UserSecret.PasswordSalt);
-
-        return hashedProvidedPassword.SequenceEqual(user.UserPassword.PasswordHash);
     }
 }

@@ -23,6 +23,7 @@ public static class DependencyInjection
         services.AddTransient<IElectionService, ElectionService>();
         services.AddTransient<IVotesService, VotesService>();
 
+        services.AddTransient<IHelperService, HelperService>();
         services.AddTransient<IPasswordEncryptionService, PasswordEncryptionService>();
 
         if (withMockEmails)
