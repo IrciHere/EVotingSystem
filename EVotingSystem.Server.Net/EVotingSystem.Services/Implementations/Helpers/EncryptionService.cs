@@ -33,7 +33,7 @@ public class EncryptionService : IEncryptionService
     {
         // SHA256 hash of password without salt is used as AES encryption key
         byte[] votingSecretEncryptionKey = HashSHA256(password);
-        byte[] votingSecretEncryptionIV = GenerateIVArrayFromUserId(userId);
+        byte[] votingSecretEncryptionIV = GenerateIVArrayFromId(userId);
         byte[] votingSecretEncrypted = EncryptSecret(secret, votingSecretEncryptionKey, votingSecretEncryptionIV);
 
         return votingSecretEncrypted;
@@ -43,7 +43,7 @@ public class EncryptionService : IEncryptionService
     {
         // SHA256 hash of password without salt is used as AES encryption key
         byte[] oldVotingSecretEncryptionKey = HashSHA256(password);
-        byte[] votingSecretEncryptionIV = GenerateIVArrayFromUserId(userId);
+        byte[] votingSecretEncryptionIV = GenerateIVArrayFromId(userId);
         string votingSecretDecrypted = DecryptSecret(secret, oldVotingSecretEncryptionKey, votingSecretEncryptionIV);
 
         return votingSecretDecrypted;
@@ -97,7 +97,7 @@ public class EncryptionService : IEncryptionService
         return salt;
     }
 
-    public byte[] GenerateIVArrayFromUserId(int userId)
+    public byte[] GenerateIVArrayFromId(int userId)
     {
         var random = new Random(userId);
 

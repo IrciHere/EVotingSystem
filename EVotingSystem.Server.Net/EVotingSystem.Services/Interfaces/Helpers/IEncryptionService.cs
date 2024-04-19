@@ -9,5 +9,5 @@ public interface IEncryptionService
     byte[] EncryptSecret(string secret, byte[] key, byte[] iv);
     string DecryptSecret(byte[] encryptedSecret, byte[] key, byte[] iv);
     byte[] GenerateRandomByteArray();
-    byte[] GenerateIVArrayFromUserId(int userId);
+    byte[] GenerateIVArrayFromId(int userId);
 }

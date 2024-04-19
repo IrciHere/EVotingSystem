@@ -38,7 +38,6 @@ public class ElectionService : IElectionService
         List<Election> elections = await _electionRepository.GetAllElections();
 
         var mappedElections = _mapper.Map<List<ElectionDto>>(elections);
-
         return mappedElections;
     }
 
@@ -49,7 +48,6 @@ public class ElectionService : IElectionService
         List<Election> elections = await _electionRepository.GetElectionsForUser(userIdNumeric);
         
         var mappedElections = _mapper.Map<List<ElectionDto>>(elections);
-
         return mappedElections;
     }
 
@@ -65,7 +63,6 @@ public class ElectionService : IElectionService
         List<User> candidates = election.Candidates.ToList();
 
         var mappedCandidates = _mapper.Map<List<CandidateDto>>(candidates);
-
         return mappedCandidates;
     }
 
@@ -73,12 +70,7 @@ public class ElectionService : IElectionService
     {
         Election election = await _electionRepository.GetElectionById(electionId);
 
-        if (election is null)
-        {
-            return [];
-        }
-
-        if (!election.HasEnded)
+        if (election is null || !election.HasEnded)
         {
             return [];
         }
@@ -86,7 +78,6 @@ public class ElectionService : IElectionService
         List<ElectionResult> results = await _electionRepository.GetElectionResults(electionId);
 
         var resultsMapped = _mapper.Map<List<ElectionResultDto>>(results);
-
         return resultsMapped;
     }
 
@@ -100,7 +91,6 @@ public class ElectionService : IElectionService
         await _electionRepository.CreateElection(election);
 
         var mappedElection = _mapper.Map<ElectionDto>(election);
-
         return mappedElection;
     }
 
@@ -122,7 +112,6 @@ public class ElectionService : IElectionService
         await _helperRepository.SaveChangesAsync();
 
         var mappedElection = _mapper.Map<ElectionDto>(election);
-
         return mappedElection;
     }
 
@@ -139,19 +128,15 @@ public class ElectionService : IElectionService
 
         await _usersService.CreateUsersOrAssignExistingEntities(votersToAdd);
 
-        List<EligibleVoter> eligibleVoters = votersToAdd.Select(v => new EligibleVoter
-        {
-            ElectionId = electionId,
-            UserId = v.Id,
-            HasVoted = false
-        }).ToList();
+        List<EligibleVoter> eligibleVoters = votersToAdd
+            .Select(v => CreateEligibleVoter(v.Id, electionId))
+            .ToList();
 
         election.EligibleVoters = eligibleVoters;
 
         await _helperRepository.SaveChangesAsync();
 
         var mappedElection = _mapper.Map<ElectionDto>(election);
-
         return mappedElection;
     }
 
@@ -159,45 +144,18 @@ public class ElectionService : IElectionService
     {
         Election election = await _electionRepository.GetElectionById(electionId, withSecret: true, withCandidates: true);
 
-        if (election is null)
-        {
-            return null;
-        }
-
-        if (election.EndTime.AddMinutes(10) > DateTime.Now || election.HasEnded)
+        if (election is null || election.HasEnded || election.EndTime.AddMinutes(10) > DateTime.Now)
         {
             return null;
         }
         
-        // get votes
         List<ElectionVote> votes = await _votesRepository.GetAllVotesForElection(electionId);
         
-        // decrypt votes
-        byte[] ivArray = _encryptionService.GenerateIVArrayFromUserId(electionId);
-        
-        foreach (ElectionVote vote in votes)
-        {
-            string decryptedVoteStr = _encryptionService
-                .DecryptSecret(vote.VotedCandidateEncrypted, election.ElectionSecret.Secret, ivArray);
-            var decryptedVote = JsonSerializer.Deserialize<VoteEncryptModel>(decryptedVoteStr);
-            vote.VotedCandidateId = decryptedVote.CandidateId;
-        }
-        
-        // create summarised results
-        Dictionary<int?, List<ElectionVote>> resultsGrouped = votes
-            .GroupBy(v => v.VotedCandidateId)
-            .ToDictionary(g => g.Key, g => g.ToList());
-        
-        List<ElectionResult> results = election.Candidates.Select(c => new ElectionResult
-            {
-                ElectionId = electionId,
-                UserId = c.Id,
-                Votes = resultsGrouped.TryGetValue(c.Id, out List<ElectionVote> value) ? value.Count : 0
-            })
-            .ToList();
-        
+        DecryptVotes(electionId, votes, election);
+
+        List<ElectionResult> results = CreateSummarisedResults(electionId, votes, election);
+
         election.ElectionResults = results;
-        
         election.HasEnded = true;
         
         await _helperRepository.SaveChangesAsync();
@@ -206,5 +164,51 @@ public class ElectionService : IElectionService
 
         var mappedElection = _mapper.Map<ElectionDto>(election);
         return mappedElection;
+    }
+
+    private void DecryptVotes(int electionId, List<ElectionVote> votes, Election election)
+    {
+        byte[] ivArray = _encryptionService.GenerateIVArrayFromId(electionId);
+
+        foreach (ElectionVote vote in votes)
+        {
+            string decryptedVoteStr = _encryptionService
+                .DecryptSecret(vote.VotedCandidateEncrypted, election.ElectionSecret.Secret, ivArray);
+            var decryptedVote = JsonSerializer.Deserialize<VoteEncryptModel>(decryptedVoteStr);
+            vote.VotedCandidateId = decryptedVote.CandidateId;
+        }
+    }
+    
+    private static List<ElectionResult> CreateSummarisedResults(int electionId, List<ElectionVote> votes, Election election)
+    {
+        Dictionary<int?, List<ElectionVote>> resultsGrouped = votes
+            .GroupBy(v => v.VotedCandidateId)
+            .ToDictionary(g => g.Key, g => g.ToList());
+
+        List<ElectionResult> results = election.Candidates
+            .Select(c => CreateElectionResult(electionId, c.Id, resultsGrouped))
+            .ToList();
+        
+        return results;
+    }
+
+    private static EligibleVoter CreateEligibleVoter(int userId, int electionId)
+    {
+        return new EligibleVoter
+        {
+            ElectionId = electionId,
+            UserId = userId,
+            HasVoted = false
+        };
+    }
+
+    private static ElectionResult CreateElectionResult(int electionId, int userId, Dictionary<int?, List<ElectionVote>> votesGrouped)
+    {
+        return new ElectionResult
+        {
+            ElectionId = electionId,
+            UserId = userId,
+            Votes = votesGrouped.TryGetValue(userId, out List<ElectionVote> value) ? value.Count : 0
+        };
     }
 }

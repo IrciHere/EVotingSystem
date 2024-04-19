@@ -76,7 +76,7 @@ public class VotesService : IVotesService
         }
         
         // get user secret
-        byte[] votingSecretEncryptionIV = _encryptionService.GenerateIVArrayFromUserId(user.Id);
+        byte[] votingSecretEncryptionIV = _encryptionService.GenerateIVArrayFromId(user.Id);
         // SHA256 hash of password without salt is used as AES encryption key
         byte[] votingSecretEncryptionKey = _encryptionService
             .HashSHA256(hashCheckDto.Password);
@@ -131,7 +131,7 @@ public class VotesService : IVotesService
         }
         
         // get user secret
-        byte[] votingSecretEncryptionIV = _encryptionService.GenerateIVArrayFromUserId(user.Id);
+        byte[] votingSecretEncryptionIV = _encryptionService.GenerateIVArrayFromId(user.Id);
         // SHA256 hash of password without salt is used as AES encryption key
         byte[] votingSecretEncryptionKey = _encryptionService
             .HashSHA256(vote.VoterPassword);
@@ -175,7 +175,7 @@ public class VotesService : IVotesService
         };
         string voteEncryptText = JsonSerializer.Serialize(voteEncryptObject);
 
-        byte[] ivArray = _encryptionService.GenerateIVArrayFromUserId(vote.ElectionId);
+        byte[] ivArray = _encryptionService.GenerateIVArrayFromId(vote.ElectionId);
         byte[] voteEncrypted = _encryptionService
             .EncryptSecret(voteEncryptText, election.ElectionSecret.Secret, ivArray);
 
