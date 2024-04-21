@@ -1,4 +1,8 @@
 {
+  "MockServicesSettings": {
+    "UseMockEmail": true,
+    "UseMockSms": false
+  },
   "Smsapi": {
     "Url": "https://api.smsapi.pl",
     "Token": "ExampleBearerToken"

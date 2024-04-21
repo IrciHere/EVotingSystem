@@ -61,7 +61,10 @@ builder.Services.AddSwaggerGen(c => {
     });
 });
 
-builder.Services.AddApplicationServices(withMockEmails: true);
+var useMockEmail = configuration.GetSection("MockServicesSettings").GetValue<bool>("UseMockEmail");
+var useMockSms = configuration.GetSection("MockServicesSettings").GetValue<bool>("UseMockSms");
+
+builder.Services.AddApplicationServices(withMockEmails: useMockEmail, withMockSms: useMockSms);
 
 builder.Services.AddApplicationInfrastructure(configuration);
 
