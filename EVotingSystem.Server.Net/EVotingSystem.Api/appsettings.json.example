@@ -1,4 +1,8 @@
 {
+  "Smsapi": {
+    "Url": "https://api.smsapi.pl",
+    "Token": "ExampleBearerToken"
+  },
   "GmailSettings": {
     "ServerLogin": "examplelogin@gmail.com",
     "ServerPassword": "examplePassword",

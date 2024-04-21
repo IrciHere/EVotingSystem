@@ -61,7 +61,7 @@ builder.Services.AddSwaggerGen(c => {
     });
 });
 
-builder.Services.AddApplicationServices(withMockEmails: true, withMockSms: true);
+builder.Services.AddApplicationServices(withMockEmails: true);
 
 builder.Services.AddApplicationInfrastructure(configuration);
 

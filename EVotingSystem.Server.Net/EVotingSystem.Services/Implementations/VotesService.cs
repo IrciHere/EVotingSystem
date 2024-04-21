@@ -204,7 +204,7 @@ public class VotesService : IVotesService
     
     private static bool IsElectionOngoing(Election election, int endTimeMargin = 0)
     {
-        return election.StartTime < DateTime.Now && election.EndTime.AddMinutes(endTimeMargin) < DateTime.Now;
+        return election.StartTime < DateTime.Now && election.EndTime.AddMinutes(endTimeMargin) > DateTime.Now;
     }
     
     private static bool IsUserElectionCandidate(IEnumerable<User> candidates, int userId)

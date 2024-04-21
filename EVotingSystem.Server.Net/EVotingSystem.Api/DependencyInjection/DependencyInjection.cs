@@ -41,7 +41,7 @@ public static class DependencyInjection
         }
         else
         {
-            services.AddTransient<ISmsService, MockSmsService>();
+            services.AddTransient<ISmsService, SmsapiSmsService>();
         }
         
         return services;
