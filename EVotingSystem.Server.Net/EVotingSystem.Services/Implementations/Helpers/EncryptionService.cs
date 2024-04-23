@@ -110,12 +110,10 @@ public class EncryptionService : IEncryptionService
 
         ICryptoTransform encryptor = aes.CreateEncryptor();
 
-        // Create the streams used for encryption.
         using var msEncrypt = new MemoryStream();
         using var csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write);
         using (var swEncrypt = new StreamWriter(csEncrypt))
         {
-            //Write all data to the stream.
             swEncrypt.Write(secret);
         }
         
