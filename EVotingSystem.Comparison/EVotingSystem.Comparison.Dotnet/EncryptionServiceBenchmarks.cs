@@ -23,7 +23,7 @@ public class EncryptionServiceBenchmarks
     }
 
     [Benchmark]
-    public byte[] CreateSalt()
+    public byte[] CreateHash()
     {
         byte[] hash = EncryptionService.HashSHA256(Password);
 
