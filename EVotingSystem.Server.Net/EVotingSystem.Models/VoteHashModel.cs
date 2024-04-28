@@ -2,7 +2,7 @@
 
 public class VoteHashModel
 {
-    public int UserId { get; set; }
-    public int ElectionId { get; set; }
-    public string Secret { get; set; }
+    public int UserId { get; init; }
+    public int ElectionId { get; init; }
+    public string Secret { get; init; }
 }
