@@ -2,7 +2,7 @@
 
 public class ValidateVoteDto
 {
-    public int ElectionId { get; set; }
-    public byte[] VoteHash { get; set; }
-    public string OtpCode { get; set; }
+    public int ElectionId { get; init; }
+    public byte[] VoteHash { get; init; }
+    public string OtpCode { get; init; }
 }

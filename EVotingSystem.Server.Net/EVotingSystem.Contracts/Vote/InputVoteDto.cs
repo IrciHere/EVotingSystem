@@ -2,7 +2,7 @@
 
 public class InputVoteDto
 {
-    public int ElectionId { get; set; }
-    public int CandidateId { get; set; }
-    public string VoterPassword { get; set; }
+    public int ElectionId { get; init; }
+    public int CandidateId { get; init; }
+    public string VoterPassword { get; init; }
 }
