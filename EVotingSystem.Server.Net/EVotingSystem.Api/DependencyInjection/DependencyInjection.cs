@@ -18,30 +18,30 @@ public static class DependencyInjection
     {
         services.AddAutoMapper(typeof(EVotingSystemProfile));
 
-        services.AddTransient<IUsersService, UsersService>();
-        services.AddTransient<ILoginService, LoginService>();
-        services.AddTransient<IElectionService, ElectionService>();
-        services.AddTransient<IVotesService, VotesService>();
+        services.AddScoped<IUsersService, UsersService>();
+        services.AddScoped<ILoginService, LoginService>();
+        services.AddScoped<IElectionService, ElectionService>();
+        services.AddScoped<IVotesService, VotesService>();
 
-        services.AddTransient<IHelperService, HelperService>();
-        services.AddTransient<IEncryptionService, EncryptionService>();
+        services.AddScoped<IHelperService, HelperService>();
+        services.AddScoped<IEncryptionService, EncryptionService>();
 
         if (withMockEmails)
         {
-            services.AddTransient<IEmailsService, MockEmailsService>();
+            services.AddScoped<IEmailsService, MockEmailsService>();
         }
         else
         {
-            services.AddTransient<IEmailsService, GmailEmailsService>();
+            services.AddScoped<IEmailsService, GmailEmailsService>();
         }
 
         if (withMockSms)
         {
-            services.AddTransient<ISmsService, MockSmsService>();
+            services.AddScoped<ISmsService, MockSmsService>();
         }
         else
         {
-            services.AddTransient<ISmsService, SmsapiSmsService>();
+            services.AddScoped<ISmsService, SmsapiSmsService>();
         }
         
         return services;
@@ -50,11 +50,11 @@ public static class DependencyInjection
     public static IServiceCollection AddApplicationInfrastructure(this IServiceCollection services,
         IConfigurationRoot configuration)
     {
-        services.AddTransient<IUsersRepository, UsersRepository>();
-        services.AddTransient<IElectionRepository, ElectionRepository>();
-        services.AddTransient<IVotesRepository, VotesRepository>();
+        services.AddScoped<IUsersRepository, UsersRepository>();
+        services.AddScoped<IElectionRepository, ElectionRepository>();
+        services.AddScoped<IVotesRepository, VotesRepository>();
         
-        services.AddTransient<IHelperRepository, HelperRepository>();
+        services.AddScoped<IHelperRepository, HelperRepository>();
 
         services.AddSingleton<IConfiguration>(_ => configuration);
 
