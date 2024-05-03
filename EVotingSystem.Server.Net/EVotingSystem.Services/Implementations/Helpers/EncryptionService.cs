@@ -59,9 +59,9 @@ public class EncryptionService : IEncryptionService
     public string DecryptVotingSecretForUser(byte[] secret, string password, int userId)
     {
         // SHA256 hash of password without salt is used as AES encryption key
-        byte[] oldVotingSecretEncryptionKey = HashSHA256(password);
+        byte[] votingSecretEncryptionKey = HashSHA256(password);
         byte[] votingSecretEncryptionIV = GenerateIVArrayFromId(userId);
-        string votingSecretDecrypted = DecryptSecret(secret, oldVotingSecretEncryptionKey, votingSecretEncryptionIV);
+        string votingSecretDecrypted = DecryptSecret(secret, votingSecretEncryptionKey, votingSecretEncryptionIV);
 
         return votingSecretDecrypted;
     }
@@ -85,16 +85,16 @@ public class EncryptionService : IEncryptionService
     public byte[] GenerateRandomByteArray()
     {
         var rng = RandomNumberGenerator.Create();
-        var salt = new byte[32];
+        var secret = new byte[32];
              
-        rng.GetBytes(salt);
+        rng.GetBytes(secret);
 
-        return salt;
+        return secret;
     }
 
-    public byte[] GenerateIVArrayFromId(int userId)
+    public byte[] GenerateIVArrayFromId(int id)
     {
-        var random = new Random(userId);
+        var random = new Random(id);
 
         var ivArray = new byte[16];
         random.NextBytes(ivArray);
