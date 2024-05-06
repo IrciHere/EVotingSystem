@@ -11,10 +11,10 @@ import java.util.concurrent.TimeUnit;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 @State(Scope.Thread)
 @BenchmarkMode(Mode.AverageTime)
-@OutputTimeUnit(TimeUnit.MILLISECONDS)
+@OutputTimeUnit(TimeUnit.NANOSECONDS)
 public class Main {
     private static final String Password = "TestPassw0rd%";
-    private static final String Secret = "TestSecr3t@";
+    private static final String Secret = "Litwo! Ojczyzno moja! ty jesteś jak zdrowie:\nIle cię trzeba cenić, ten tylko się dowie,\nKto cię stracił. Dziś piękność twą w całej ozdobie\nWidzę i opisuję, bo tęsknię po tobie.";
     private byte[] _aesKey;
     private byte[] _aesIv;
 

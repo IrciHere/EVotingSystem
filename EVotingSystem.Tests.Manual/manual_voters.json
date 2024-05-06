@@ -1,0 +1,14 @@
+[
+    {
+        "email": "tox14329@vogco.com",
+        "phoneNumber": "+48111111111",
+        "name": "Dawid Starczewski",
+        "isAdmin": false
+    },
+    {
+        "email": "bitemac401@deligy.com",
+        "phoneNumber": "+48111111112",
+        "name": "Jan Nowak",
+        "isAdmin": false
+    }
+]

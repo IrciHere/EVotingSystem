@@ -1,0 +1,1190 @@
+[
+  {
+    "email": "glancurszula@example.org",
+    "candidateId": 12,
+    "resetCode": "aUoL7hu9Ce",
+    "voteHash": "OmIQ6A2rxWuSQjKk/5VGOkJTLLNZVO0Bfi4wUUHTS28="
+  },
+  {
+    "email": "marianna10@example.com",
+    "candidateId": 13,
+    "resetCode": "ZLQjAnRa1n",
+    "voteHash": "GTmsFCqGsTSCywYnaoqGNZTezKExCqse9jfU9kj5Wqo="
+  },
+  {
+    "email": "marcin49@example.org",
+    "candidateId": 5,
+    "resetCode": "4z9aQYCMDL",
+    "voteHash": "ih6rBt6b0DdPX5QqOTdB83XsEmy+TftIi7hKUiumb08="
+  },
+  {
+    "email": "banachowiczjacek@example.com",
+    "candidateId": 9,
+    "resetCode": "DoM0eUqdyU",
+    "voteHash": "5Bzb2ckNVScGSMhrG4uxy4Xp3uFeiwbCssBVNh+4Ons="
+  },
+  {
+    "email": "kwojnicz@example.com",
+    "candidateId": 6,
+    "resetCode": "XlA5OoKjI5",
+    "voteHash": "p+gGf4qw2Piqqr6wWyEuhchNKBgPhoAxhRaeOZqzZow="
+  },
+  {
+    "email": "umadura@example.org",
+    "candidateId": 8,
+    "resetCode": "uQKyppkcbt",
+    "voteHash": "9qupFdG4Cf/CY33JzijC6SSt8SvNM9pbHawuoBL1rOc="
+  },
+  {
+    "email": "kajetanpotoczek@example.com",
+    "candidateId": 8,
+    "resetCode": "jRZtTEVbWA",
+    "voteHash": "PgN62ZAoKKYEgJMljCkYBQuq5HHSa9idaz3qOg6kUz4="
+  },
+  {
+    "email": "hpietrusiak@example.com",
+    "candidateId": 11,
+    "resetCode": "FsRVqszrY0",
+    "voteHash": "fWEUI/vkfCRY4apkCOYMN87mRrAMlsZEnUDAoFg8unU="
+  },
+  {
+    "email": "anna-mariaborkowicz@example.net",
+    "candidateId": 7,
+    "resetCode": "cHut8ItcG1",
+    "voteHash": "ySdu41vaTxkwcV0NRP64yEIZdJhBi8iQStNggdzZVG4="
+  },
+  {
+    "email": "dariusz44@example.net",
+    "candidateId": 5,
+    "resetCode": "zMhwJK7j2j",
+    "voteHash": "0UkAYLLEnJEaS4QgJTQpYbWWZ3gDM/HcOmZ7IwaBqpA="
+  },
+  {
+    "email": "anna-mariagolas@example.com",
+    "candidateId": 9,
+    "resetCode": "xkyQ6Ap1W6",
+    "voteHash": "CiUPgM9C/Sba8ccfAdgiCZVTtjCk+Ai+JcK8y0cIsNk="
+  },
+  {
+    "email": "mikusekhubert@example.org",
+    "candidateId": 8,
+    "resetCode": "bpNNtkhqWd",
+    "voteHash": "umld/EZ29Nh201mO2VUqoi29axqYzE0GbAxtUCTjE+8="
+  },
+  {
+    "email": "eryk83@example.org",
+    "candidateId": 10,
+    "resetCode": "7fzitwGmnT",
+    "voteHash": "HYlSPyj6ju/xL4ps55nucX/gBSH/A++YnEtHZ0hPMU8="
+  },
+  {
+    "email": "adriannakalista@example.net",
+    "candidateId": 5,
+    "resetCode": "U3mcKXUoQR",
+    "voteHash": "dEsXk+YK9JZnfA6UR5VVJkByI4vmGPnJ8DsnAsEa5YI="
+  },
+  {
+    "email": "hgrzela@example.net",
+    "candidateId": 8,
+    "resetCode": "KmabzqNWFt",
+    "voteHash": "rjjqNVFidL46q686DssNlKVLIZVAu7/Sml7nQfJw3So="
+  },
+  {
+    "email": "lejkjan@example.net",
+    "candidateId": 9,
+    "resetCode": "F3mLWUI9IK",
+    "voteHash": "90ki0O5gRyNYtILF/hGXcNMzu4V5/13O5cITJFjk7d8="
+  },
+  {
+    "email": "dawidglanc@example.net",
+    "candidateId": 12,
+    "resetCode": "4W8G7gN53f",
+    "voteHash": "0TXj2+W7moJklTFef9PyaqofaZ2MJ9Ba6TwiFbb2AOE="
+  },
+  {
+    "email": "zagozdzonida@example.org",
+    "candidateId": 10,
+    "resetCode": "tQRMVuLOi9",
+    "voteHash": "X1Hgei7eeW2kfz158A+n0RDNYRx96fufX/AZ9S+dn84="
+  },
+  {
+    "email": "adriannaciak@example.org",
+    "candidateId": 9,
+    "resetCode": "vLJaDItf7w",
+    "voteHash": "GdJb1/348NoGL7q9n223bnaGdQjuTCeQcFvegAeDAuk="
+  },
+  {
+    "email": "gzoltek@example.com",
+    "candidateId": 7,
+    "resetCode": "jTKNgU0zSs",
+    "voteHash": "qWbNWyUjtmao8Mh4W5H84vnV+C/qhkM/L3aOwIgyqlk="
+  },
+  {
+    "email": "jamrozekborys@example.com",
+    "candidateId": 9,
+    "resetCode": "YByo4AbrIP",
+    "voteHash": "8EdCCunVbHBuN6pgoqMvYJelSbD5RD2bPBzj075XV04="
+  },
+  {
+    "email": "fgrabas@example.com",
+    "candidateId": 5,
+    "resetCode": "d9cOZP0JqY",
+    "voteHash": "C3xSt5npUtyDK3wDYYj01Pt1mHoOZUYdA7wZlePdVX8="
+  },
+  {
+    "email": "fgierach@example.net",
+    "candidateId": 9,
+    "resetCode": "Ms2EPkJGcO",
+    "voteHash": "BoboJw9l0Gs9vfgn+1+rPRQ5Tl5jLoaksauK1IHUmVI="
+  },
+  {
+    "email": "leszczukkazimierz@example.org",
+    "candidateId": 12,
+    "resetCode": "nojjCI6Rkk",
+    "voteHash": "/zviCEn/mVNDj1ah3I0o/tYlHhwV89EmroMNbuFD0QA="
+  },
+  {
+    "email": "korneliasarosiek@example.net",
+    "candidateId": 7,
+    "resetCode": "2cwKmb9eyh",
+    "voteHash": "uE2k7D8Qw/Nz/T5OZU8zQNda9R/6UPSaPbmg3qlbVOM="
+  },
+  {
+    "email": "ngalaj@example.net",
+    "candidateId": 4,
+    "resetCode": "VhpPnBgKth",
+    "voteHash": "LZtb6bbucfr6JC9VKBn3HDCgmMdGxzO/w130mwrkQ0w="
+  },
+  {
+    "email": "jozefmajak@example.org",
+    "candidateId": 9,
+    "resetCode": "0DDECw8QxF",
+    "voteHash": "PZJzrjor/2pwm5Xjiwb91Dqu9YOQm3lOFxzOyKbaqd4="
+  },
+  {
+    "email": "wojciech48@example.net",
+    "candidateId": 5,
+    "resetCode": "3BJHV8U23i",
+    "voteHash": "FujGkw2OjMdBlb0AwskBTumoh4+hbLD4/Tt6M6mymMY="
+  },
+  {
+    "email": "jfras@example.org",
+    "candidateId": 13,
+    "resetCode": "IDLcqrQV4F",
+    "voteHash": "qsDlcu3qHE2tfC8Z2glkuxHEmCoEBt2NwnAxJLCz9LM="
+  },
+  {
+    "email": "ziniewiczeliza@example.net",
+    "candidateId": 8,
+    "resetCode": "9giaRlU1hr",
+    "voteHash": "I119H8teZtjDvSWfpPmWtDwF9VUG0mTd0r4W10jOwqE="
+  },
+  {
+    "email": "nikodem52@example.com",
+    "candidateId": 8,
+    "resetCode": "T84kFLpBWd",
+    "voteHash": "CVQFVxdMShfe+kG8SbNGlIOHqWF+aWoogRmW2DUvRno="
+  },
+  {
+    "email": "tobiasz90@example.com",
+    "candidateId": 11,
+    "resetCode": "yEDOskYNC6",
+    "voteHash": "z4CCXYqYx7iLZ9U65NnxrlKZfXXRF16WmG7Flp17rck="
+  },
+  {
+    "email": "milosz62@example.org",
+    "candidateId": 5,
+    "resetCode": "CBuktHvmkH",
+    "voteHash": "ac2xZL/4nlRN72GJgFeA96Q0q1qv5Gokot5uyuCbsOo="
+  },
+  {
+    "email": "konstantywiatrak@example.org",
+    "candidateId": 12,
+    "resetCode": "FUpfHyvujB",
+    "voteHash": "bLSjm1kjA/fo+W41xrHMQU1Q78R5e6pLQYVmCjkEOWY="
+  },
+  {
+    "email": "pworoch@example.net",
+    "candidateId": 6,
+    "resetCode": "kjTZZUOvnL",
+    "voteHash": "tK/AP1PJ6fCdSe4X8UT3qLJgQoSkJjSrCoMkrKQQBMA="
+  },
+  {
+    "email": "dorota24@example.com",
+    "candidateId": 9,
+    "resetCode": "nZgc9oAY21",
+    "voteHash": "yfpkBHk46ClsAobpnoUkv7zXiVyFRcW/aePaIyGAkLw="
+  },
+  {
+    "email": "ukierepka@example.com",
+    "candidateId": 5,
+    "resetCode": "4FXzNNu59Y",
+    "voteHash": "zr/0JtTIiRaUJib2wUna7VL3cxV6V1vwEVI8PxsJkCM="
+  },
+  {
+    "email": "ycmiel@example.com",
+    "candidateId": 4,
+    "resetCode": "JxxZwX6kgJ",
+    "voteHash": "cg6MNC+zFc9ESAPHITo0GQEffYxUoXD2EBikTl44/7A="
+  },
+  {
+    "email": "anna-mariakrzosek@example.org",
+    "candidateId": 13,
+    "resetCode": "OYNTkp8Kqq",
+    "voteHash": "hw5LWaVmYyVDtLeoT8Gf+W9gTjwfby0xVlkodEoKYk0="
+  },
+  {
+    "email": "kuranteryk@example.net",
+    "candidateId": 11,
+    "resetCode": "T3aIW6ploU",
+    "voteHash": "ND7U/9actseZFgekA9k5AMOihSicivtPDGZbvH0NLqk="
+  },
+  {
+    "email": "nikodembela@example.net",
+    "candidateId": 12,
+    "resetCode": "g7DiOsUmFK",
+    "voteHash": "QxEjiaRlkCULvvnNP0Y8Dva8X633uvWupF6cgHHcuOc="
+  },
+  {
+    "email": "arkadiuszswiech@example.org",
+    "candidateId": 5,
+    "resetCode": "bjjRd0tk5Q",
+    "voteHash": "BoYYkgi9G6YUO8J1/ToQbb58RO3v9VjW1Yp3IOZOviY="
+  },
+  {
+    "email": "tolamatura@example.org",
+    "candidateId": 8,
+    "resetCode": "yI4vhFVzFI",
+    "voteHash": "KWYrW1h5zhrk9FZIjA4st79NMfDnhOzQ72L5Yh5ifDY="
+  },
+  {
+    "email": "nlaskawiec@example.net",
+    "candidateId": 8,
+    "resetCode": "bNOi7GZvJa",
+    "voteHash": "eK48b7EUPbqElKy7rX1rnFA0T8Z8pT5SV9YC11RrGgs="
+  },
+  {
+    "email": "zugajmalwina@example.com",
+    "candidateId": 13,
+    "resetCode": "DAuGNCTSTD",
+    "voteHash": "G9pxxOB65lA8uvgPUOd1nnrBhlwffh6kdyPeiVgFvGM="
+  },
+  {
+    "email": "zmosur@example.net",
+    "candidateId": 5,
+    "resetCode": "P4lmzsrRFS",
+    "voteHash": "/2+9AWumaRccQvvPldpo8v5HrHn4k7FRkq9ttLJJXEo="
+  },
+  {
+    "email": "rafaldrozdziel@example.org",
+    "candidateId": 10,
+    "resetCode": "xJcyPkY1JV",
+    "voteHash": "hUcNdNClDa3vIIilumEfAsinr+dZ/j8pj09RL3fXRQs="
+  },
+  {
+    "email": "kafelalan@example.net",
+    "candidateId": 6,
+    "resetCode": "xUOUQoQojy",
+    "voteHash": "wO1fiHwUVWfDuYawF9GmrgsTwlBqj4jMfQ7Ko2IYfKI="
+  },
+  {
+    "email": "roksanapabisiak@example.com",
+    "candidateId": 9,
+    "resetCode": "qHhUsGGV9X",
+    "voteHash": "btDQzebKaEhA5QFqLmS4CGqkKOspR5aDSI05pCEPGvU="
+  },
+  {
+    "email": "mateusz22@example.com",
+    "candidateId": 4,
+    "resetCode": "dSiN2sg2Sa",
+    "voteHash": "labAS7RpmFnWOUpCQwAJOojMzPuVLzvJAZbBA5T9vXk="
+  },
+  {
+    "email": "dmanista@example.org",
+    "candidateId": 13,
+    "resetCode": "7As8V0L3On",
+    "voteHash": "hHyFgS7fA9h0OUP9/47uAJZQJigCM9fe6Vzz7zRP2J4="
+  },
+  {
+    "email": "karolletkiewicz@example.com",
+    "candidateId": 7,
+    "resetCode": "rrZLUmGqF7",
+    "voteHash": "a6U+lXN9//wUDJ5vB/fVotZJLXJh7mXIUafmfZyNzj0="
+  },
+  {
+    "email": "kochanowiczbartek@example.net",
+    "candidateId": 6,
+    "resetCode": "9adAq2uakb",
+    "voteHash": "N0hilHccYwsbtEuFfFolyX5zbot4vqXQCheOZq9gdcc="
+  },
+  {
+    "email": "astartek@example.com",
+    "candidateId": 4,
+    "resetCode": "sFMBbCpNw2",
+    "voteHash": "NUrPG4iBkrDGf7dxueQb6fBMgZRyYbutCWrM1A8+xNc="
+  },
+  {
+    "email": "adriandzielak@example.net",
+    "candidateId": 7,
+    "resetCode": "hE53lhiYdT",
+    "voteHash": "locR94nxt1fY74lR9wocF86y89oP6vojh7RZxRbDY5I="
+  },
+  {
+    "email": "tomasz96@example.net",
+    "candidateId": 6,
+    "resetCode": "7wRAA44VNM",
+    "voteHash": "zw6YDLfmfL3ljKiWzAr5VhH4HjiWO+Yx8RhU7eP1C0M="
+  },
+  {
+    "email": "soleksik@example.org",
+    "candidateId": 11,
+    "resetCode": "OIW1ZyMXP6",
+    "voteHash": "qHVpANBhvm4ITHXi4wXxE09OF9Tc1tmTJhRCiMa0mnM="
+  },
+  {
+    "email": "epetrus@example.com",
+    "candidateId": 6,
+    "resetCode": "LMFB1aM8je",
+    "voteHash": "hp8iSlhVLrnVwicQyYJZfpePRm2R9wJ1VAgI2adOPjo="
+  },
+  {
+    "email": "adamlabus@example.net",
+    "candidateId": 6,
+    "resetCode": "ESpxU4Zjar",
+    "voteHash": "4zoDioybfP1tZ/Y1PPdBiwyw9WpLIRVFKlm2uz4eqw8="
+  },
+  {
+    "email": "anna-mariaborejko@example.org",
+    "candidateId": 13,
+    "resetCode": "XkCAhC7Hnb",
+    "voteHash": "zwmN3R3ftQKRCv3Acd21PlLkeFN4JuGgWCyEZOCUs64="
+  },
+  {
+    "email": "eszumny@example.net",
+    "candidateId": 9,
+    "resetCode": "0cbsBCUd9R",
+    "voteHash": "n8ApwSHSb4YLAFK2ABYx34aDrr7J5SqCsWNfM1V0r6o="
+  },
+  {
+    "email": "kalinaorawiec@example.com",
+    "candidateId": 10,
+    "resetCode": "bcLpNFC2r3",
+    "voteHash": "ibW/xGeEulv0Hl2ccS3yDzPGgB5RML/z2dpmTthYI6A="
+  },
+  {
+    "email": "oklaanita@example.com",
+    "candidateId": 9,
+    "resetCode": "xQltow4rLN",
+    "voteHash": "149sZgGU+YpRYKs4+puVXuDhSJJEXP1Q+X5H2tddqXk="
+  },
+  {
+    "email": "ograban@example.net",
+    "candidateId": 6,
+    "resetCode": "EAPobRPy0n",
+    "voteHash": "W0WdNE6XhU8EgSvn8WgVK0Z5+/TN+zZ3f+IAdEksq9c="
+  },
+  {
+    "email": "jedrzej59@example.com",
+    "candidateId": 8,
+    "resetCode": "Djdf8Aecq4",
+    "voteHash": "hU7rFg/6uCUXQPTqy8orfNYl2ppOcMDkNJSrA+JYhgc="
+  },
+  {
+    "email": "iwo49@example.org",
+    "candidateId": 12,
+    "resetCode": "rR2sshOoFP",
+    "voteHash": "9kXekY3IMb7qeGARTe1YyPV0ZkMBI9ZLkOhnsot09i0="
+  },
+  {
+    "email": "luksnela@example.org",
+    "candidateId": 7,
+    "resetCode": "BQBfE5d658",
+    "voteHash": "RdpD1lWbCNZhzUNFIyL+VsUJQm+l/KbqpdEKv/EUfRY="
+  },
+  {
+    "email": "tymoteuszsobilo@example.org",
+    "candidateId": 13,
+    "resetCode": "7EeC7TBPAW",
+    "voteHash": "rNmyDx+p2V9uvCywvnR3Ns9l47oT9844WQxZ/6DORRM="
+  },
+  {
+    "email": "fryderyksajda@example.com",
+    "candidateId": 5,
+    "resetCode": "ckzF27DDBS",
+    "voteHash": "mdxF8p/lJonCq7J6U3elMWcic1cBdbpbECgVhZIQDos="
+  },
+  {
+    "email": "konrad04@example.net",
+    "candidateId": 12,
+    "resetCode": "Qnm48JjbR3",
+    "voteHash": "ANtyxIfpZfsCCCz6hgfc1tNnnc90f5rP28d8Qf183Nk="
+  },
+  {
+    "email": "ebogdal@example.com",
+    "candidateId": 6,
+    "resetCode": "zmD6iMQ7pi",
+    "voteHash": "NSw20IWo7IqA3b27fGMpSoM+Hop0VaJfUKr3xK6gvzQ="
+  },
+  {
+    "email": "biankaswiergiel@example.org",
+    "candidateId": 12,
+    "resetCode": "IXRnoBn63d",
+    "voteHash": "klnXLDBKh3raRwwwI654u3EmjW3dJygzpweuHa/PY7o="
+  },
+  {
+    "email": "medralaiwo@example.com",
+    "candidateId": 7,
+    "resetCode": "gnNvXLWONi",
+    "voteHash": "U7gTYx4mEuzkXhDZIuxH2J7UB9au2B2lfyC/AY4LPtA="
+  },
+  {
+    "email": "gabrychsara@example.org",
+    "candidateId": 10,
+    "resetCode": "wWqvLY0afs",
+    "voteHash": "z7j3hQyPPOllVqPm08AMZhjbDWJh3TCmXJeu3WIgeWI="
+  },
+  {
+    "email": "brachakrystian@example.com",
+    "candidateId": 6,
+    "resetCode": "4WxVJxWXbE",
+    "voteHash": "DK4PHLPAuSu4FVfWM9EdCd3vlxLxWMFnw6E16+2Gyh4="
+  },
+  {
+    "email": "olgabulczak@example.org",
+    "candidateId": 12,
+    "resetCode": "VOsHlCTpDl",
+    "voteHash": "26s9JP2G19kUsF0/bRxoV1dHFNCbyHlGo82DaS6ijKk="
+  },
+  {
+    "email": "wierzchonnela@example.org",
+    "candidateId": 5,
+    "resetCode": "ozgeEolXqc",
+    "voteHash": "LxqqX23M+PitgZcNcGDEhPSFnjIQajiYnrRKK1o8+nU="
+  },
+  {
+    "email": "pabisbruno@example.net",
+    "candidateId": 11,
+    "resetCode": "avDfBcPrfX",
+    "voteHash": "lqfQQAZr5IaetFpmw3ugyIYlIZt3Psv7j+JIjmRh/6A="
+  },
+  {
+    "email": "olafflisek@example.net",
+    "candidateId": 7,
+    "resetCode": "47mJS0LJdw",
+    "voteHash": "sfNBlnCsaZTSK59VQ19ObHGQOhYelEdmtfTqbLPNve8="
+  },
+  {
+    "email": "gadzinajacek@example.org",
+    "candidateId": 13,
+    "resetCode": "5qusvQvjvA",
+    "voteHash": "rVi6mcSSMkOvWwgoBgbRIYC6xkpVX+ctmKumltN6XR0="
+  },
+  {
+    "email": "tobiaszludwiniak@example.org",
+    "candidateId": 6,
+    "resetCode": "a46BySGG3i",
+    "voteHash": "LgWlwF05NvMNQLj6rAHI2z286+MMzGfHoZNGN9i9fRc="
+  },
+  {
+    "email": "cholodykaja@example.com",
+    "candidateId": 6,
+    "resetCode": "4D2tSxtlC7",
+    "voteHash": "glfhvtyT+lzA3S0R4+32ox+RFcTXLJhhI3wSwRbU95s="
+  },
+  {
+    "email": "przemyslawwojtarowicz@example.net",
+    "candidateId": 13,
+    "resetCode": "mmVGoXaqY9",
+    "voteHash": "Ts1RLHeXBGEw/CEUH06SO6YRR8Q5AE2zHJGr0S383PI="
+  },
+  {
+    "email": "stefanlachacz@example.org",
+    "candidateId": 7,
+    "resetCode": "lRE2JGsJa7",
+    "voteHash": "k4a4AQmjr9Dflw5Jre/xhRLyl+NYjKJvvicYHprvOhA="
+  },
+  {
+    "email": "qmachniak@example.org",
+    "candidateId": 5,
+    "resetCode": "kmUfAdEkU9",
+    "voteHash": "LTonmy6inm6Fr1WjUKWRRsjEhJIjwlUOqHCwkukC6KU="
+  },
+  {
+    "email": "olafkiszczak@example.com",
+    "candidateId": 8,
+    "resetCode": "U8M5HOWboL",
+    "voteHash": "AdCO9o4EkRFpJR1CIVfbjZwmGhfyQQR8Y2e/+sKSKdI="
+  },
+  {
+    "email": "rozakkamil@example.org",
+    "candidateId": 5,
+    "resetCode": "uiCwWCKEbI",
+    "voteHash": "iEYUTnitBd6AVBoJAJKMSBcrdba1TGAnJBWChdibRKg="
+  },
+  {
+    "email": "xbarankiewicz@example.net",
+    "candidateId": 7,
+    "resetCode": "9TYJIbqYR7",
+    "voteHash": "xDBqCH/dnwcsHU432mi+vKKXrXZG4kQ4gGbZ8pOcXY0="
+  },
+  {
+    "email": "maurycysaluda@example.net",
+    "candidateId": 10,
+    "resetCode": "vrgowbpXll",
+    "voteHash": "+YC3OIYrXFRDL+AgNCKdwinl0ZPdresx0L3N180M15s="
+  },
+  {
+    "email": "rafalkurbiel@example.com",
+    "candidateId": 4,
+    "resetCode": "fwiTSr58fC",
+    "voteHash": "3L2o5U2JcGbc0a1Dku3GEQ9Q9In7FsAQ3b7GWHwC3tU="
+  },
+  {
+    "email": "ignacywojs@example.org",
+    "candidateId": 13,
+    "resetCode": "9VBzuu7PKs",
+    "voteHash": "73XhCafD5LpS+4qtrnobjMbRUgTi5AHU+S6MgMmhGYk="
+  },
+  {
+    "email": "inga45@example.com",
+    "candidateId": 5,
+    "resetCode": "xjUUIi30D3",
+    "voteHash": "My0ZRxmRvgxtZPvPzsIONmUg3tSbt+6Vtuyyco1VlYU="
+  },
+  {
+    "email": "jozeffidor@example.com",
+    "candidateId": 12,
+    "resetCode": "LimXaNQlYq",
+    "voteHash": "GRYhyGkpy426q48DWzE8xJfdmkQ4w+G4nppswCZmRK4="
+  },
+  {
+    "email": "andrzejpolom@example.com",
+    "candidateId": 11,
+    "resetCode": "Bufvap6WjZ",
+    "voteHash": "lK4wEuDrYBVR3FUsv9fZYSGJHtwHp9UY8gXXUNv42L8="
+  },
+  {
+    "email": "gregorekkacper@example.com",
+    "candidateId": 8,
+    "resetCode": "LRYgftax9o",
+    "voteHash": "tjK8qoD8p0ONf7ravqNTxa25gt4YeY6PurHkLVP6jGY="
+  },
+  {
+    "email": "krystynamalewicz@example.org",
+    "candidateId": 11,
+    "resetCode": "IIgV6oxPyy",
+    "voteHash": "4ZgsI3uwAS9fMeR9lse6uUkx3BB8faNpPp78PQJ2o8o="
+  },
+  {
+    "email": "hpotyrala@example.net",
+    "candidateId": 13,
+    "resetCode": "VxBKLLtxn0",
+    "voteHash": "L8hvOws0f87LL+QVymvXD+eo9nz532cz/M0zsMaDgQc="
+  },
+  {
+    "email": "krzysiekeliza@example.net",
+    "candidateId": 10,
+    "resetCode": "rvI6cWurE1",
+    "voteHash": "svCZ/e/RCbNnwNBUOOgFFCF0du66bU5ZQWTGXBeIxP8="
+  },
+  {
+    "email": "gsiejak@example.net",
+    "candidateId": 12,
+    "resetCode": "aW1cHVa9BN",
+    "voteHash": "qCmetnoA/yK0I6Naa6thSRxTlc4RJ4nUESnBi/3WtCc="
+  },
+  {
+    "email": "jedrzejzieja@example.net",
+    "candidateId": 4,
+    "resetCode": "Kb1kRSnu1V",
+    "voteHash": "AomCBcEhgVCSOcCbYZSjntpiWs1kw+CcY94f9wAV5TM="
+  },
+  {
+    "email": "mikolaj01@example.net",
+    "candidateId": 4,
+    "resetCode": "buubmjMTv5",
+    "voteHash": "ug3n0R+csnZ5v16jb11YuO9viu9Q3s3mbp7MIWq0FAA="
+  },
+  {
+    "email": "kolaczekszymon@example.org",
+    "candidateId": 10,
+    "resetCode": "qGHIUwTm45",
+    "voteHash": "I45pgb1mVlZRSOH+3Qis/9u+OVHN7Yq63wmBwD72Nb0="
+  },
+  {
+    "email": "konstantykarys@example.net",
+    "candidateId": 4,
+    "resetCode": "SexVT7LLDk",
+    "voteHash": "n9wuAiTtKSNBMsVUlQwicPZlhhXmeP0iiD81LUMwkRY="
+  },
+  {
+    "email": "dudkowiakkamil@example.net",
+    "candidateId": 7,
+    "resetCode": "i3wDht3vdU",
+    "voteHash": "oDb5CnT0T9mmCJBSZj410JWfmswRNpEBWgNN8pgODM8="
+  },
+  {
+    "email": "julitawaleczek@example.org",
+    "candidateId": 11,
+    "resetCode": "dVOOVuzxS0",
+    "voteHash": "me3OY+hae5x1dAxoAmwpYV5G4fphN2xsSypx/WyTWWI="
+  },
+  {
+    "email": "hincatadeusz@example.com",
+    "candidateId": 6,
+    "resetCode": "xbYNCi9y7c",
+    "voteHash": "ovFsl5TfAVA28TlRnc7rG+SHQBvLUgB/3lWnbNSkWHI="
+  },
+  {
+    "email": "domzalnela@example.org",
+    "candidateId": 7,
+    "resetCode": "1JDFDUEj9W",
+    "voteHash": "onEP2RznFVvIFrTzYztuspCUCUgcYZ7IRbKv8URWsTE="
+  },
+  {
+    "email": "wiktordyja@example.net",
+    "candidateId": 6,
+    "resetCode": "qyItLtBTwR",
+    "voteHash": "rQP4vvvWTWeLoMbDWMIDPg74eaWQvmLL1eZPrJ+O8U0="
+  },
+  {
+    "email": "eryklaskawiec@example.com",
+    "candidateId": 4,
+    "resetCode": "9R5NkmasDc",
+    "voteHash": "K1AH/AMV1HVjAhssH+lRzMAvLs5mygAfUveCrn8/wyk="
+  },
+  {
+    "email": "pkubisz@example.com",
+    "candidateId": 5,
+    "resetCode": "AVeKBMy23z",
+    "voteHash": "ofua0/F/QLy4TOeJmIeJzoftZws3/b7ejMnB1TmxVaI="
+  },
+  {
+    "email": "gustaw33@example.net",
+    "candidateId": 13,
+    "resetCode": "RMIdKRzr4F",
+    "voteHash": "Cl8c6SI3FArjQJ8uXxV1Dtb3pnvo/9KN4YPGdwQVfbg="
+  },
+  {
+    "email": "mkasiak@example.org",
+    "candidateId": 7,
+    "resetCode": "GEJM7sKhFY",
+    "voteHash": "RQvOY/YbRPCx5QDr21rUF9VCElurTNk39gWvQBUKeKk="
+  },
+  {
+    "email": "szymon64@example.net",
+    "candidateId": 8,
+    "resetCode": "Da2oGIWNpI",
+    "voteHash": "iMxAxp1Y6xBFMzohchx8Ga1GLFC3uLeqYkCaaqYYwtI="
+  },
+  {
+    "email": "jedrzejkunert@example.com",
+    "candidateId": 13,
+    "resetCode": "uwz07ECTtZ",
+    "voteHash": "5ROVKSVC5uPoHp1GfQQp8gTKopjjUuWNT2FdYoXT8BA="
+  },
+  {
+    "email": "zbrzek@example.org",
+    "candidateId": 13,
+    "resetCode": "aO9yHn979U",
+    "voteHash": "5HG2aCQ1qJs9trGGW2iNXo/GMM+qja4+kS8YCVdri6M="
+  },
+  {
+    "email": "rmajnusz@example.org",
+    "candidateId": 10,
+    "resetCode": "NlRM6OmXlG",
+    "voteHash": "mbqhjW09TyJ4FG2JWR2/IEsKrE1ET/H1d2t8wRlRpeE="
+  },
+  {
+    "email": "cjedruch@example.org",
+    "candidateId": 4,
+    "resetCode": "jgwbh9LixQ",
+    "voteHash": "96ePWlCQNUEoFOqZ9+sfm1qyL5kg9S9B4MZrO1xuV7Q="
+  },
+  {
+    "email": "zelazekpatryk@example.com",
+    "candidateId": 9,
+    "resetCode": "et1HHQrvpb",
+    "voteHash": "4qzzuKw7ftlpuf2zm6fSUq0W69apTYkMK3wk4xPMbxo="
+  },
+  {
+    "email": "mieszko91@example.com",
+    "candidateId": 8,
+    "resetCode": "bbbgdotAlg",
+    "voteHash": "iLGWCEwFwo+/NZl4AqY/JvygvCcQMcIKrV4Qlr7JRRU="
+  },
+  {
+    "email": "ignacy49@example.org",
+    "candidateId": 13,
+    "resetCode": "wGDFjWgtrf",
+    "voteHash": "rIZo6B8TW2oQpYZPcUuECawqSJTwyTMwe0O04haObxA="
+  },
+  {
+    "email": "szmurloaurelia@example.net",
+    "candidateId": 11,
+    "resetCode": "WCXgBeXipO",
+    "voteHash": "RKrDWMLa6aJsyRy4GYtTpuPzBkatP5qSS6E1uaC9Pa4="
+  },
+  {
+    "email": "urszula34@example.net",
+    "candidateId": 5,
+    "resetCode": "LYluxzZNFG",
+    "voteHash": "joFD3EGSoU9tk8r+j5kjE5XKlMSvzVRMACGaihthjxI="
+  },
+  {
+    "email": "myszakiwo@example.com",
+    "candidateId": 13,
+    "resetCode": "RydS4nnNJS",
+    "voteHash": "+6pdIM56dSjE4UNFgZl0TLPzLSR7cCO9//90+SgELBM="
+  },
+  {
+    "email": "kporeda@example.org",
+    "candidateId": 8,
+    "resetCode": "0FhEMvxYab",
+    "voteHash": "y/4O9qe7e4nhKVoc+oobpmra8My2lb7zayXLU/0ApMg="
+  },
+  {
+    "email": "artur12@example.com",
+    "candidateId": 13,
+    "resetCode": "tIsQp2ZNuH",
+    "voteHash": "QQDTIQvvgcushtJSu2Xq3RVKWuqsrZIMxFL0izMaMCg="
+  },
+  {
+    "email": "marekkluczyk@example.net",
+    "candidateId": 9,
+    "resetCode": "OtBAeVaL3G",
+    "voteHash": "2cbWgN08Dy+xzlfFyTuTZNJWKQRUfuaT0DksCXAIY3c="
+  },
+  {
+    "email": "olgacymbala@example.net",
+    "candidateId": 12,
+    "resetCode": "Tg4364YWfE",
+    "voteHash": "DeEjVZ9/7QEFmZkDBzamczjejbnVAZld2qoaN+7rMNk="
+  },
+  {
+    "email": "maksymilian72@example.org",
+    "candidateId": 12,
+    "resetCode": "eRIqDqxWe4",
+    "voteHash": "L9fsEva68gVIIcfugpJTJdcx287f/OW4huKtGxuPf+4="
+  },
+  {
+    "email": "kozokmichal@example.org",
+    "candidateId": 10,
+    "resetCode": "o2b1RI6xYg",
+    "voteHash": "5Wfg/+5h9zM0RW9UYeB92dDLUKtMR9G3nt5/zJZhmVs="
+  },
+  {
+    "email": "tymoteusz71@example.net",
+    "candidateId": 11,
+    "resetCode": "jLMeJb8hcl",
+    "voteHash": "GtQG3fjduDIyomaytX590M4blTu5qxs5Dtb3S2Uwum0="
+  },
+  {
+    "email": "kacpergospodarek@example.net",
+    "candidateId": 10,
+    "resetCode": "371HRelkY1",
+    "voteHash": "acli7X2BFKfwxRS20kwV6uaPZs16ELY3Mb6qmcwiGGc="
+  },
+  {
+    "email": "fraczkiewiczjozef@example.org",
+    "candidateId": 13,
+    "resetCode": "TgEmpLQsBI",
+    "voteHash": "heUKueqH4CvbtVXKhSJ/iURMgdGDAuoMFOCvsHsqows="
+  },
+  {
+    "email": "wyciszkiewiczszymon@example.org",
+    "candidateId": 9,
+    "resetCode": "iLXCeQWD0w",
+    "voteHash": "0S1nDzvP7Lu7ytc77GkzV1mMB49uTRwNkG2IT0T08ok="
+  },
+  {
+    "email": "wwylegala@example.net",
+    "candidateId": 9,
+    "resetCode": "ZqKQAKFEaD",
+    "voteHash": "OV21/u6QsPpr/RYclOhkoP3iXPwaPj0G+LhZb8o4aH8="
+  },
+  {
+    "email": "qwydrych@example.com",
+    "candidateId": 6,
+    "resetCode": "sRUnoTeInb",
+    "voteHash": "/tvmvEhbS0f6txatHV+plsE5HB+QZV20l+uJ189d0fI="
+  },
+  {
+    "email": "bbok@example.net",
+    "candidateId": 10,
+    "resetCode": "f2rWKH4p9s",
+    "voteHash": "uNLUEWCa301GjfGLGGTk+iF2cJD0L0jONTsHN4pwhfE="
+  },
+  {
+    "email": "sandraslabosz@example.org",
+    "candidateId": 4,
+    "resetCode": "NrceDjX5er",
+    "voteHash": "b52BaTxudlbAvgujCX090kjGB79CMhmDdh8c/G+IFHo="
+  },
+  {
+    "email": "zdonekmilosz@example.org",
+    "candidateId": 11,
+    "resetCode": "GNZTWWNMV4",
+    "voteHash": "bBAJn4pTTIsJKFbYQ+05AMlLVTK7HD7l0LD8OvIqd0g="
+  },
+  {
+    "email": "aosada@example.org",
+    "candidateId": 13,
+    "resetCode": "35o5zmc8CM",
+    "voteHash": "PE5hsYY3ZZW6UUFgTujT71O9jKqdHFHhGtNXnOXbJ9I="
+  },
+  {
+    "email": "antonifitas@example.org",
+    "candidateId": 7,
+    "resetCode": "OJxvPilooo",
+    "voteHash": "5yGFkOAZuM0+VW5M9S3LF2AWBp8dpJeKFa/H8aDg/vg="
+  },
+  {
+    "email": "igor50@example.com",
+    "candidateId": 11,
+    "resetCode": "23BTFUdyer",
+    "voteHash": "jIY7ODDqC0LGISq6KQxnlmdMowtntLmuBTdOSF6F3eI="
+  },
+  {
+    "email": "slizjulianna@example.org",
+    "candidateId": 6,
+    "resetCode": "cMRcKTAgGL",
+    "voteHash": "Ftgnh4VVO8bY0p4bH/JSArMlExqdEaD207RuTSAwW48="
+  },
+  {
+    "email": "stefan11@example.org",
+    "candidateId": 4,
+    "resetCode": "X2FR9DdLOP",
+    "voteHash": "AwtMqT9lFWdQkMxvsQAuXbRVvL8D/7JTkTFQ1iHIh7I="
+  },
+  {
+    "email": "krzysztof02@example.org",
+    "candidateId": 9,
+    "resetCode": "DXCAszk9UC",
+    "voteHash": "7ymUJSae3AOkj2rev0zOJeGXe1/KLE0GoaKhHQYHBQI="
+  },
+  {
+    "email": "zelaskokrystian@example.net",
+    "candidateId": 4,
+    "resetCode": "fXBQOpBuyc",
+    "voteHash": "CAxZecE3C76p47HDD/HAwa29kTzdEvh1h/QW3xjqclg="
+  },
+  {
+    "email": "roksananiedospial@example.com",
+    "candidateId": 10,
+    "resetCode": "hPLZ4moYG9",
+    "voteHash": "bY3WToviGrIndiy+T0ujs1tg4qxU/CxIrAGBEvLqa24="
+  },
+  {
+    "email": "kajetankolek@example.org",
+    "candidateId": 8,
+    "resetCode": "OhQMibom1U",
+    "voteHash": "Gjr2QyMvKJSGx5wEfvk5tgC96FgKYKy4acxvE6tcoOM="
+  },
+  {
+    "email": "lukaszgiec@example.net",
+    "candidateId": 8,
+    "resetCode": "zUCFnOPJHE",
+    "voteHash": "nM1hxre3/3i6+7SfHCfeoYhthF0859ieCqCSWuUzc/c="
+  },
+  {
+    "email": "terkapiotr@example.com",
+    "candidateId": 5,
+    "resetCode": "3kbU9WS4GR",
+    "voteHash": "G+iJRnsgiSsTNWIf5OBH9zaq22XUWWsglwQY3h9WVC0="
+  },
+  {
+    "email": "dzienismikolaj@example.com",
+    "candidateId": 5,
+    "resetCode": "S9vkDMELVp",
+    "voteHash": "sLFskve4TDQl+S3zU/vNWHuUETh/pXc9A5DZ+kdnFNg="
+  },
+  {
+    "email": "nataszadanel@example.org",
+    "candidateId": 12,
+    "resetCode": "E18GnMiWjM",
+    "voteHash": "0IDJTDYvJ5ko3S7e7bx9MlyUpuE6n/pWGiLy5zCrCPU="
+  },
+  {
+    "email": "rmlocek@example.com",
+    "candidateId": 13,
+    "resetCode": "nIy0hC61PN",
+    "voteHash": "iA25CVxCyQcL1SUMvZs+BL+B1YnDYGVOb0Eu8P+1viw="
+  },
+  {
+    "email": "kstefanik@example.com",
+    "candidateId": 11,
+    "resetCode": "QF3BzAYONy",
+    "voteHash": "dwUEPj3e5n/apx+r+p5oVPEiya8LHC0uAu+m+5YOh50="
+  },
+  {
+    "email": "adrianszela@example.net",
+    "candidateId": 12,
+    "resetCode": "fU3kKQU0jo",
+    "voteHash": "N2J4NAYw0DvFNE2Rhf5ybblJAfI8OE+ihrKFw1Eqlj0="
+  },
+  {
+    "email": "fabian95@example.org",
+    "candidateId": 10,
+    "resetCode": "1Hl2nbXFpf",
+    "voteHash": "pTDIpj8NQTQuLxswh2DceE6/qbexaF8FPuHJbjQfrfo="
+  },
+  {
+    "email": "grabongaja@example.com",
+    "candidateId": 7,
+    "resetCode": "bqN1WnRSwj",
+    "voteHash": "OV6qZpsfLGHbCDFGDcsKndWtcKsd8w9lbsrIbUzSomY="
+  },
+  {
+    "email": "ekruszka@example.net",
+    "candidateId": 12,
+    "resetCode": "uh1WKyAY31",
+    "voteHash": "kZ3TCNRaV8rpNa7aTW6U7dFzGcqdoyK3jM+lCj26O/k="
+  },
+  {
+    "email": "norbert12@example.com",
+    "candidateId": 10,
+    "resetCode": "Uv3PxjQHnk",
+    "voteHash": "7mSPCnEf29T7EdcANuzhDcvAT9QEWTHGqsSQpWE+FlE="
+  },
+  {
+    "email": "vpiksa@example.com",
+    "candidateId": 4,
+    "resetCode": "ye35WvENkB",
+    "voteHash": "7KiCtZ7A2qwmjK43EpgcV2uJcD0hKwTq4rptvsAHgS4="
+  },
+  {
+    "email": "ufniarzszymon@example.org",
+    "candidateId": 10,
+    "resetCode": "3N6HUHKwYy",
+    "voteHash": "Q/pR16lH/G+g50xLBPtvaUGIETomX3KwZJUqwQ5W/m4="
+  },
+  {
+    "email": "kacper39@example.com",
+    "candidateId": 8,
+    "resetCode": "NLj2Q2BSoA",
+    "voteHash": "UVGDLj4uS7n2buhRlJ8wGYtDeTmOr07tAgZItT9mHuw="
+  },
+  {
+    "email": "kosmanwitold@example.com",
+    "candidateId": 9,
+    "resetCode": "LaoLukM7bW",
+    "voteHash": "jC1pfZfzFy2Bf9H5uUEYgwBQV6M5bSv2BT44dTQd9aI="
+  },
+  {
+    "email": "reitergaja@example.com",
+    "candidateId": 10,
+    "resetCode": "CrZ91NNWoo",
+    "voteHash": "ZTVHI/8IG/5U0sw0T6qGKaAxvUr5ThNIR4kXYwlUO2g="
+  },
+  {
+    "email": "maksymilian12@example.org",
+    "candidateId": 11,
+    "resetCode": "CKCIrXoh6G",
+    "voteHash": "oIoHBKdO/hzcrIi/eQeLeeGQtgR4Y4RqL6REkLl3p9k="
+  },
+  {
+    "email": "rszelest@example.org",
+    "candidateId": 10,
+    "resetCode": "1NQph2pgiT",
+    "voteHash": "xcZynRZ4eRaCXxbDpHuX4qW2xyAoFHYD672ted8Guek="
+  },
+  {
+    "email": "adrianna05@example.com",
+    "candidateId": 13,
+    "resetCode": "PDEaBsUVyz",
+    "voteHash": "UisRuOokSmGH1s7TW06P5F8HMHwvYltTf3PPft5tPxc="
+  },
+  {
+    "email": "norberttomalak@example.org",
+    "candidateId": 7,
+    "resetCode": "4SZGLwa6go",
+    "voteHash": "5XRUysJx5A2hvRczP9qk+R4jPOKT9BaGbODKIljzQng="
+  },
+  {
+    "email": "franciszek54@example.org",
+    "candidateId": 4,
+    "resetCode": "WRRtPVCfPd",
+    "voteHash": "RsrPqJ7sYhU2MgzMi7qHEhMmdOoPYFEGXKjS1HRXDA8="
+  },
+  {
+    "email": "jnitek@example.org",
+    "candidateId": 8,
+    "resetCode": "XVLygEHpXX",
+    "voteHash": "Bc2f0ks16NBQmSFidlkKHjCDz9BAEfCJJppymlCv0lA="
+  },
+  {
+    "email": "calkonstanty@example.com",
+    "candidateId": 8,
+    "resetCode": "by8GhwJdPy",
+    "voteHash": "moSLi0jMm9Ttco+in4VUsP6K+8XLFtBZjz7Iu0Jy2iw="
+  },
+  {
+    "email": "aprzystupa@example.com",
+    "candidateId": 13,
+    "resetCode": "8WmSXdHD9P",
+    "voteHash": "JXq2oMq0Q/qgNIOtzGAb5Os2Bv6HkTibd3bK5OhOTtY="
+  },
+  {
+    "email": "wojciech99@example.net",
+    "candidateId": 6,
+    "resetCode": "paiiprynSX",
+    "voteHash": "0ILsDnryDe7HsJk1jqkA79kk/uOT83akwltNvv/zjlk="
+  },
+  {
+    "email": "apaczos@example.com",
+    "candidateId": 4,
+    "resetCode": "ZaQyeROCH4",
+    "voteHash": "KndavXVjtEECX1WR14agrAWbHNh/tMEmHHinpjOgYQU="
+  },
+  {
+    "email": "wiktorzbrog@example.org",
+    "candidateId": 11,
+    "resetCode": "T3isc0zr0s",
+    "voteHash": "jupi981SDd4LClHpAO0AGDtAjJKTyhXl2moZLrwN/QQ="
+  },
+  {
+    "email": "roksanabiesek@example.com",
+    "candidateId": 11,
+    "resetCode": "RT5xXyV9pF",
+    "voteHash": "EnRQhbSJcSpqD1EO8kkkkOCmSqGXdOlcDaFPbH3WOq0="
+  },
+  {
+    "email": "alex85@example.org",
+    "candidateId": 5,
+    "resetCode": "faKudoSiFZ",
+    "voteHash": "2PrYC2M9RnUEgxxuK+AYRYrZ3eJkArXUdAArOE/i22o="
+  },
+  {
+    "email": "kornaksandra@example.net",
+    "candidateId": 6,
+    "resetCode": "gkpiM5q2Qt",
+    "voteHash": "hnHZVENw1cx58oAfMxPuW+6CrI4OwTzOGKOjJ1ovSEg="
+  },
+  {
+    "email": "bdoliwa@example.com",
+    "candidateId": 4,
+    "resetCode": "A59SsPjOTG",
+    "voteHash": "BhjuagBmeFiKwdMi8A5PAFGWlGBbF0jlLeV/WRYhW/A="
+  },
+  {
+    "email": "drygasmilosz@example.org",
+    "candidateId": 10,
+    "resetCode": "PS8ExIdhvr",
+    "voteHash": "i5ejeSzX1F/1ME4Lcm3BgnP5TLuNQkSmmLMce9R62Mg="
+  },
+  {
+    "email": "oskar12@example.com",
+    "candidateId": 5,
+    "resetCode": "lT4LZpTFHp",
+    "voteHash": "sacG44NCxGDGtopQ3Xl9t3zq9T4bANP530DIw4TCdK8="
+  },
+  {
+    "email": "gploskonka@example.net",
+    "candidateId": 4,
+    "resetCode": "bGSX28DLNh",
+    "voteHash": "6yW2vkT63rWUt2NGiPF2PcPCjVM7wotwl0x3upLiSHc="
+  },
+  {
+    "email": "krystiankrefta@example.com",
+    "candidateId": 5,
+    "resetCode": "VpWW2CCdTY",
+    "voteHash": "5e1r4Ftp7FZyiLaRUlu26XsFm4qdIfkZc5kOr1s3/hE="
+  },
+  {
+    "email": "ysereda@example.org",
+    "candidateId": 9,
+    "resetCode": "NjobZa9sDj",
+    "voteHash": "U6Ue74ukq9nf8pqw6XT5xQZpVxug45gfwO1AW1oRQMA="
+  },
+  {
+    "email": "cwolk@example.com",
+    "candidateId": 10,
+    "resetCode": "mDwp8LqKbu",
+    "voteHash": "HIJb2vpT/8uyD+17eMY2XZW8w/W8oz5FL0kYEgQndkM="
+  },
+  {
+    "email": "poczko@example.net",
+    "candidateId": 11,
+    "resetCode": "LqUp0QX6Wh",
+    "voteHash": "Pws1XgFOLiZsVzfilOoOnXl69m7QObJHIBS28Enymds="
+  },
+  {
+    "email": "jacekleoniak@example.net",
+    "candidateId": 6,
+    "resetCode": "jzzW22BALR",
+    "voteHash": "fD1TNy+/vNGgc6+o7hZ6NJR8n9aLPLBLg/T/l2Lg41k="
+  },
+  {
+    "email": "nataszajaniuk@example.org",
+    "candidateId": 7,
+    "resetCode": "lTcjD8DFGP",
+    "voteHash": "VRwfgFFIpnuQZVj1O/oemqxB65VYSnWJV3oTEOMF7mM="
+  },
+  {
+    "email": "rlejk@example.com",
+    "candidateId": 4,
+    "resetCode": "UzYTV2hkhU",
+    "voteHash": "2qvtjzGfY4sybJf2Xv7gTZRyvCuHhdW3jk9XaNcz1MA="
+  },
+  {
+    "email": "karina88@example.com",
+    "candidateId": 7,
+    "resetCode": "3bC8u3db5X",
+    "voteHash": "xdE2BumkxxMh7PHVpOBn9ASOinG/CiCjOBy02L1fqVk="
+  },
+  {
+    "email": "bartek12@example.net",
+    "candidateId": 13,
+    "resetCode": "CG9tSvlLu6",
+    "voteHash": "v2/WCunWMQmf3NHLkeIc40XV277ReAno893Gl5cCE6c="
+  },
+  {
+    "email": "dorotaziemkiewicz@example.net",
+    "candidateId": 10,
+    "resetCode": "Qva1WoBlBM",
+    "voteHash": "+NxdXKW638/SWGGEYc7bnV88/HaasaIcPgftJXzQAYA="
+  },
+  {
+    "email": "dawidzaniewicz@example.org",
+    "candidateId": 5,
+    "resetCode": "QeJWjphJpE",
+    "voteHash": "DDyQgUTUWL3Jf3HCWie2eoZhiwLg4mPmTdDDwBxVNdc="
+  },
+  {
+    "email": "filip53@example.com",
+    "candidateId": 5,
+    "resetCode": "vhyQMVf3J9",
+    "voteHash": "HMSsOHRBrRK9O17kwzgYKpNU9GmOLe5NwQCh/WsCEP0="
+  },
+  {
+    "email": "molekkacper@example.net",
+    "candidateId": 10,
+    "resetCode": "KBM4oP9Dwt",
+    "voteHash": "uVjH6mWW00xv8yywfEhRzo8ur0OepU5JBWbZ6fzpN/Q="
+  },
+  {
+    "email": "kgordon@example.org",
+    "candidateId": 8,
+    "resetCode": "pTc9nUf7sa",
+    "voteHash": "Bh04QZHmGjhUUg2HE4jeDqIfZ8no2Zy665bWacYZwIo="
+  },
+  {
+    "email": "xzontek@example.net",
+    "candidateId": 9,
+    "resetCode": "wIvhJJQA7r",
+    "voteHash": "BCvS+/gSYzH6eAIas16bhlMoXQa1nKRYiVQoQSUrlps="
+  },
+  {
+    "email": "inga67@example.org",
+    "candidateId": 11,
+    "resetCode": "gQYmda8Dkf",
+    "voteHash": "Ou/GbVjBVW3dBbPFRyIe/mERaiqwDmqHq3ls99k/jMY="
+  },
+  {
+    "email": "fgrys@example.com",
+    "candidateId": 8,
+    "resetCode": "9tWz69A8Zf",
+    "voteHash": "lppi2L89FqMUU4A2C8Qy23gpSKMgKGHyB7d2fzHEi/M="
+  }
+]

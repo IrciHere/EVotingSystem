@@ -81,3 +81,6 @@ CREATE TABLE votes_otp (
     otp_code varchar(10) NOT NULL,
     CONSTRAINT fk_otp_vote FOREIGN KEY(vote_id) REFERENCES election_votes(id)
 );
+
+INSERT INTO users (email, phone_number, name, is_admin) VALUES ('admin@admin.com', '+48123456789', 'Admin Adminowski', true);
+INSERT INTO password_reset_codes (user_id, reset_code) VALUES (1, 'abcde12345');

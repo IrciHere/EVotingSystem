@@ -2,11 +2,10 @@
 
 namespace EVotingSystem.Comparison.Dotnet;
 
-[MemoryDiagnoser]
 public class EncryptionServiceBenchmarks
 {
     private const string Password = "TestPassw0rd%";
-    private const string Secret = "TestSecr3t@";
+    private const string Secret = "Litwo! Ojczyzno moja! ty jesteś jak zdrowie:\nIle cię trzeba cenić, ten tylko się dowie,\nKto cię stracił. Dziś piękność twą w całej ozdobie\nWidzę i opisuję, bo tęsknię po tobie.";
     private byte[] _aesKey;
     private byte[] _aesIv;
 
