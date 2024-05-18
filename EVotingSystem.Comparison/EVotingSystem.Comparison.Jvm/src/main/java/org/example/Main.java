@@ -12,11 +12,14 @@ import java.util.concurrent.TimeUnit;
 @State(Scope.Thread)
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
+@Fork(1)
 public class Main {
-    private static final String Password = "TestPassw0rd%";
-    private static final String Secret = "Litwo! Ojczyzno moja! ty jesteś jak zdrowie:\nIle cię trzeba cenić, ten tylko się dowie,\nKto cię stracił. Dziś piękność twą w całej ozdobie\nWidzę i opisuję, bo tęsknię po tobie.";
+    private String _textForTests;
     private byte[] _aesKey;
     private byte[] _aesIv;
+
+    @Param({"100", "500", "1000", "5000", "10000"})
+    public int Size;
 
     @Setup
     public void setup() {
@@ -29,25 +32,27 @@ public class Main {
         for (int i = 0; i < 16; i++) {
             _aesIv[i] = (byte) (i * 4 + 7);
         }
+        
+        _textForTests = Secret.Text.substring(0, Size);
     }
     
     @Benchmark
     public byte[] createHash() throws UnsupportedEncodingException, NoSuchAlgorithmException {
-        byte[] hash = EncryptionService.hashSHA256(Password);
+        byte[] hash = EncryptionService.hashSHA256(_textForTests);
         
         return hash;
     }
     
     @Benchmark
     public byte[] EncryptSecret() throws Exception {
-        byte[] encrypted = EncryptionService.encryptSecret(Secret, _aesKey, _aesIv);
+        byte[] encrypted = EncryptionService.encryptSecret(_textForTests, _aesKey, _aesIv);
         
         return encrypted;
     }
     
     @Benchmark
     public String EncryptAndDecryptSecret() throws Exception {
-        byte[] encrypted = EncryptionService.encryptSecret(Secret, _aesKey, _aesIv);
+        byte[] encrypted = EncryptionService.encryptSecret(_textForTests, _aesKey, _aesIv);
         String decrypted = EncryptionService.decryptSecret(encrypted, _aesKey, _aesIv);
         
         return decrypted;

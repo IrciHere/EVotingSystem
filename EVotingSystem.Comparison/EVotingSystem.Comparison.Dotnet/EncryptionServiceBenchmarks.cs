@@ -4,10 +4,12 @@ namespace EVotingSystem.Comparison.Dotnet;
 
 public class EncryptionServiceBenchmarks
 {
-    private const string Password = "TestPassw0rd%";
-    private const string Secret = "Litwo! Ojczyzno moja! ty jesteś jak zdrowie:\nIle cię trzeba cenić, ten tylko się dowie,\nKto cię stracił. Dziś piękność twą w całej ozdobie\nWidzę i opisuję, bo tęsknię po tobie.";
+    private string _textForTests;
     private byte[] _aesKey;
     private byte[] _aesIv;
+    
+    [Params(100, 500, 1000, 5000, 10_000)]
+    public int Size { get; set; }
 
     [GlobalSetup]
     public void Setup()
@@ -19,12 +21,14 @@ public class EncryptionServiceBenchmarks
         _aesIv = Enumerable.Range(1, 16)
             .Select(num => (byte)(num * 4 + 7))
             .ToArray();
+
+        _textForTests = Secret.Text[..Size];
     }
 
     [Benchmark]
     public byte[] CreateHash()
     {
-        byte[] hash = EncryptionService.HashSHA256(Password);
+        byte[] hash = EncryptionService.HashSHA256(_textForTests);
 
         return hash;
     }
@@ -32,7 +36,7 @@ public class EncryptionServiceBenchmarks
     [Benchmark]
     public byte[] EncryptSecret()
     {
-        byte[] encrypted = EncryptionService.EncryptSecret(Secret, _aesKey, _aesIv);
+        byte[] encrypted = EncryptionService.EncryptSecret(_textForTests, _aesKey, _aesIv);
 
         return encrypted;
     }
@@ -40,7 +44,7 @@ public class EncryptionServiceBenchmarks
     [Benchmark]
     public string EncryptAndDecryptSecret()
     {
-        byte[] encrypted = EncryptionService.EncryptSecret(Secret, _aesKey, _aesIv);
+        byte[] encrypted = EncryptionService.EncryptSecret(_textForTests, _aesKey, _aesIv);
         string decrypted = EncryptionService.DecryptSecret(encrypted, _aesKey, _aesIv);
         
         return decrypted;
